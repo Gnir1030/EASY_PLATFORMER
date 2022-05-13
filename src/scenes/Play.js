@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.add.text(20, 20, "Play Scene");
-        this.healthText = this.add.text(700, 20, "Health: " + 1);
+        //this.healthText = this.add.text(700, 20, "Health: " + 1);
 
 
         // map
@@ -40,6 +40,6 @@ class Play extends Phaser.Scene {
 
     update() {
         this.player.update();
-        this.healthText.setText("Health: " + this.player.health());
+        //this.healthText.setText("Health: " + this.player.health());
     }
 }
