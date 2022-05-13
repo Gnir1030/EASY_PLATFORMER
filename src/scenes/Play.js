@@ -10,11 +10,25 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // move keys
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         this.add.text(20, 20, "Play Scene");
+
+        // map
         const map = this.make.tilemap({ key: 'map' });
         const tileSet = map.addTilesetImage('simple_tileset', 'tiles');
         const platforms = map.createLayer('Platforms', tileSet, 0, 200);
-        this.player = Player();
         platforms.setCollisionByExclusion(-1, true);
+
+        // player
+        this.player = new Player(this, 0, 130, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0,0);
+
+        // collision
+        this.physics.add.collider(this.player, platforms);
+    }
+
+    update() {
+        this.player.update();
     }
 }
