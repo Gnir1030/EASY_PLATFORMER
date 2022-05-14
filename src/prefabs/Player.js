@@ -35,8 +35,4 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setFlipX(true);
         }
     }
-
-    health() {
-        return this.health;
-    }
 }
