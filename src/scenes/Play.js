@@ -38,7 +38,7 @@ class Play extends Phaser.Scene {
         const viewH = 640;
         const viewW = 800;
         this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
-        this.cam.setBounds(0,0,3000, 3000);
+        this.cam.setBounds(0,0,28*64, 8*64);
         this.cam.startFollow(this.player);
         //this.cam.ignore(this.healthText);
 

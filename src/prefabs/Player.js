@@ -10,7 +10,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.health = 1;
         this.setScale(1);
         this.setBounce(0.1);
-        this.setCollideWorldBounds(true);
     }
 
     update() {
