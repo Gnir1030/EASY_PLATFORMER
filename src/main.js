@@ -16,3 +16,18 @@ let game = new Phaser.Game(config);
 let keyLEFT, keyRIGHT, keySPACE;
 
 let borderS = game.config.height/10;
+
+let gameOver = false;
+
+let scoreConfig = {
+    fontFamily: 'Courier',
+    fontSize: '25px',
+    backgroundColor: '#F3B141',
+    color: '#843605',
+    align: 'center',
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 550
+};
