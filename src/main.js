@@ -9,11 +9,11 @@ let config = {
             debug: false
         }
     },
-    scene: Play
+    scene: Tutorial
 }
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keySPACE;
+let keyLEFT, keyRIGHT, keySPACE, keyR;
 
 let borderS = game.config.height/10;
 

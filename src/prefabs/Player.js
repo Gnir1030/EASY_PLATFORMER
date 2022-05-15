@@ -1,6 +1,6 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
 
-    constructor(scene, x, y, texture, frame, kLeft, kRight, kSpace) {
+    constructor(scene, x, y, texture, frame, kLeft, kRight, kSpace, mW, mH) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -8,15 +8,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyRight = kRight;
         this.keySpace = kSpace;
         this.health = 3;
+        this.mw = mW;
+        this.mh = mH;
         this.setScale(1);
         this.setBounce(0.1);
+
     }
 
     update() {
         // move
         if (this.keyLeft.isDown && this.x > 0) {
             this.setVelocityX(-200);
-        } else if (this.keyRight.isDown && this.x <= (55*64) - this.width) {
+        } else if (this.keyRight.isDown && this.x <= this.mw - this.width) {
             this.setVelocityX(200);
         } else {
             this.setVelocityX(0);
