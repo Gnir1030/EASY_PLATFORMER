@@ -7,16 +7,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyLeft = kLeft;
         this.keyRight = kRight;
         this.keySpace = kSpace;
-        this.health = 1;
+        this.health = 3;
         this.setScale(1);
         this.setBounce(0.1);
     }
 
     update() {
         // move
-        if (this.keyLeft.isDown) {
+        if (this.keyLeft.isDown && this.x > 0) {
             this.setVelocityX(-200);
-        } else if (this.keyRight.isDown) {
+        } else if (this.keyRight.isDown && this.x <= (28*64) - this.width) {
             this.setVelocityX(200);
         } else {
             this.setVelocityX(0);

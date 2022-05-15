@@ -44,10 +44,27 @@ class Play extends Phaser.Scene {
 
         // collision
         this.physics.add.collider(this.player, platforms);
+
+        // spikes
+        this.spikes = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+        map.getObjectLayer('Spikes').objects.forEach((spike) => {
+            let sSprite = this.spikes.create(spike.x, spike.y + 200 - spike.height, 'spike').setOrigin(0);
+            sSprite.body.setSize(spike.width, spike.height - 20).setOffset(0, 20);
+        });
+        this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
     }
 
     update() {
         this.player.update();
         this.healthText.setText("Health: " + this.player.health);
+    }
+
+    looseHealth() {
+        this.player.health -= 1;
+        this.player.x -= 64;
+        this.player.setVelocity(0,0);
     }
 }
