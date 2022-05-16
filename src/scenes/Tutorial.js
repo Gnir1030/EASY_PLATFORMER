@@ -17,6 +17,7 @@ class Tutorial extends Phaser.Scene {
         gameOver = false;
         this.length = 55*64;
         this.height = 8*64;
+        this.count = 0;
 
         // background
         //this.add.image(0, 0,'background').setOrigin(0, 0);
@@ -83,11 +84,17 @@ class Tutorial extends Phaser.Scene {
         this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
             this.player.update();
+            if (this.player.y >= this.height) {
+                gameOver = true;
+            }
         } else {
-            const x = game.config.width + this.player.x;
-            const y = this.player.y;
-            this.add.text(x/2, y/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x/2, y/2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            if (this.count < 1) {
+                x = this.player.x;
+                y = game.config.height/2;
+                this.count += 1;
+            }
+            this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
+            this.add.text(x, y + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.scene.restart();
             }

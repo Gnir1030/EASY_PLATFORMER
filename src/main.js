@@ -31,3 +31,6 @@ let scoreConfig = {
     },
     fixedWidth: 550
 };
+
+let x = game.config.width;
+let y = game.config.height;
