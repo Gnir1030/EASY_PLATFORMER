@@ -4,6 +4,13 @@ class Tutorial extends Phaser.Scene {
     }
 
     preload() {
+        // load audio
+        this.load.audio('Jump_noise', './assets/Jump.wav');
+        this.load.audio('Take_Damage', './assets/Damage.wav');
+        this.load.audio('Game_over', './assets/Game_Over.wav');
+
+
+        // load images, spritesheets, and tilemaps
         this.load.image('tiles', './assets/tilesheet.png');
         this.load.tilemapTiledJSON('map', './assets/tutorial_level.json');
         this.load.image('spike', './assets/spike.png');
@@ -18,6 +25,8 @@ class Tutorial extends Phaser.Scene {
         this.length = 55*64;
         this.height = 8*64;
         this.count = 0;
+
+        this.Game_over = this.sound.add('Game_over', {volume: 0.5});
 
         // background
         //this.add.image(0, 0,'background').setOrigin(0, 0);
@@ -89,6 +98,7 @@ class Tutorial extends Phaser.Scene {
             }
         } else {
             if (this.count < 1) {
+                this.Game_over.play();
                 x = this.player.x;
                 y = game.config.height/2;
                 this.count += 1;
