@@ -109,6 +109,9 @@ class Tutorial extends Phaser.Scene {
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.scene.restart();
             }
+            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+                this.scene.start('menuScene');
+            }
         }
     }
 
