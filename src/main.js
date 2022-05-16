@@ -9,7 +9,7 @@ let config = {
             debug: false
         }
     },
-    scene: Tutorial
+    scene: [Menu, Tutorial]
 }
 let game = new Phaser.Game(config);
 
@@ -34,5 +34,7 @@ let scoreConfig = {
 
 let x = game.config.width;
 let y = game.config.height;
+let borderUISize = game.config.width/15;
+let borderPadding = borderUISize / 3;
 
 let chords = [];
