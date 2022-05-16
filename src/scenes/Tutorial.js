@@ -93,7 +93,7 @@ class Tutorial extends Phaser.Scene {
         this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
             this.player.update();
-            if (this.player.y >= this.height) {
+            if (this.player.y >= this.height) { // falling off a ledge
                 gameOver = true;
             }
         } else {
