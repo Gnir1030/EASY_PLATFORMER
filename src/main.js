@@ -1,3 +1,5 @@
+//Zachary Hollaway, Sheel Kulkarni, Louis Lim
+//Published: 05/15/2022
 let config = {
     type: Phaser.CANVAS,
     width: 800,
