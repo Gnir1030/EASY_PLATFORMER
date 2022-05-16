@@ -13,7 +13,7 @@ let config = {
 }
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keySPACE, keyR;
+let keyLEFT, keyRIGHT, keySPACE, keyR, keyM;
 
 let borderS = game.config.height/10;
 

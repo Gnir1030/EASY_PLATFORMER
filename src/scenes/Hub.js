@@ -33,9 +33,9 @@ class Hub extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        //this.add.text(20, 20, "Main Hub");
-        //this.healthText = this.add.text(700, 20, "Health: " + 3);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.add.text(20, 20, "Main Hub(Still under Construction)");
+        this.add.text(84, 84, 'Press M for Menu');
 
 
         // map
@@ -63,43 +63,12 @@ class Hub extends Phaser.Scene {
 
         // collision
         this.physics.add.collider(this.player, platforms);
-
-        // // portal
-        // this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hub').setOrigin(0);
-        // this.anims.create({
-        //     key: 'portal',
-        //     frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-        //     frameRate: 2,
-        //     repeat: -1
-        // });
-        // this.portal.play('portal');
-
     }
 
     update() {
-        //this.healthText.setText("Health: " + this.player.health);
-        if (!gameOver) {
-            this.player.update();
-        } else {
-            this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                this.scene.restart();
-            }
-            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-                this.scene.start('menuScene');
-            }
+        if (Phaser.Input.Keyboard.JustDown(keyM)) {
+            this.scene.start('menuScene');
         }
+        this.player.update();
     }
-
-    // looseHealth() {
-    //     this.player.health -= 1;
-    //     this.sound.play('Take_Damage');
-    //     if (this.player.health <= 0) {
-    //         this.player.health = 0;
-    //         gameOver = true;
-    //     }
-    //     this.player.x -= 50;
-    //     this.player.setVelocity(0,0);
-    // }
 }
