@@ -11,7 +11,7 @@ class Menu extends Phaser.Scene {
 
     create() {
 
-        this.menu_music = this.sound.add('menu_music', {volume: 0.70});
+        this.menu_music = this.sound.add('menu_music', {volume: 0.50});
         this.menu_music.play();
         this.menu_music.loop = true;
 
@@ -43,6 +43,7 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.menu_music.stop();
             this.scene.start('tutorialScene');
         }
     }
