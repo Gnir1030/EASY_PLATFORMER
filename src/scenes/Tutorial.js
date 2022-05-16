@@ -8,6 +8,7 @@ class Tutorial extends Phaser.Scene {
         this.load.audio('Jump_noise', './assets/Jump.wav');
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
+        this.load.audio('C_Chord', './assets/C_Chord.wav');
 
 
         // load images, spritesheets, and tilemaps
@@ -112,6 +113,7 @@ class Tutorial extends Phaser.Scene {
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
             this.add.text(x, y + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.Game_over.stop();
                 this.scene.restart();
             }
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
@@ -136,6 +138,7 @@ class Tutorial extends Phaser.Scene {
         this.scene.start('hubScene');
     }
     collectChord() {
+        this.sound.play('C_Chord');
         this.item.destroy();
     }
 }
