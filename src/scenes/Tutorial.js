@@ -25,7 +25,8 @@ class Tutorial extends Phaser.Scene {
         this.length = 55*64;
         this.height = 8*64;
         this.count = 0;
-
+        
+        // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
 
         // background
@@ -113,6 +114,7 @@ class Tutorial extends Phaser.Scene {
 
     looseHealth() {
         this.player.health -= 1;
+        this.sound.play('Take_Damage');
         if (this.player.health <= 0) {
             this.player.health = 0;
             gameOver = true;
