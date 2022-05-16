@@ -17,6 +17,7 @@ class Tutorial extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         this.load.image('background', './assets/background.png');
+        this.load.image('chordC', './assets/C_Major_Chord.png');
     }
 
     create() {
@@ -88,7 +89,9 @@ class Tutorial extends Phaser.Scene {
         this.portal.play('portal');
         this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
-
+        //item
+        this.item = new Item(this, this.length - 256, 5*64, 'chordC', 0, 'majorC').setOrigin(0);
+        this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
     }
 
     update() {
@@ -128,7 +131,10 @@ class Tutorial extends Phaser.Scene {
         this.player.setVelocity(0,0);
     }
     switchScene() {
-        this.player.destroy();
+        //this.player.destroy();
         this.scene.start('hubScene');
+    }
+    collectChord() {
+        this.item.destroy();
     }
 }
