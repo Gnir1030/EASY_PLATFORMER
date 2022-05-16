@@ -34,3 +34,5 @@ let scoreConfig = {
 
 let x = game.config.width;
 let y = game.config.height;
+
+let chords = [];
