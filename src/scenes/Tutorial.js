@@ -36,7 +36,7 @@ class Tutorial extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        this.add.text(20, 20, "Tutorial Scene");
+        this.add.text(20, 20, "Level 1");
         this.healthText = this.add.text(700, 20, "Health: " + 3);
 
 
@@ -62,7 +62,6 @@ class Tutorial extends Phaser.Scene {
         this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
         this.cam.setBounds(0,0,this.length, this.height);
         this.cam.startFollow(this.player);
-        //this.cam.ignore(this.healthText);
 
         // collision
         this.physics.add.collider(this.player, platforms);
@@ -79,7 +78,7 @@ class Tutorial extends Phaser.Scene {
         this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
 
         // portal
-        this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hub').setOrigin(0);
+        this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
         this.anims.create({
             key: 'portal',
             frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
@@ -87,6 +86,8 @@ class Tutorial extends Phaser.Scene {
             repeat: -1
         });
         this.portal.play('portal');
+        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+
 
     }
 
@@ -124,5 +125,9 @@ class Tutorial extends Phaser.Scene {
         }
         this.player.x -= 50;
         this.player.setVelocity(0,0);
+    }
+    switchScene() {
+        this.player.destroy();
+        this.scene.start('hubScene');
     }
 }
