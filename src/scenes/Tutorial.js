@@ -92,7 +92,7 @@ class Tutorial extends Phaser.Scene {
         this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         //item
-        this.item = new Item(this, this.length - 256, 5*64, 'chordC', 0, 'majorC').setOrigin(0);
+        this.item = new Item(this, this.length - 256, 5*64, 'chordC', 0, 'C_chord').setOrigin(0);
         this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
     }
 
@@ -139,6 +139,7 @@ class Tutorial extends Phaser.Scene {
     }
     collectChord() {
         this.sound.play('C_Chord');
+        this.item.addToItems(chords);
         this.item.destroy();
     }
 }
