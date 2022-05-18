@@ -8,7 +8,7 @@ class Tutorial extends Phaser.Scene {
         this.load.audio('Jump_noise', './assets/Jump.wav');
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
-        this.load.audio('C_Chord', './assets/C_Chord.wav');
+        this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
 
 
         // load images, spritesheets, and tilemaps
@@ -18,7 +18,7 @@ class Tutorial extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         this.load.image('background', './assets/background.png');
-        this.load.image('chordC', './assets/C_Major_Chord.png');
+        this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
     }
 
     create() {
@@ -92,7 +92,7 @@ class Tutorial extends Phaser.Scene {
         this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         //item
-        this.item = new Item(this, this.length - 256, 5*64, 'chordC', 0, 'C_chord').setOrigin(0);
+        this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 'Low_C_chord').setOrigin(0);
         this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
     }
 
@@ -138,7 +138,7 @@ class Tutorial extends Phaser.Scene {
         this.scene.start('hubScene');
     }
     collectChord() {
-        this.sound.play('C_Chord');
+        this.sound.play('Low_C_Chord');
         this.item.addToItems(chords);
         this.item.destroy();
     }
