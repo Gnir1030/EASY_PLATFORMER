@@ -12,16 +12,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.mh = mH;
         this.setScale(1);
         this.setBounce(0.1);
-
     }
 
-    // preload() {
-    //     this.load.audio('Jump_noise', './assets/Jump.wav');
-    // };
+    preload() {
+        this.load.audio('Jump_noise', './assets/Jump.wav');
+    }
 
-    // create() {
-    //     this.jump = this.sound.add('Jump_noise');
-    // };
+    create() {
+        this.jump = this.sound.add('Jump_noise');
+    }
 
     update() {
         // move
@@ -35,7 +34,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         // jump
         if (this.keySpace.isDown && this.body.onFloor()) {
-           // this.jump.play('Jump_noise');
+            this.jump.play();
             this.setVelocityY(-400);
         }
 
