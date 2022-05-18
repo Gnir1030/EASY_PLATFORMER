@@ -35,7 +35,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // jump
         if (this.keySpace.isDown && this.body.onFloor()) {
             // this.jump.play();
-            this.setVelocityY(-400);
+            this.setVelocityY(-450);
         }
 
         // change direction
