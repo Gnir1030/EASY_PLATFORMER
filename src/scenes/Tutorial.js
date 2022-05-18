@@ -40,7 +40,7 @@ class Tutorial extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
         this.healthText = this.add.text(700, 20, "Health: " + 3).setScrollFactor(0);
-        this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes").setScrollFactor(0);
+        this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes").setScrollFactor(0); //UI scroll
 
 
         // map
