@@ -24,7 +24,7 @@ class World1 extends Phaser.Scene {
         // base settings for this scene
         gameOver = false;
         this.length = 50*64;
-        this.height = 50*64;
+        this.height = 51*64;
         this.count = 0;
         
         // Game Over music plays when player dies
@@ -62,7 +62,7 @@ class World1 extends Phaser.Scene {
         const viewH = 640;
         const viewW = 800;
         this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
-        this.cam.setBounds(0,0,this.length, this.height);
+        this.cam.setBounds(0,0,this.length, this.height + 64);
         this.cam.startFollow(this.player);
 
         // collision

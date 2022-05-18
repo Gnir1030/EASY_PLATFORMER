@@ -25,9 +25,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update() {
         // move
         if (this.keyLeft.isDown && this.x > 0) {
-            this.setVelocityX(-200);
+            this.setVelocityX(-300);
         } else if (this.keyRight.isDown && this.x <= this.mw - this.width) {
-            this.setVelocityX(200);
+            this.setVelocityX(300);
         } else {
             this.setVelocityX(0);
         }
