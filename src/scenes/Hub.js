@@ -34,8 +34,8 @@ class Hub extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-        this.add.text(20, 20, "Main Hub(Still under Construction)");
-        this.add.text(84, 84, 'Press M for Menu');
+        this.add.text(20, 20, "Main Hub").setScrollFactor(0);
+        this.add.text(84, 84, 'Press M for Menu').setScrollFactor(0);
         this.add.text(84, 84 + 64, chords[0]);
 
 
