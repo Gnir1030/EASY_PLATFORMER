@@ -64,6 +64,17 @@ class Hub extends Phaser.Scene {
 
         // collision
         this.physics.add.collider(this.player, platforms);
+
+        // portal
+        this.portal = new Portal(this, this.length - (8*64), 5*64, 'portal', 0, 'world1Scene').setOrigin(0);
+        this.anims.create({
+            key: 'portal',
+            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
+        this.portal.play('portal');
+        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
     }
 
     update() {
@@ -71,5 +82,9 @@ class Hub extends Phaser.Scene {
             this.scene.start('menuScene');
         }
         this.player.update();
+    }
+
+    switchScene(){
+        this.scene.start(this.portal.destination);
     }
 }
