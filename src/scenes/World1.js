@@ -1,6 +1,6 @@
-class Tutorial extends Phaser.Scene {
+class World1 extends Phaser.Scene {
     constructor() {
-        super("tutorialScene");
+        super("world1Scene");
     }
 
     preload() {
@@ -12,20 +12,19 @@ class Tutorial extends Phaser.Scene {
 
 
         // load images, spritesheets, and tilemaps
-        this.load.image('tiles', './assets/tilesheet.png');
-        this.load.tilemapTiledJSON('map', './assets/tutorial_level.json');
-        this.load.image('spike', './assets/spike.png');
+        this.load.image('tiles1', './assets/hub_tilesheet.png');
+        this.load.tilemapTiledJSON('map1', './assets/world1.json');
+        //this.load.image('spike', './assets/spike.png');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
-        this.load.image('background', './assets/background.png');
-        this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
+        //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
     }
 
     create() {
         // base settings for this scene
         gameOver = false;
-        this.length = 55*64;
-        this.height = 8*64;
+        this.length = 50*64;
+        this.height = 50*64;
         this.count = 0;
         
         // Game Over music plays when player dies
@@ -38,14 +37,14 @@ class Tutorial extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        this.add.text(20, 20, "Level 1").setScrollFactor(0);
-        this.healthText = this.add.text(700, 20, "Health: " + 3).setScrollFactor(0);
-        this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes").setScrollFactor(0);
+        this.add.text(20, 20, "Level 1");
+        this.healthText = this.add.text(700, 20, "Health: " + 3);
+        //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
         // map
-        const map = this.make.tilemap({ key: 'map' });
-        const tileSet = map.addTilesetImage('simple_tileset', 'tiles');
+        const map = this.make.tilemap({ key: 'map1' });
+        const tileSet = map.addTilesetImage('world1_tiles', 'tiles1');
         const platforms = map.createLayer('Platforms', tileSet, 0, 200);
         platforms.setCollisionByExclusion(-1, true);
 
@@ -56,7 +55,7 @@ class Tutorial extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
-        this.player = new Player(this, 0, 130, 'player', 0, keyLEFT, keyRIGHT, keySPACE, this.length, this.height).setOrigin(0,0);
+        this.player = new Player(this, 64, 49*64, 'player', 0, keyLEFT, keyRIGHT, keySPACE, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
 
         // set up camera
@@ -70,30 +69,30 @@ class Tutorial extends Phaser.Scene {
         this.physics.add.collider(this.player, platforms);
 
         // spikes
-        this.spikes = this.physics.add.group({
-            allowGravity: false,
-            immovable: true
-        });
-        map.getObjectLayer('Spikes').objects.forEach((spike) => {
-            let sSprite = this.spikes.create(spike.x, spike.y + 200 - spike.height, 'spike').setOrigin(0);
-            sSprite.body.setSize(spike.width, spike.height - 32).setOffset(0, 32);
-        });
-        this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
+        // this.spikes = this.physics.add.group({
+        //     allowGravity: false,
+        //     immovable: true
+        // });
+        // map.getObjectLayer('Spikes').objects.forEach((spike) => {
+        //     let sSprite = this.spikes.create(spike.x, spike.y + 200 - spike.height, 'spike').setOrigin(0);
+        //     sSprite.body.setSize(spike.width, spike.height - 32).setOffset(0, 32);
+        // });
+        // this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
 
         // portal
-        this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
-        this.anims.create({
-            key: 'portal',
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 2,
-            repeat: -1
-        });
-        this.portal.play('portal');
-        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        // this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
+        // this.anims.create({
+        //     key: 'portal',
+        //     frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+        //     frameRate: 2,
+        //     repeat: -1
+        // });
+        // this.portal.play('portal');
+        // this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         //item
-        this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 'Low_C_chord').setOrigin(0);
-        this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
+        // this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 'Low_C_chord').setOrigin(0);
+        // this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
     }
 
     update() {
@@ -123,12 +122,6 @@ class Tutorial extends Phaser.Scene {
         }
     }
 
-    /*
-    render(){
-        this.debug.cameraInfo(this.cam, 32, 32);
-    }
-    */
-
     looseHealth() {
         this.player.health -= 1;
         this.sound.play('Take_Damage');
@@ -139,13 +132,13 @@ class Tutorial extends Phaser.Scene {
         this.player.x -= 50;
         this.player.setVelocity(0,0);
     }
-    switchScene() {
-        //this.player.destroy();
-        this.scene.start('hubScene');
-    }
-    collectChord() {
-        this.sound.play('Low_C_Chord');
-        this.item.addToItems(chords);
-        this.item.destroy();
-    }
+    // switchScene() {
+    //     //this.player.destroy();
+    //     this.scene.start('hubScene');
+    // }
+    // collectChord() {
+    //     this.sound.play('Low_C_Chord');
+    //     this.item.addToItems(chords);
+    //     this.item.destroy();
+    // }
 }
