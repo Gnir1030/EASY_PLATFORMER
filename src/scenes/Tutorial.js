@@ -9,6 +9,7 @@ class Tutorial extends Phaser.Scene {
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
         this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
+        this.load.audio('tutorial_music', './assets/Tutorial_Music.wav');
 
 
         // load images, spritesheets, and tilemaps
@@ -19,9 +20,15 @@ class Tutorial extends Phaser.Scene {
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         this.load.image('background', './assets/background.png');
         this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
+        this.load.image('bullet', './assets/bullet.ong');
     }
 
     create() {
+        // Tutorial level music
+        this.tutorial_music = this.sound.add('tutorial_music', {volume: 0.50});
+        this.tutorial_music.play();
+        this.tutorial_music.loop = true;
+
         // base settings for this scene
         gameOver = false;
         this.length = 55*64;
@@ -105,6 +112,7 @@ class Tutorial extends Phaser.Scene {
             }
         } else {
             if (this.count < 1) {
+                this.tutorial_music.stop();
                 this.Game_over.play();
                 x = this.player.x;
                 y = game.config.height/2;
@@ -113,10 +121,12 @@ class Tutorial extends Phaser.Scene {
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
             this.add.text(x, y + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.tutorial_music.stop();
                 this.Game_over.stop();
                 this.scene.restart();
             }
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+                this.tutorial_music.stop();
                 this.Game_over.stop();
                 this.scene.start('menuScene');
             }
@@ -141,6 +151,7 @@ class Tutorial extends Phaser.Scene {
     }
     switchScene() {
         this.scene.start(this.portal.destination);
+        this.tutorial_music.stop();
     }
     collectChord() {
         this.sound.play('Low_C_Chord');
