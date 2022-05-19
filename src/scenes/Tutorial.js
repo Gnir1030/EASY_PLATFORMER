@@ -43,6 +43,7 @@ class Tutorial extends Phaser.Scene {
         // move keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.add.text(20, 20, "Tutorial Level").setScrollFactor(0);
@@ -63,7 +64,7 @@ class Tutorial extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
-        this.player = new Player(this, 0, 130, 'player', 0, keyLEFT, keyRIGHT, keySPACE, this.length, this.height).setOrigin(0,0);
+        this.player = new Player(this, 0, 130, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
 
         // set up camera

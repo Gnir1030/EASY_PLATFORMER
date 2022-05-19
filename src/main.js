@@ -7,7 +7,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 500},
+            gravity: { y: 600},
             debug: false
         }
     },
@@ -16,7 +16,7 @@ let config = {
 }
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keySPACE, keyR, keyM;
+let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM;
 
 let borderS = game.config.height/10;
 
