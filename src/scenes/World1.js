@@ -18,6 +18,8 @@ class World1 extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
+        this.load.image('bullet', './assets/bullet.png');
+        this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 4});
     }
 
     create() {
@@ -93,12 +95,24 @@ class World1 extends Phaser.Scene {
         //item
         // this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 'Low_C_chord').setOrigin(0);
         // this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
+
+        // enmmey creation
+        this.anims.create({
+            key: 'idle2',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 3, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
+        this.enemy = new Enemy(this, 128, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
+        this.enemy.play('idle2');
+        this.physics.add.collider(this.enemy, platforms);
     }
 
     update() {
         this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
             this.player.update();
+            this.enemy.update(this.player);
             if (this.player.y >= this.height) { // falling off a ledge
                 gameOver = true;
             }
