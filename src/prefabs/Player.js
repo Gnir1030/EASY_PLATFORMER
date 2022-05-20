@@ -4,7 +4,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.scene = scene
+        this.scene = scene;
         this.keyLeft = kLeft;
         this.keyRight = kRight;
         this.keyUp = kUp;
@@ -24,6 +24,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     create() {
         this.jump = this.sound.add('Jump_noise');
+        this.setMaxVelocity(200, 2000);
     }
 
     update() {
@@ -37,7 +38,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         // fire
-        if (this.keySpace.isDown) {
+        if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
             this.isFire = true;
         } else {
             this.isFire = false;
@@ -55,9 +56,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else if (this.body.velocity.x < 0) {
             this.setFlipX(true);
         }
+
+        if(this.isFire) {
+            if (!this.flipX) {
+                this.spawnBullet('right');
+            }
+            else if (this.flipX) {
+                this.spawnBullet('left');
+            }
+            this.isFire = false;
+        }
     }
 
     spawnBullet(dir) {
-        let bullet = new Bullet(this.scene, this.x + 64, this.y, 'bullet', 0, thi.color, dir);
+        console.log(dir);
+        let bullet = new Bullet(this.scene, this.x + 64, this.y + 64, 'bullet', 0, dir);
+        bullet.update();
     }
 }

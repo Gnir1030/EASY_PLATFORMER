@@ -19,6 +19,9 @@ class World1 extends Phaser.Scene {
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 4});
+
+        //bullet image
+        this.load.image('bullet', './assets/bullet.png');
     }
 
     create() {

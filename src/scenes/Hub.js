@@ -15,6 +15,8 @@ class Hub extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         this.load.image('background', './assets/background.png');
+
+        this.load.image('bullet', './assets/bullet.png');
     }
 
     create() {
