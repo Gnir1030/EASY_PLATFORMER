@@ -71,14 +71,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     spawnBullet(dir, enemy, platform) {
         console.log(dir);
         console.log(enemy);
-        let bullet = new Bullet(this.scene, this.x + 64, this.y + 64, 'bullet', 0, dir);
+        let bullet = new Bullet(this.scene, this.x + 64, this.y + 96, 'bullet', 0, dir);
         console.log(enemy);
-        this.scene.physics.add.collider(bullet, enemy, (obj1, obj2) => {
-            console.log("obj2 name : " + obj2.yyName);
+        this.scene.physics.add.overlap(bullet, enemy, (obj1, obj2) => {
+            console.log("obj2 name : " + obj2);
+            obj2.setActive(false).setVisible(false);
             obj2.destroy();
+            obj1.setActive(false).setVisible(false);
+            obj1.destroy();
         })
         this.scene.physics.add.collider(bullet, platform, (obj1, obj2) => {
             console.log("obj2 name : " + obj2.yyName);
+            obj1.setActive(false).setVisible(false);
             obj1.destroy();
         })
         bullet.update();

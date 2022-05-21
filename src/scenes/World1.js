@@ -104,7 +104,7 @@ class World1 extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
-        this.enemy = new Enemy(this, 128, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
+        this.enemy = new Enemy(this, 128*2, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
         this.enemy.play('idle2');
         this.physics.add.collider(this.enemy, this.platforms);
 

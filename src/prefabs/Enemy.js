@@ -13,14 +13,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(player) {
-        if (this) {
+        if (this.body) {
             // enemy ai
             if (this.detect(player) == 'left') {
-                this.setVelocityX(-200);
+                this.body.setVelocityX(-200);
             } else if (this.detect(player) == 'right') {
-                this.setVelocityX(200);
+                this.body.setVelocityX(200);
             } else {
-                this.setVelocityX(0);
+                this.body.setVelocityX(0);
             }
 
             // change the direction
@@ -29,12 +29,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             } else if (this.body.velocity.x > 0) {
                 this.setFlipX(false);
             }
-        }
+            if ((this.body.blocked.left || this.body.blocked.right) && this.body.blocked.down){
+                this.setVelocityY(-300);
+            }
 
-
-        //enemy jumps when blocked by wall
-        if ((this.body.blocked.left || this.body.blocked.right) && this.body.blocked.down){
-            this.setVelocityY(-300);
+            //enemy jumps when blocked by wall
+            if ((this.body.blocked.left || this.body.blocked.right) && this.body.blocked.down){
+                this.setVelocityY(-300);
+            }
         }
     }
 
