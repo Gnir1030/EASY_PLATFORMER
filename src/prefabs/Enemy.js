@@ -12,20 +12,22 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(player) {
-        // enemy ai
-        if (this.detect(player) == 'left') {
-            this.setVelocityX(-200);
-        } else if (this.detect(player) == 'right') {
-            this.setVelocityX(200);
-        } else {
-            this.setVelocityX(0);
-        }
+        if (this) {
+            // enemy ai
+            if (this.detect(player) == 'left') {
+                this.setVelocityX(-200);
+            } else if (this.detect(player) == 'right') {
+                this.setVelocityX(200);
+            } else {
+                this.setVelocityX(0);
+            }
 
-        // change the direction
-        if (this.body.velocity.x < 0 ) {
-            this.setFlipX(true);
-        } else if (this.body.velocity.x > 0) {
-            this.setFlipX(false);
+            // change the direction
+            if (this.body.velocity.x < 0 ) {
+                this.setFlipX(true);
+            } else if (this.body.velocity.x > 0) {
+                this.setFlipX(false);
+            }
         }
     }
 
