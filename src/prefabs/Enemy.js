@@ -9,6 +9,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.color = color;
         this.setScale(1);
         this.setBounce(0.1);
+        this.jump = false;
     }
 
     update(player) {
@@ -26,6 +27,17 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.setFlipX(true);
         } else if (this.body.velocity.x > 0) {
             this.setFlipX(false);
+        }
+
+
+        //enemy jumps when blocked by wall
+        if ((this.body.blocked.left || this.body.blocked.right) && !this.jump){
+            this.setVelocityY(-300);
+            this.jump = true;
+        }
+
+        if(this.body.blocked.down){
+            this.jump = false;
         }
     }
 
