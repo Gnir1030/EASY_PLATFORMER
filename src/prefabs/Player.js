@@ -27,7 +27,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setMaxVelocity(200, 2000);
     }
 
-    update() {
+    update(enemy, platform) {
         // move
         if (this.keyLeft.isDown && this.x > 0) {
             this.setVelocityX(-300);
@@ -59,18 +59,28 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if(this.isFire) {
             if (!this.flipX) {
-                this.spawnBullet('right');
+                this.spawnBullet('right', enemy, platform);
             }
             else if (this.flipX) {
-                this.spawnBullet('left');
+                this.spawnBullet('left', enemy, platform);
             }
             this.isFire = false;
         }
     }
 
-    spawnBullet(dir) {
+    spawnBullet(dir, enemy, platform) {
         console.log(dir);
+        console.log(enemy);
         let bullet = new Bullet(this.scene, this.x + 64, this.y + 64, 'bullet', 0, dir);
+        console.log(enemy);
+        this.scene.physics.add.collider(bullet, enemy, (obj1, obj2) => {
+            console.log("obj2 name : " + obj2.yyName);
+            obj2.destroy();
+        })
+        this.scene.physics.add.collider(bullet, platform, (obj1, obj2) => {
+            console.log("obj2 name : " + obj2.yyName);
+            obj1.destroy();
+        })
         bullet.update();
     }
 }

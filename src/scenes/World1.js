@@ -50,8 +50,8 @@ class World1 extends Phaser.Scene {
         // map
         const map = this.make.tilemap({ key: 'map1' });
         const tileSet = map.addTilesetImage('world1_tiles', 'tiles1');
-        const platforms = map.createLayer('Platforms', tileSet, 0, 200);
-        platforms.setCollisionByExclusion(-1, true);
+        this.platforms = map.createLayer('Platforms', tileSet, 0, 200);
+        this.platforms.setCollisionByExclusion(-1, true);
 
         // player
         this.anims.create({
@@ -71,7 +71,7 @@ class World1 extends Phaser.Scene {
         this.cam.startFollow(this.player);
 
         // collision
-        this.physics.add.collider(this.player, platforms);
+        this.physics.add.collider(this.player, this.platforms);
 
         // spikes
         // this.spikes = this.physics.add.group({
@@ -108,13 +108,15 @@ class World1 extends Phaser.Scene {
         });
         this.enemy = new Enemy(this, 128, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
         this.enemy.play('idle2');
-        this.physics.add.collider(this.enemy, platforms);
+        this.physics.add.collider(this.enemy, this.platforms);
+
+        // detection for bullets and enemies
     }
 
     update() {
         this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
-            this.player.update();
+            this.player.update(this.enemy, this.platforms);
             this.enemy.update(this.player);
             if (this.player.y >= this.height) { // falling off a ledge
                 gameOver = true;
