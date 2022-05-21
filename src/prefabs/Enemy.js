@@ -33,24 +33,22 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 
         //enemy jumps when blocked by wall
-        if ((this.body.blocked.left || this.body.blocked.right) && !this.jump){
+        if ((this.body.blocked.left || this.body.blocked.right) && this.body.blocked.down){
             this.setVelocityY(-300);
-            this.jump = true;
-        }
-
-        if(this.body.blocked.down){
-            this.jump = false;
         }
     }
 
     detect(player) {
-        let dist = 10 * 64
-        if (player.x - this.x <= dist && player.x - this.x > 64) {
-            return 'right';
-        } else if (this.x - player.x <= dist && this.x - player.x > 64) {
-            return 'left'
-        } else {
+        let maxDist = 5 * 64
+        let dist = Phaser.Math.Distance.BetweenPoints(this, player);
+        let direction = player.x - this.x;
+
+        if(dist > maxDist){
             return ''
+        }else if (direction > 0 && dist > 65) {
+            return 'right';
+        } else if (direction < 0 && dist > 65) {
+            return 'left'
         }
     }
 }
