@@ -10,9 +10,16 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     
     update() {
         if (this.dir == 'left') {
+<<<<<<< HEAD
             this.setVelocityX(-1000);
         } else if (this.dir == 'right') {
             this.setVelocityX(1000);
+=======
+            this.setVelocityX(-100);
+            this.setFlipX(true);
+        } else if (this.dir == 'right') {
+            this.setVelocityX(100);
+>>>>>>> 8d0b92532ae01ef5494cda074f7085581804e377
         }
     }
 }
