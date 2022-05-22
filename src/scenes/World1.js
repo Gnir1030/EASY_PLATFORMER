@@ -104,9 +104,17 @@ class World1 extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
-        this.enemy = new Enemy(this, 128*2, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
-        this.enemy.play('idle2');
-        this.physics.add.collider(this.enemy, this.platforms);
+
+        // create enemies
+        this.enemy = []
+        this.enemy[0] = new Enemy(this, 128*2, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
+        this.enemy[0].play('idle2');
+
+        this.enemy[1] = new Enemy(this, 128*3, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
+        this.enemy[1].play('idle2');
+
+        this.enemies = this.physics.add.group(this.enemy);
+        this.physics.add.collider(this.enemies, this.platforms);
 
         // detection for bullets and enemies
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
@@ -116,10 +124,9 @@ class World1 extends Phaser.Scene {
     update() {
         this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
-            this.player.update(this.enemy, this.platforms);
-            this.enemy.update(this.player);
-            if (this.player.y >= this.height) { // falling off a ledge
-                gameOver = true;
+            this.player.update(this.enemies, this.platforms);
+            for (let i = 0; i < this.enemy.length; i++) {
+                this.enemy[i].update(this.player);
             }
         } else {
             if (this.count < 1) {
