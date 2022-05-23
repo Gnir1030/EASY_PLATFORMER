@@ -116,6 +116,7 @@ class World1 extends Phaser.Scene {
         });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
+        this.physics.add.collider(this.enemies, this.player, this.looseHealth, null, this);
 
         // detection for bullets and enemies
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
