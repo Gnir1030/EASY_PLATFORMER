@@ -13,6 +13,7 @@ class World1 extends Phaser.Scene {
 
         // load images, spritesheets, and tilemaps
         this.load.image('tiles1', './assets/hub_tilesheet.png');
+
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
         //this.load.image('spike', './assets/spike.png');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
@@ -107,6 +108,7 @@ class World1 extends Phaser.Scene {
 
         // create enemies
         this.enemy = []
+        //const findEnem = map.createFromObjects("Enemies");
         this.enemy[0] = new Enemy(this, 128*2, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
         this.enemy[0].play('idle2');
 
