@@ -12,7 +12,7 @@ class World1 extends Phaser.Scene {
 
 
         // load images, spritesheets, and tilemaps
-        this.load.image('tiles1', './assets/hub_tilesheet.png');
+        this.load.image('tiles1', './assets/tileset1.png');
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
         //this.load.image('spike', './assets/spike.png');
@@ -108,13 +108,12 @@ class World1 extends Phaser.Scene {
 
         // create enemies
         this.enemy = []
-        //const findEnem = map.createFromObjects("Enemies");
-        this.enemy[0] = new Enemy(this, 128*2, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
-        this.enemy[0].play('idle2');
-
-        this.enemy[1] = new Enemy(this, 128*3, 49*64, 'enemy', 0, this.length, this.height).setOrigin(0,0);
-        this.enemy[1].play('idle2');
-
+        let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
+        let index = 0;
+        enemyObjects.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height).setOrigin(0,0); 
+            index += 1;
+        });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
 
