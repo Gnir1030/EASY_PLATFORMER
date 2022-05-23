@@ -65,27 +65,27 @@
 </data>
  </layer>
  <objectgroup id="2" name="Enemies">
-  <object id="1" gid="5" x="961.135" y="2622.39" width="64" height="64"/>
-  <object id="2" gid="5" x="2050.38" y="3075.48" width="64" height="64"/>
-  <object id="3" gid="5" x="2562.97" y="3075.48" width="64" height="64"/>
-  <object id="4" gid="5" x="2430.24" y="2247.1" width="64" height="64"/>
-  <object id="5" gid="5" x="901.638" y="1917.58" width="64" height="64"/>
-  <object id="6" gid="5" x="1345.57" y="1597.22" width="64" height="64"/>
-  <object id="7" gid="5" x="1281.5" y="1926.74" width="64" height="64"/>
-  <object id="8" gid="5" x="1675.09" y="1922.16" width="64" height="64"/>
-  <object id="9" gid="5" x="1986.31" y="1734.52" width="64" height="64"/>
-  <object id="10" gid="5" x="389.053" y="1281.43" width="64" height="64"/>
-  <object id="11" gid="5" x="709.419" y="576.622" width="64" height="64"/>
+  <object id="1" gid="5" x="965.712" y="2503.4" width="64" height="64"/>
+  <object id="2" gid="5" x="2054.96" y="2947.33" width="64" height="64"/>
+  <object id="3" gid="5" x="2562.97" y="2942.76" width="64" height="64"/>
+  <object id="4" gid="5" x="2434.82" y="2109.8" width="64" height="64"/>
+  <object id="5" gid="5" x="901.638" y="1844.35" width="64" height="64"/>
+  <object id="6" gid="5" x="1340.99" y="1469.07" width="64" height="64"/>
+  <object id="7" gid="5" x="1281.5" y="1858.09" width="64" height="64"/>
+  <object id="8" gid="5" x="1665.94" y="1812.32" width="64" height="64"/>
+  <object id="9" gid="5" x="1986.31" y="1592.64" width="64" height="64"/>
+  <object id="10" gid="5" x="384.476" y="1208.2" width="64" height="64"/>
+  <object id="11" gid="5" x="709.419" y="489.665" width="64" height="64"/>
   <object id="12" gid="5" x="1025.21" y="1217.35" width="64" height="64"/>
   <object id="13" gid="5" x="1789.51" y="1217.35" width="64" height="64"/>
   <object id="14" gid="5" x="1473.72" y="1221.93" width="64" height="64"/>
-  <object id="15" gid="5" x="2306.67" y="1029.71" width="64" height="64"/>
-  <object id="16" gid="5" x="1798.66" y="585.776" width="64" height="64"/>
-  <object id="17" gid="5" x="1345.57" y="576.622" width="64" height="64"/>
-  <object id="18" gid="5" x="1858.16" y="196.76" width="64" height="64"/>
-  <object id="19" gid="5" x="1533.22" y="379.826" width="64" height="64"/>
-  <object id="20" gid="5" x="2109.88" y="393.556" width="64" height="64"/>
-  <object id="21" gid="5" x="2938.25" y="576.622" width="64" height="64"/>
-  <object id="22" gid="5" x="1922.23" y="2430.17" width="64" height="64"/>
+  <object id="15" gid="5" x="2315.82" y="901.564" width="64" height="64"/>
+  <object id="16" gid="5" x="1803.24" y="517.126" width="64" height="64"/>
+  <object id="17" gid="5" x="1345.57" y="475.936" width="64" height="64"/>
+  <object id="18" gid="5" x="1858.16" y="123.533" width="64" height="64"/>
+  <object id="19" gid="5" x="1537.8" y="297.446" width="64" height="64"/>
+  <object id="20" gid="5" x="2119.03" y="256.256" width="64" height="64"/>
+  <object id="21" gid="5" x="2947.4" y="453.052" width="64" height="64"/>
+  <object id="22" gid="5" x="1922.23" y="2306.6" width="64" height="64"/>
  </objectgroup>
 </map>
