@@ -15,6 +15,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setScale(1);
         this.setBounce(0.1);
         this.isFire = false;
+        this.hitted = false
+        this.scene = scene;
     }
 
     preload() {
@@ -28,44 +30,54 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(enemy, platform) {
+
+        if(!this.hitted){
         // move
-        if (this.keyLeft.isDown && this.x > 0) {
-            this.setVelocityX(-300);
-        } else if (this.keyRight.isDown && this.x <= this.mw - this.width) {
-            this.setVelocityX(300);
-        } else {
-            this.setVelocityX(0);
-        }
-
-        // fire
-        if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
-            this.isFire = true;
-        } else {
-            this.isFire = false;
-        }
-
-        // jump
-        if (this.keyUp.isDown && this.body.onFloor()) {
-            // this.jump.play();
-            this.setVelocityY(-500);
-        }
-
-        // change direction
-        if (this.body.velocity.x > 0 ) {
-            this.setFlipX(false);
-        } else if (this.body.velocity.x < 0) {
-            this.setFlipX(true);
-        }
-
-        if(this.isFire) {
-            if (!this.flipX) {
-                this.spawnBullet('right', enemy, platform);
+            if (this.keyLeft.isDown && this.x > 0) {
+                this.setVelocityX(-300);
+            } else if (this.keyRight.isDown && this.x <= this.mw - this.width) {
+                this.setVelocityX(300);
+            } else {
+                //this.setVelocityX(0);
+                this.setDragX(1000);
             }
-            else if (this.flipX) {
-                this.spawnBullet('left', enemy, platform);
+
+            // fire
+            if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+                this.isFire = true;
+            } else {
+                this.isFire = false;
             }
-            this.isFire = false;
+
+            // jump
+            if (this.keyUp.isDown && this.body.onFloor()) {
+                // this.jump.play();
+                this.setVelocityY(-500);
+            }
+
+            // change direction
+            if (this.body.velocity.x > 0 ) {
+                this.setFlipX(false);
+            } else if (this.body.velocity.x < 0) {
+                this.setFlipX(true);
+            }
+
+            if(this.isFire) {
+                if (!this.flipX) {
+                    this.spawnBullet('right', enemy, platform);
+                }
+                else if (this.flipX) {
+                    this.spawnBullet('left', enemy, platform);
+                }
+                this.isFire = false;
+            }
         }
+        
+    }
+
+    hitBack(){
+        this.setVelocityX(-500);
+        this.setVelocityY(-300);
     }
 
     spawnBullet(dir, enemy, platform) {

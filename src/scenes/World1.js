@@ -111,12 +111,12 @@ class World1 extends Phaser.Scene {
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
         let index = 0;
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height).setOrigin(0,0); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height).setOrigin(0,0).setImmovable(true); 
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
-        this.physics.add.collider(this.enemies, this.player, this.looseHealth, null, this);
+        this.physics.add.overlap(this.enemies, this.player, this.looseHealth, null, this);
 
         // detection for bullets and enemies
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
@@ -151,14 +151,16 @@ class World1 extends Phaser.Scene {
     }
 
     looseHealth() {
-        this.player.health -= 1;
+        //this.player.health -= 1;
         this.sound.play('Take_Damage');
         if (this.player.health <= 0) {
             this.player.health = 0;
             gameOver = true;
         }
-        this.player.x -= 50;
-        this.player.setVelocity(0,0);
+        this.player.setVelocityX(-500);
+        this.player.setVelocityY(-300);
+        //this.player.hitted = true;
+        //this.player.setVelocity(0,0);
     }
     // switchScene() {
     //     //this.player.destroy();
