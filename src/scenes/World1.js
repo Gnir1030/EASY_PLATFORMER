@@ -12,7 +12,7 @@ class World1 extends Phaser.Scene {
 
 
         // load images, spritesheets, and tilemaps
-        this.load.image('tiles1', './assets/tileset1.png');
+        this.load.image('tiles1', './assets/tilesheet1.png');
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
         //this.load.image('spike', './assets/spike.png');
@@ -28,8 +28,8 @@ class World1 extends Phaser.Scene {
     create() {
         // base settings for this scene
         gameOver = false;
-        this.length = 50*64;
-        this.height = 51*64;
+        this.length = 100*32;
+        this.height = 100*32;
         this.count = 0;
         this.physics.world.gravity.y = 2000;
         
@@ -49,8 +49,9 @@ class World1 extends Phaser.Scene {
 
         // map
         const map = this.make.tilemap({ key: 'map1' });
-        const tileSet = map.addTilesetImage('world1_tiles', 'tiles1');
-        this.platforms = map.createLayer('Platforms', tileSet, 0, 200);
+        const tileSet = map.addTilesetImage('tile_sheet_1', 'tiles1');
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96);
+        this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
         this.platforms.setCollisionByExclusion(-1, true);
 
         // player
@@ -60,15 +61,15 @@ class World1 extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
-        this.player = new Player(this, 64, 49*64, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, this.length, this.height).setOrigin(0,0);
+        this.player = new Player(this, 32, 96*32, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
 
         // set up camera
         const viewH = 640;
         const viewW = 800;
-        this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
-        this.cam.setBounds(0,0,this.length, this.height + 64);
-        this.cam.startFollow(this.player);
+        //this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
+        this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
+        this.cameras.main.startFollow(this.player);
 
         // collision
         this.physics.add.collider(this.player, this.platforms);
