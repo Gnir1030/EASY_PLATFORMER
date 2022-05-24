@@ -15,8 +15,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setScale(1);
         this.setBounce(0.1);
         this.isFire = false;
-        this.hitted = false
+        this.hitted = false;
         this.scene = scene;
+        this.direction;
+        this.life = 3;
     }
 
     preload() {
@@ -27,6 +29,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     create() {
         this.jump = this.sound.add('Jump_noise');
         this.setMaxVelocity(200, 2000);
+        if(this.hitted){
+            this.alpha = 0.5;
+            this.life -= 1;
+        }
     }
 
     update(enemy, platform) {
@@ -58,8 +64,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // change direction
             if (this.body.velocity.x > 0 ) {
                 this.setFlipX(false);
+                //this.dir = 'right';
             } else if (this.body.velocity.x < 0) {
                 this.setFlipX(true);
+                //this.dir = 'left';
             }
 
             if(this.isFire) {
@@ -71,13 +79,31 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }
                 this.isFire = false;
             }
+
+            if(!this.body.touching.none){
+                if(this.direction == 'right'){
+                    this.setVelocityX(700);
+                    this.setVelocityY(-100);
+                    this.y -= 1;
+                    this.x += 5;
+                    this.hitted = true;
+                }
+                else{
+                    this.setVelocityX(-700);
+                    this.setVelocityY(-100);
+                    this.y -= 1;
+                    this.x -= 5;
+                    this.hitted = true;
+                }
+            }
+        }
+
+        
+        if(this.hitted){
+            this.alpha = 0.5;
         }
         
-    }
-
-    hitBack(){
-        this.setVelocityX(-500);
-        this.setVelocityY(-300);
+        console.log(this.life);
     }
 
     spawnBullet(dir, enemy, platform) {
