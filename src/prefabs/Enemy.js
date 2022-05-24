@@ -10,15 +10,16 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setScale(1);
         this.setBounce(0.1);
         this.jump = false;
+        this.direction;
     }
 
     update(player) {
         if (this.body) {
             // enemy ai
             if (this.detect(player) == 'left') {
-                this.body.setVelocityX(-200);
+                this.body.setVelocityX(-100);
             } else if (this.detect(player) == 'right') {
-                this.body.setVelocityX(200);
+                this.body.setVelocityX(100);
             } else {
                 this.body.setVelocityX(0);
             }
@@ -43,14 +44,16 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     detect(player) {
         let maxDist = 5 * 64
         let dist = Phaser.Math.Distance.BetweenPoints(this, player);
-        let direction = player.x - this.x;
+        this.direction = player.x - this.x;
 
         if(dist > maxDist){
             return ''
-        }else if (direction > 0 && dist > 65) {
+        }else if (this.direction > 0 && dist > 65) {
             return 'right';
-        } else if (direction < 0 && dist > 65) {
+        } else if (this.direction < 0 && dist > 65) {
             return 'left'
         }
     }
+
+
 }

@@ -17,6 +17,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.isFire = false;
         this.hitted = false
         this.scene = scene;
+        this.direction;
     }
 
     preload() {
@@ -58,8 +59,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // change direction
             if (this.body.velocity.x > 0 ) {
                 this.setFlipX(false);
+                //this.dir = 'right';
             } else if (this.body.velocity.x < 0) {
                 this.setFlipX(true);
+                //this.dir = 'left';
             }
 
             if(this.isFire) {
@@ -71,14 +74,27 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }
                 this.isFire = false;
             }
+
+            if(!this.body.touching.none){
+                if(this.direction == 'right'){
+                    this.setVelocityX(700);
+                    this.setVelocityY(-100);
+                    this.hitted = true;
+                }
+                else{
+                    this.setVelocityX(-700);
+                    this.setVelocityY(-100);
+                    this.hitted = true;
+                }
+            }
         }
-        
+
+        if(this.hitted && !this.body.blocked.none){
+            this.hitted = false;
+        }
+        //console.log(this.direction);
     }
 
-    hitBack(){
-        this.setVelocityX(-500);
-        this.setVelocityY(-300);
-    }
 
     spawnBullet(dir, enemy, platform) {
         console.log(dir);

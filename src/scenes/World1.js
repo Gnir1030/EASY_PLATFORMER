@@ -116,7 +116,12 @@ class World1 extends Phaser.Scene {
         });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
-        this.physics.add.overlap(this.enemies, this.player, this.looseHealth, null, this);
+        this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.direction = 'left'}
+            else
+                obj1.direction = 'right'
+        }, null, this);
 
         // detection for bullets and enemies
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
@@ -126,8 +131,8 @@ class World1 extends Phaser.Scene {
     update() {
         this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
-            this.player.update(this.enemies, this.platforms);
             for (let i = 0; i < this.enemy.length; i++) {
+                this.player.update(this.enemy[i], this.platforms);
                 this.enemy[i].update(this.player);
             }
         } else {
@@ -157,8 +162,6 @@ class World1 extends Phaser.Scene {
             this.player.health = 0;
             gameOver = true;
         }
-        this.player.setVelocityX(-500);
-        this.player.setVelocityY(-300);
         //this.player.hitted = true;
         //this.player.setVelocity(0,0);
     }
