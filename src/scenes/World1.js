@@ -139,12 +139,13 @@ class World1 extends Phaser.Scene {
     }
 
     update() {
-        this.healthText.setText("Health: " + this.player.health);
+        //this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
             for (let i = 0; i < this.enemy.length; i++) {
                 this.player.update(this.enemies, this.platforms);
                 this.enemy[i].update(this.player);
             }
+            this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
         } else {
             if (this.count < 1) {
@@ -154,7 +155,7 @@ class World1 extends Phaser.Scene {
                 this.count += 1;
             }
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(x, y + 32, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.Game_over.stop();
                 this.scene.restart();
@@ -166,11 +167,11 @@ class World1 extends Phaser.Scene {
         }
     }
 
-    looseHealth() {
+    checkHealth() {
         //this.player.health -= 1;
-        this.sound.play('Take_Damage');
-        if (this.player.health <= 0) {
-            this.player.health = 0;
+        //this.sound.play('Take_Damage');
+        if (this.player.life <= 0) {
+            this.player.life = 0;
             gameOver = true;
         }
         //this.player.hitted = true;
