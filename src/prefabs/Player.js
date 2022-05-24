@@ -58,7 +58,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // jump
             if (this.keyUp.isDown && this.body.onFloor()) {
                 // this.jump.play();
-                this.setVelocityY(-500);
+                this.setVelocityY(-900);
             }
 
             // change direction
@@ -84,15 +84,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 if(this.direction == 'right'){
                     this.setVelocityX(700);
                     this.setVelocityY(-100);
-                    this.y -= 1;
-                    this.x += 5;
                     this.hitted = true;
                 }
                 else{
                     this.setVelocityX(-700);
                     this.setVelocityY(-100);
-                    this.y -= 1;
-                    this.x -= 5;
                     this.hitted = true;
                 }
             }
@@ -109,7 +105,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     spawnBullet(dir, enemy, platform) {
         console.log(dir);
         console.log(enemy);
-        let bullet = new Bullet(this.scene, this.x + 64, this.y + 96, 'bullet', 0, dir);
+        let bullet;
+        if(dir == 'left'){
+            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet', 0, dir);
+        }
+        else{
+            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet', 0, dir);
+        }
+
+        //let bullet = new Bullet(this.scene, this.x + 32,  this.y, 'bullet', 0, dir);
         console.log(enemy);
         this.scene.physics.add.overlap(bullet, enemy, (obj1, obj2) => {
             console.log("obj2 name : " + obj2);

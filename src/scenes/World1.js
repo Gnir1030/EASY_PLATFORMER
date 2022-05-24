@@ -31,6 +31,7 @@ class World1 extends Phaser.Scene {
         this.length = 50*64;
         this.height = 51*64;
         this.count = 0;
+        this.physics.world.gravity.y = 2000;
         
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
