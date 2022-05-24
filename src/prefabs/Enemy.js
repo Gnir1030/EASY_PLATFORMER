@@ -7,7 +7,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.mw = mW;
         this.mh = mH;
         this.color = color;
-        this.setScale(1);
+        this.setScale(0.7);
         this.setBounce(0.1);
         this.jump = false;
         this.direction;
@@ -17,9 +17,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         if (this.body) {
             // enemy ai
             if (this.detect(player) == 'left') {
-                this.body.setVelocityX(-100);
+                this.body.setVelocityX(-50);
             } else if (this.detect(player) == 'right') {
-                this.body.setVelocityX(100);
+                this.body.setVelocityX(50);
             } else {
                 this.body.setVelocityX(0);
             }
@@ -30,13 +30,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             } else if (this.body.velocity.x > 0) {
                 this.setFlipX(false);
             }
-            if ((this.body.blocked.left || this.body.blocked.right) && this.body.blocked.down){
-                this.setVelocityY(-300);
-            }
 
             //enemy jumps when blocked by wall
             if ((this.body.blocked.left || this.body.blocked.right) && this.body.blocked.down){
-                this.setVelocityY(-300);
+                this.setVelocityY(-700);
             }
         }
     }
