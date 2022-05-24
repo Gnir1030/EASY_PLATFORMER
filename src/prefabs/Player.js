@@ -99,12 +99,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.alpha = 0.5;
         }
         
-        console.log(this.life);
+        //console.log(this.life);
     }
 
     spawnBullet(dir, enemy, platform) {
-        console.log(dir);
-        console.log(enemy);
+        //console.log(dir);
+        //console.log(enemy);
         let bullet;
         if(dir == 'left'){
             bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet', 0, dir);
@@ -114,7 +114,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         //let bullet = new Bullet(this.scene, this.x + 32,  this.y, 'bullet', 0, dir);
-        console.log(enemy);
+        //console.log(enemy);
         this.scene.physics.add.overlap(bullet, enemy, (obj1, obj2) => {
             console.log("obj2 name : " + obj2);
             obj2.setActive(false).setVisible(false);

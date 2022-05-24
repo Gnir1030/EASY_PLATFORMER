@@ -123,20 +123,23 @@ class World1 extends Phaser.Scene {
                 {obj1.direction = 'left'}
             else
                 {obj1.direction = 'right'}
+            this.overlap.active = false;
             this.player.life -= 1;
-            this.time.addEvent({
-                delay: 700,
-                callback: ()=>{
-                    this.player.alpha = 1;
-                    this.player.hitted = false;
-                },
-                loop: false
-            })
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.player.lifeHandler = false;
+                        this.overlap.active = true;
+                    },
+                    loop: false
+                })
         })
 
         // detection for bullets and enemies
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
-        this.healthText = this.add.text(700, 20, "Health: " + 3).setScrollFactor(0);
+        this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
     }
 
     update() {
