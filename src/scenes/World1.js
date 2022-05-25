@@ -50,7 +50,8 @@ class World1 extends Phaser.Scene {
         // map
         const map = this.make.tilemap({ key: 'map1' });
         const tileSet = map.addTilesetImage('tile_sheet_1', 'tiles1');
-        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96);
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.5); // background layer
+        const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
         this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
         this.platforms.setCollisionByExclusion(-1, true);
 
@@ -118,6 +119,7 @@ class World1 extends Phaser.Scene {
         });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
+        // do damage if player collides with enemies
         this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
                 {obj1.direction = 'left'}
