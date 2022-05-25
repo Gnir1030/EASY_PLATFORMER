@@ -16,7 +16,7 @@ class World1 extends Phaser.Scene {
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
         //this.load.image('spike', './assets/spike.png');
-        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
@@ -76,15 +76,15 @@ class World1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platforms);
 
         // spikes
-        // this.spikes = this.physics.add.group({
-        //     allowGravity: false,
-        //     immovable: true
-        // });
-        // map.getObjectLayer('Spikes').objects.forEach((spike) => {
-        //     let sSprite = this.spikes.create(spike.x, spike.y + 200 - spike.height, 'spike').setOrigin(0);
-        //     sSprite.body.setSize(spike.width, spike.height - 32).setOffset(0, 32);
-        // });
-        // this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
+        this.spikes = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+        map.getObjectLayer('Spikes').objects.forEach((spike) => {
+            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'spike').setOrigin(0);
+            sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 32);
+        });
+        this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
 
         // portal
         // this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
@@ -174,14 +174,14 @@ class World1 extends Phaser.Scene {
     }
 
     checkHealth() {
-        //this.player.health -= 1;
-        //this.sound.play('Take_Damage');
         if (this.player.life <= 0) {
             this.player.life = 0;
             gameOver = true;
         }
-        //this.player.hitted = true;
-        //this.player.setVelocity(0,0);
+    }
+
+    looseHealth() {
+        this.player.life -= 1;
     }
     // switchScene() {
     //     //this.player.destroy();
