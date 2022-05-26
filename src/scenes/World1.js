@@ -80,15 +80,40 @@ class World1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platforms);
 
         // spikes
+        // this.spikes = map.createFromObjects("Spikes", {
+        //     name: "",
+        //     key: "tile1_sheet",
+        //     frame: 20
+        // });
+        // this.physics.world.enable(this.spikes, Phaser.Physics.Arcade.STATIC_BODY);
+        // this.sGroup = this.add.group(this.spikes);
         this.spikes = this.physics.add.group({
             allowGravity: false,
             immovable: true
         });
         map.getObjectLayer('Spikes').objects.forEach((spike) => {
-            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'spike').setOrigin(0);
-            sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 32);
+            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
+            sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
         });
-        this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
+        this.collides = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.direction = 'left'}
+            else
+                {obj1.direction = 'right'}
+            this.collides.active = false;
+            this.player.life -= 1;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.player.lifeHandler = false;
+                        this.collides.active = true;
+                    },
+                    loop: false
+                })
+        });
+        //his.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
 
         // set up health pickups
         this.hPickUp = map.createFromObjects("Health", {
