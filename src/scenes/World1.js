@@ -40,8 +40,6 @@ class World1 extends Phaser.Scene {
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
 
-        // background
-        //this.add.image(0, 0,'background').setOrigin(0, 0);
         // move keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -72,21 +70,13 @@ class World1 extends Phaser.Scene {
         // set up camera
         const viewH = 640;
         const viewW = 800;
-        //this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
         this.cameras.main.startFollow(this.player);
 
-        // collision
+        // collision with platforms
         this.physics.add.collider(this.player, this.platforms);
 
         // spikes
-        // this.spikes = map.createFromObjects("Spikes", {
-        //     name: "",
-        //     key: "tile1_sheet",
-        //     frame: 20
-        // });
-        // this.physics.world.enable(this.spikes, Phaser.Physics.Arcade.STATIC_BODY);
-        // this.sGroup = this.add.group(this.spikes);
         this.spikes = this.physics.add.group({
             allowGravity: false,
             immovable: true
@@ -95,12 +85,13 @@ class World1 extends Phaser.Scene {
             let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
             sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
         });
-        this.collides = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+        let collides;
+        collides = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
                 {obj1.direction = 'left'}
             else
                 {obj1.direction = 'right'}
-            this.collides.active = false;
+            collides.active = false;
             this.player.life -= 1;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -108,12 +99,11 @@ class World1 extends Phaser.Scene {
                         this.player.alpha = 1;
                         this.player.hitted = false;
                         this.player.lifeHandler = false;
-                        this.collides.active = true;
+                        collides.active = true;
                     },
                     loop: false
                 })
         });
-        //his.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
 
         // set up health pickups
         this.hPickUp = map.createFromObjects("Health", {
@@ -180,15 +170,14 @@ class World1 extends Phaser.Scene {
                     },
                     loop: false
                 })
-        })
+        });
 
-        // detection for bullets and enemies
+        // add instruction text
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
         this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
     }
 
     update() {
-        //this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
             for (let i = 0; i < this.enemy.length; i++) {
                 this.player.update(this.enemies, this.platforms);
