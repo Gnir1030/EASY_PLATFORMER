@@ -118,6 +118,8 @@ class World1 extends Phaser.Scene {
         });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
+
+        //player-enemy hitback
         this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
                 {obj1.direction = 'left'}
