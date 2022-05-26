@@ -13,6 +13,10 @@ class World1 extends Phaser.Scene {
 
         // load images, spritesheets, and tilemaps
         this.load.image('tiles1', './assets/tilesheet1.png');
+        this.load.spritesheet("tile1_sheet", "./assets/tilesheet1.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
         //this.load.image('spike', './assets/spike.png');
@@ -85,6 +89,20 @@ class World1 extends Phaser.Scene {
             sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 32);
         });
         this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
+
+        // set up health pickups
+        this.hPickUp = map.createFromObjects("Health", {
+            name: "",
+            key: "tile1_sheet",
+            frame: 13
+        });
+        this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
+        this.hGroup = this.add.group(this.hPickUp);
+        this.physics.add.collider(this.player, this.hGroup, (obj1, obj2) => {
+            obj2.destroy(); // remove coin on overlap
+            console.log(this.player.hitted);
+            this.player.life += 1; // add 1 to player health
+        }, null, this);
 
         // portal
         // this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
