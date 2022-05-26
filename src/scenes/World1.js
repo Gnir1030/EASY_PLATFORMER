@@ -13,10 +13,14 @@ class World1 extends Phaser.Scene {
 
         // load images, spritesheets, and tilemaps
         this.load.image('tiles1', './assets/tilesheet1.png');
+        this.load.spritesheet("tile1_sheet", "./assets/tilesheet1.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
         //this.load.image('spike', './assets/spike.png');
-        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
@@ -36,8 +40,6 @@ class World1 extends Phaser.Scene {
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
 
-        // background
-        //this.add.image(0, 0,'background').setOrigin(0, 0);
         // move keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -50,7 +52,8 @@ class World1 extends Phaser.Scene {
         // map
         const map = this.make.tilemap({ key: 'map1' });
         const tileSet = map.addTilesetImage('tile_sheet_1', 'tiles1');
-        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96);
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.5); // background layer
+        const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
         this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
         this.platforms.setCollisionByExclusion(-1, true);
 
@@ -67,23 +70,54 @@ class World1 extends Phaser.Scene {
         // set up camera
         const viewH = 640;
         const viewW = 800;
-        //this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
         this.cameras.main.startFollow(this.player);
 
-        // collision
+        // collision with platforms
         this.physics.add.collider(this.player, this.platforms);
 
         // spikes
-        // this.spikes = this.physics.add.group({
-        //     allowGravity: false,
-        //     immovable: true
-        // });
-        // map.getObjectLayer('Spikes').objects.forEach((spike) => {
-        //     let sSprite = this.spikes.create(spike.x, spike.y + 200 - spike.height, 'spike').setOrigin(0);
-        //     sSprite.body.setSize(spike.width, spike.height - 32).setOffset(0, 32);
-        // });
-        // this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
+        this.spikes = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+        map.getObjectLayer('Spikes').objects.forEach((spike) => {
+            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
+            sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
+        });
+        let collides;
+        collides = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.direction = 'left'}
+            else
+                {obj1.direction = 'right'}
+            collides.active = false;
+            this.player.life -= 1;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.player.lifeHandler = false;
+                        collides.active = true;
+                    },
+                    loop: false
+                })
+        });
+
+        // set up health pickups
+        this.hPickUp = map.createFromObjects("Health", {
+            name: "",
+            key: "tile1_sheet",
+            frame: 13
+        });
+        this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
+        this.hGroup = this.add.group(this.hPickUp);
+        this.physics.add.collider(this.player, this.hGroup, (obj1, obj2) => {
+            obj2.destroy(); // remove coin on overlap
+            console.log(this.player.hitted);
+            this.player.life += 1; // add 1 to player health
+        }, null, this);
 
         // portal
         // this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
@@ -118,8 +152,12 @@ class World1 extends Phaser.Scene {
         });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
+<<<<<<< HEAD
 
         //player-enemy hitback
+=======
+        // do damage if player collides with enemies
+>>>>>>> d154f8f51157eb95114688c909d53362820a3039
         this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
                 {obj1.direction = 'left'}
@@ -137,20 +175,20 @@ class World1 extends Phaser.Scene {
                     },
                     loop: false
                 })
-        })
+        });
 
-        // detection for bullets and enemies
+        // add instruction text
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
         this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
     }
 
     update() {
-        this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
             for (let i = 0; i < this.enemy.length; i++) {
                 this.player.update(this.enemies, this.platforms);
                 this.enemy[i].update(this.player);
             }
+            this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
         } else {
             if (this.count < 1) {
@@ -160,7 +198,7 @@ class World1 extends Phaser.Scene {
                 this.count += 1;
             }
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(x, y + 32, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.Game_over.stop();
                 this.scene.restart();
@@ -172,15 +210,15 @@ class World1 extends Phaser.Scene {
         }
     }
 
-    looseHealth() {
-        //this.player.health -= 1;
-        this.sound.play('Take_Damage');
-        if (this.player.health <= 0) {
-            this.player.health = 0;
+    checkHealth() {
+        if (this.player.life <= 0) {
+            this.player.life = 0;
             gameOver = true;
         }
-        //this.player.hitted = true;
-        //this.player.setVelocity(0,0);
+    }
+
+    looseHealth() {
+        this.player.life -= 1;
     }
     // switchScene() {
     //     //this.player.destroy();
