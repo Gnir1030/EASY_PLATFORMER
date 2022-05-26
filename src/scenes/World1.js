@@ -113,7 +113,7 @@ class World1 extends Phaser.Scene {
         });
         this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
         this.hGroup = this.add.group(this.hPickUp);
-        this.physics.add.collider(this.player, this.hGroup, (obj1, obj2) => {
+        this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
             console.log(this.player.hitted);
             this.player.life += 1; // add 1 to player health
@@ -160,6 +160,7 @@ class World1 extends Phaser.Scene {
             else
                 {obj1.direction = 'right'}
             this.overlap.active = false;
+            this.player.hitted = true;
             this.player.life -= 1;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,

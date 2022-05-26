@@ -80,6 +80,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.isFire = false;
             }
 
+            /*
             if(!this.body.touching.none){
                 if(this.direction == 'right'){
                     this.setVelocityX(700);
@@ -92,10 +93,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     this.hitted = true;
                 }
             }
+            */
         }
 
         
-        if(this.hitted){
+        if(this.hitted && !this.body.touching.none){
+            if(this.direction == 'right'){
+                this.setVelocityX(700);
+                this.setVelocityY(-500);
+                this.hitted = true;
+            }
+            else{
+                this.setVelocityX(-700);
+                this.setVelocityY(-500);
+                this.hitted = true;
+            }
             this.alpha = 0.5;
         }
         
