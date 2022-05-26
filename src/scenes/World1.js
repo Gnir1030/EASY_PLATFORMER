@@ -64,7 +64,9 @@ class World1 extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
-        this.player = new Player(this, 32, 96*32, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, this.length, this.height).setOrigin(0,0);
+
+        let playerPos  = map.findObject("Enemies", obj => obj.name === "player");
+        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
 
         // set up camera

@@ -45,9 +45,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         if(dist > maxDist){
             return ''
-        }else if (this.direction > 0 && dist > 65) {
+        }else if (this.direction > 0 && dist > 32) {
             return 'right';
-        } else if (this.direction < 0 && dist > 65) {
+        } else if (this.direction < 0 && dist > 32) {
             return 'left'
         }
     }
