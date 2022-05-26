@@ -12,7 +12,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.health = 3;
         this.mw = mW;
         this.mh = mH;
-        this.setScale(1);
+        this.setScale(0.7);
         this.setBounce(0.1);
         this.isFire = false;
         this.hitted = false;
@@ -83,12 +83,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if(!this.body.touching.none){
                 if(this.direction == 'right'){
                     this.setVelocityX(700);
-                    this.setVelocityY(-100);
+                    this.setVelocityY(-500);
                     this.hitted = true;
                 }
                 else{
                     this.setVelocityX(-700);
-                    this.setVelocityY(-100);
+                    this.setVelocityY(-500);
                     this.hitted = true;
                 }
             }
