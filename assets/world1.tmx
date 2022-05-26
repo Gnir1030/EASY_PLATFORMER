@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="30">
-=======
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="52">
->>>>>>> d154f8f51157eb95114688c909d53362820a3039
+
  <editorsettings>
   <export target="world1.json" format="json"/>
  </editorsettings>
@@ -366,14 +363,6 @@
   <object id="23" gid="5" x="642" y="1952" width="32" height="32"/>
   <object id="24" gid="5" x="1256" y="1944" width="32" height="32"/>
  </objectgroup>
-<<<<<<< HEAD
- <objectgroup id="4" name="Item">
-  <object id="25" gid="6" x="2462" y="2374" width="32" height="32"/>
-  <object id="26" gid="6" x="674" y="2758" width="32" height="32"/>
-  <object id="27" gid="6" x="136" y="1590" width="32" height="32"/>
-  <object id="28" gid="6" x="1838" y="1990" width="32" height="32"/>
-  <object id="29" gid="6" x="112" y="2588" width="32" height="32"/>
-=======
  <objectgroup id="6" name="Health">
   <object id="42" gid="14" x="674.333" y="2749.33" width="32" height="32"/>
   <object id="43" gid="14" x="2781" y="3102" width="32" height="32"/>
@@ -384,6 +373,5 @@
   <object id="49" gid="14" x="518.667" y="156" width="32" height="32"/>
   <object id="50" gid="14" x="1986" y="1140" width="32" height="32"/>
   <object id="51" gid="14" x="2780" y="610" width="32" height="32"/>
->>>>>>> d154f8f51157eb95114688c909d53362820a3039
  </objectgroup>
 </map>
