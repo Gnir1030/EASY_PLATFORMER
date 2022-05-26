@@ -20,7 +20,7 @@ class World1 extends Phaser.Scene {
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
         //this.load.image('spike', './assets/spike.png');
-        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
@@ -92,6 +92,7 @@ class World1 extends Phaser.Scene {
             else
                 {obj1.direction = 'right'}
             collides.active = false;
+            this.player.hitted = true;
             this.player.life -= 1;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
