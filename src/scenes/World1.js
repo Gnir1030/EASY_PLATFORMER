@@ -116,9 +116,19 @@ class World1 extends Phaser.Scene {
         });
         this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
         this.hGroup = this.add.group(this.hPickUp);
+        this.hSFXManager = this.add.particles('tile1_sheet', 6);
+        this.hSFX = this.hSFXManager.createEmitter({
+            follow: this.player,
+            quantity: 20,
+            scale: {start: 1.0, end: 0.0},  // start big, end small
+            speed: {min: 50, max: 100}, // speed up
+            lifespan: 800,   // short lifespan
+            on: false   // do not immediately start, will trigger in collision
+        });
         this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
-            console.log(this.player.hitted);
+            this.hSFX.explode();
+            //console.log(this.player.hitted);
             this.player.life += 1; // add 1 to player health
         }, null, this);
 
