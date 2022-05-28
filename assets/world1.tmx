@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="57">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="58">
  <editorsettings>
   <export target="world1.json" format="json"/>
  </editorsettings>
@@ -229,9 +229,7 @@
   <object id="36" gid="21" x="320.333" y="1247.67" width="32" height="32"/>
   <object id="37" gid="21" x="352.333" y="1247.67" width="32" height="32"/>
   <object id="38" gid="21" x="383.333" y="1247.67" width="32" height="32"/>
-  <object id="39" gid="21" x="2368.33" y="1696" width="32" height="32"/>
   <object id="40" gid="21" x="2400.67" y="1696.33" width="32" height="32"/>
-  <object id="41" gid="21" x="2432" y="1696.33" width="32" height="32"/>
  </objectgroup>
  <layer id="1" name="Platforms" width="100" height="100">
   <data encoding="csv">
@@ -361,7 +359,7 @@
   <object id="22" gid="5" x="1942" y="1538" width="32" height="32"/>
   <object id="23" gid="5" x="642" y="1952" width="32" height="32"/>
   <object id="24" gid="5" x="1256" y="1944" width="32" height="32"/>
-  <object id="54" name="player" gid="6" x="88" y="3080" width="32" height="32"/>
+  <object id="54" name="player" gid="6" x="63.2727" y="3103.64" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="6" name="Health">
   <object id="42" gid="14" x="674.333" y="2749.33" width="32" height="32"/>
@@ -373,5 +371,8 @@
   <object id="49" gid="14" x="518.667" y="156" width="32" height="32"/>
   <object id="50" gid="14" x="1986" y="1140" width="32" height="32"/>
   <object id="51" gid="14" x="2780" y="610" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="8" name="Items">
+  <object id="57" name="portal" gid="6" x="1355.5" y="635" width="32" height="32"/>
  </objectgroup>
 </map>

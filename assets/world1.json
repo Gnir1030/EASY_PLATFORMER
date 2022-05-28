@@ -400,18 +400,6 @@
                 {
                  "gid":21,
                  "height":32,
-                 "id":39,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":32,
-                 "x":2368.33,
-                 "y":1696
-                }, 
-                {
-                 "gid":21,
-                 "height":32,
                  "id":40,
                  "name":"",
                  "rotation":0,
@@ -419,18 +407,6 @@
                  "visible":true,
                  "width":32,
                  "x":2400.67,
-                 "y":1696.33
-                }, 
-                {
-                 "gid":21,
-                 "height":32,
-                 "id":41,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":32,
-                 "x":2432,
                  "y":1696.33
                 }],
          "opacity":1,
@@ -840,8 +816,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":88,
-                 "y":3080
+                 "x":63.2727272727273,
+                 "y":3103.63636363636
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -967,12 +943,35 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":8,
+         "name":"Items",
+         "objects":[
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":57,
+                 "name":"portal",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":1355.5,
+                 "y":635
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":8,
- "nextobjectid":57,
+ "nextlayerid":9,
+ "nextobjectid":58,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.8.5",
+ "tiledversion":"1.8.4",
  "tileheight":32,
  "tilesets":[
         {

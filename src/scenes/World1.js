@@ -123,15 +123,16 @@ class World1 extends Phaser.Scene {
         }, null, this);
 
         // portal
-        // this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
-        // this.anims.create({
-        //     key: 'portal',
-        //     frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-        //     frameRate: 2,
-        //     repeat: -1
-        // });
-        // this.portal.play('portal');
-        // this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.anims.create({
+            key: 'portal',
+            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
+        let portalPos  = map.findObject("Items", obj => obj.name === "portal");
+        this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
+        this.portal.play('portal');
+        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         //item
         // this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 'Low_C_chord').setOrigin(0);
@@ -220,10 +221,10 @@ class World1 extends Phaser.Scene {
     looseHealth() {
         this.player.life -= 1;
     }
-    // switchScene() {
-    //     //this.player.destroy();
-    //     this.scene.start('hubScene');
-    // }
+    switchScene() {
+        //this.player.destroy();
+        this.scene.start('hubScene');
+    }
     // collectChord() {
     //     this.sound.play('Low_C_Chord');
     //     this.item.addToItems(chords);
