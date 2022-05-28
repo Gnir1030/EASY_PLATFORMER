@@ -192,10 +192,11 @@ class World1 extends Phaser.Scene {
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
         } else {
+            console.log("else statement ran");
             if (this.count < 1) {
                 this.Game_over.play();
-                x = this.player.x;
-                y = game.config.height/2;
+                x = this.cameras.main.x;
+                y = this.cameras.main.y;
                 this.count += 1;
             }
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);

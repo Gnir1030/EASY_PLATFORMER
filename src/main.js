@@ -12,11 +12,11 @@ let config = {
         }
     },
     //scene: [Menu, Tutorial, Hub, World1]
-    scene: [Hub, World1]
+    scene: [Menu, Tutorial, Hub, World1]
 }
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM;
+let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM, keyT;
 
 let borderS = game.config.height/10;
 
