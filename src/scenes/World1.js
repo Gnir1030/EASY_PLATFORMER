@@ -26,7 +26,8 @@ class World1 extends Phaser.Scene {
         this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
 
         //bullet image
-        this.load.image('bullet', './assets/bullet.png');
+        //this.load.image('bullet', './assets/bullet.png');
+        this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
     create() {
@@ -195,18 +196,18 @@ class World1 extends Phaser.Scene {
 
     update() {
         if (!gameOver) {
+            this.player.update(this.enemies, this.platforms);
             for (let i = 0; i < this.enemy.length; i++) {
-                this.player.update(this.enemies, this.platforms);
-                this.enemy[i].update(this.player);
+                this.enemy[i].update(this.player, this.platforms);
             }
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
         } else {
-            console.log("else statement ran");
+            //console.log("else statement ran");
             if (this.count < 1) {
                 this.Game_over.play();
-                x = this.cameras.main.x;
-                y = this.cameras.main.y;
+                x = this.player.x;
+                y = this.player.y;
                 this.count += 1;
             }
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
@@ -217,7 +218,7 @@ class World1 extends Phaser.Scene {
             }
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
                 this.Game_over.stop();
-                this.scene.start('menuScene');
+                this.scene.start('hubScene');
             }
         }
     }

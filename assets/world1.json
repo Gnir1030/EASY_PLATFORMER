@@ -960,6 +960,18 @@
                  "width":32,
                  "x":1355.5,
                  "y":635
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":58,
+                 "name":"purple_chord",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":945,
+                 "y":1951
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -968,7 +980,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":58,
+ "nextobjectid":59,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.4",
