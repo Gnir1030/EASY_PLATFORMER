@@ -10,11 +10,19 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setScale(0.7);
         this.setBounce(0.1);
         this.jump = false;
-        this.direction;
         this.isFire = false;
+        this.direction;
+        this.time = scene.time;
     }
 
     update(player, platform) {
+        if (!this.flipX) {
+            this.direction = 'right';
+        }
+        else if (this.flipX) {
+            this.direction = 'left';
+        }
+
         if (this.body) {
             // enemy ai
             if (this.detect(player) == 'left') {
@@ -41,21 +49,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             }
 
             if(this.isFire) {
-                let direction;
-                if (!this.flipX) {
-                    direction = 'right';
-                }
-                else if (this.flipX) {
-                    direction = 'left';
-                }
                 this.time.addEvent({
-                    delay: 5000,
-                    callback: spawnBullet(direction, player, platform),
-                    callbackScope: this,
+                    delay: 10000,
+                    callback: this.spawnBullet(this.direction, player, platform),
                     loop: false
-                });
-                //this.spawnBullet('left', player, platform);
-                this.isFire = false;
+                })
             }
         }
     }
@@ -63,13 +61,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     detect(player) {
         let maxDist = 5 * 64
         let dist = Phaser.Math.Distance.BetweenPoints(this, player);
-        this.direction = player.x - this.x;
+        let dir = player.x - this.x;
 
         if(dist > maxDist){
             return ''
-        }else if (this.direction > 0 && dist > 32) {
+        }else if (dir > 0 && dist > 32) {
             return 'right';
-        } else if (this.direction < 0 && dist > 32) {
+        } else if (dir < 0 && dist > 32) {
             return 'left'
         }
     }
@@ -97,10 +95,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             // obj2.destroy();
             obj1.setActive(false).setVisible(false);
             obj1.destroy();
-            player.life -= 1;
+            //player.life -= 1;
         })
         this.scene.physics.add.collider(bullet, platform, (obj1, obj2) => {
-            console.log("obj2 name : " + obj2.yyName);
+            console.log("obj2 name : " + obj2.name);
             obj1.setActive(false).setVisible(false);
             obj1.destroy();
         })

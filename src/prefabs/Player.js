@@ -17,7 +17,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.isFire = false;
         this.hitted = false;
         this.scene = scene;
-        this.direction;
+        this.enemyDir;
         this.life = 3;
     }
 
@@ -80,26 +80,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }
                 this.isFire = false;
             }
-
-            /*
-            if(!this.body.touching.none){
-                if(this.direction == 'right'){
-                    this.setVelocityX(700);
-                    this.setVelocityY(-500);
-                    this.hitted = true;
-                }
-                else{
-                    this.setVelocityX(-700);
-                    this.setVelocityY(-500);
-                    this.hitted = true;
-                }
-            }
-            */
         }
 
         
         if(this.hitted && !this.body.touching.none){
-            if(this.direction == 'right'){
+            if(this.enemyDir == 'left'){
                 this.setVelocityX(700);
                 this.setVelocityY(-500);
                 this.hitted = true;

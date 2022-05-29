@@ -25,6 +25,7 @@ class Hub extends Phaser.Scene {
         this.length = 30*64;
         this.height = 9*64;
         this.count = 0;
+        this.physics.world.gravity.y = 2000;
         
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});

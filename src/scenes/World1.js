@@ -171,9 +171,9 @@ class World1 extends Phaser.Scene {
         // do damage if player collides with enemies
         this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
-                {obj1.direction = 'left'}
+                {obj1.enemyDir = 'right'}
             else
-                {obj1.direction = 'right'}
+                {obj1.enemyDir = 'left'}
             this.overlap.active = false;
             this.player.hitted = true;
             this.player.life -= 1;
