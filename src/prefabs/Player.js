@@ -123,7 +123,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //console.log(enemy);
         this.scene.physics.add.overlap(bullet, enemy, (obj1, obj2) => {
             //console.log("obj2 name : " + obj2);
-            obj2.shooterEvent.destroy();
+            if(obj2.shooterEvent)
+                obj2.shooterEvent.destroy();
             obj2.destroy();
             obj1.destroy();
         })
