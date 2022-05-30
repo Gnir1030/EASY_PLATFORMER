@@ -26,8 +26,9 @@ class World1 extends Phaser.Scene {
         this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
 
         //bullet image
-        //this.load.image('bullet', './assets/bullet.png');
-        this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
+        this.load.image('bullet1', './assets/bullet1.png');
+        this.load.image('bullet2', './assets/bullet2.png');
+        //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
     create() {
@@ -164,7 +165,7 @@ class World1 extends Phaser.Scene {
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
         let index = 0;
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);

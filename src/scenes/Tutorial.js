@@ -100,7 +100,7 @@ class Tutorial extends Phaser.Scene {
         this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         //item
-        this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 'Low_C_chord').setOrigin(0);
+        this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 1).setOrigin(0);
         this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
     }
 
