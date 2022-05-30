@@ -54,6 +54,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     callback: this.spawnBullet(this.direction, player, platform),
                     loop: false
                 })
+                this.isFire = false;
             }
         }
     }

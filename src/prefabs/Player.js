@@ -34,6 +34,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.alpha = 0.5;
             this.life -= 1;
         }
+        //this.color = this.anims.generateFrameNumbers('bullet', { start: 0, end: 0, first: 0});
     }
 
     update(enemy, platform) {
@@ -105,16 +106,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //console.log(enemy);
         let bullet;
         if(dir == 'left'){
-            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet', 0, dir);
-            bullet.setFrame(1);
+            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet', 0, dir).setOrigin(0);
+            //bullet.setFrame(1);
             //bullet.setOriginFromFrame();
-            //bullet.frame = 1;
+            //bullet.frame = 0;
         }
         else{
-            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet', 0, dir);
-            bullet.setFrame(1);
+            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet', 0, dir).setOrigin(0);
+            //bullet.setFrame(1);
             //bullet.setOriginFromFrame();
-            //bullet.frame = 1;
+            //bullet.frame = 0;
         }
 
         //let bullet = new Bullet(this.scene, this.x + 32,  this.y, 'bullet', 0, dir);
