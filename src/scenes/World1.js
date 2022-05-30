@@ -9,6 +9,7 @@ class World1 extends Phaser.Scene {
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
         this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
+        this.load.audio('World_1', './assets/World_1.wav');
 
 
         // load images, spritesheets, and tilemaps
@@ -32,6 +33,11 @@ class World1 extends Phaser.Scene {
     }
 
     create() {
+        // World 1 Music
+        this.World_1_music = this.sound.add('World_1', {volume: 0.50});
+        this.World_1_music.play();
+        this.World_1_music.loop = true;
+
         // base settings for this scene
         gameOver = false;
         this.length = 100*32;
@@ -209,18 +215,21 @@ class World1 extends Phaser.Scene {
         } else {
             //console.log("else statement ran");
             if (this.count < 1) {
+                this.World_1_music.stop();
                 this.Game_over.play();
                 x = this.player.x;
                 y = this.player.y;
                 this.count += 1;
             }
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 32, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(x, y + 32, 'Press (R) to Restart or <- to return to the Hub World', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.World_1_music.stop();
                 this.Game_over.stop();
                 this.scene.restart();
             }
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+                this.World_1_music.stop();
                 this.Game_over.stop();
                 this.scene.start('hubScene');
             }

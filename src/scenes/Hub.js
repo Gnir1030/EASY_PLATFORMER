@@ -7,6 +7,7 @@ class Hub extends Phaser.Scene {
         this.load.audio('Jump_noise', './assets/Jump.wav');
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
+        this.load.audio('Hub_World', './assets/Hub_World.wav');
 
 
         // load images, spritesheets, and tilemaps
@@ -20,6 +21,12 @@ class Hub extends Phaser.Scene {
     }
 
     create() {
+        // Hub World music
+
+        this.Hub_World_music = this.sound.add('Hub_World', {volume: 0.50});
+        this.Hub_World_music.play();
+        this.Hub_World_music.loop = true;
+
         // base settings for this scene
         gameOver = false;
         this.length = 30*64;
@@ -77,12 +84,14 @@ class Hub extends Phaser.Scene {
             frameRate: 2,
             repeat: -1
         });
+        this.Hub_World_music.stop();
         this.portal.play('portal');
         this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
     }
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
+            this.Hub_World_music.stop();
             this.scene.start('menuScene');
         }
         this.player.update();
