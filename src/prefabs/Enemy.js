@@ -13,6 +13,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.isFire = false;
         this.direction;
         this.time = scene.time;
+        this.firing = true;
+        this.shooterEvent;
     }
 
     update(player, platform) {
@@ -48,15 +50,16 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 this.setVelocityY(-700);
             }
 
-            if(this.isFire) {
-                
-                this.time.addEvent({
-                    delay: 10000,
-                    callback: this.spawnBullet(this.direction, player, platform),
-                    loop: false
+            if(this.isFire && this.firing) {
+                this.firing = false;
+                this.shooterEvent = this.time.addEvent({
+                    delay: 1000,
+                    callback: () => {
+                        this.spawnBullet(this.direction, player, platform);
+                    },//this.spawnBullet(this.direction, player, platform),
+                    loop: true
                 })
                 //this.spawnBullet(this.direction, player, platform)
-                this.isFire = false;
             }
         }
     }
