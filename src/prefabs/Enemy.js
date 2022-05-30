@@ -82,13 +82,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     spawnBullet(dir, player, platform) {
         let bullet;
         if(dir == 'left'){
-            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet', 0, dir);
+            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet' + this.color, 0, dir, this.color);
             bullet.setFrame(1);
             //bullet.setOriginFromFrame();
             //bullet.frame = 1;
         }
         else{
-            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet', 0, dir);
+            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet' + this.color, 0, dir, this.color);
             bullet.setFrame(1);
             //bullet.setOriginFromFrame();
             //bullet.frame = 1;

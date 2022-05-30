@@ -25,7 +25,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     preload() {
         this.load.audio('Jump_noise', './assets/Jump.wav');
         //this.load.image('bullet', './assets/bullet.png');
-        this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
+        //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
     create() {
@@ -107,13 +107,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //console.log(enemy);
         let bullet;
         if(dir == 'left'){
-            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet', 0, dir).setOrigin(0);
+            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet1', 0, dir, 1).setOrigin(0);
             //bullet.setFrame(1);
             //bullet.setOriginFromFrame();
             //bullet.frame = 0;
         }
         else{
-            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet', 0, dir).setOrigin(0);
+            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet1', 0, dir, 1).setOrigin(0);
             //bullet.setFrame(1);
             //bullet.setOriginFromFrame();
             //bullet.frame = 0;
@@ -125,7 +125,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             //console.log("obj2 name : " + obj2);
             if(obj2.shooterEvent)
                 obj2.shooterEvent.destroy();
-            obj2.destroy();
+            if (obj1.color == obj2.color) {
+                obj2.destroy();
+            }
             obj1.destroy();
         })
         this.scene.physics.add.collider(bullet, platform, (obj1, obj2) => {
