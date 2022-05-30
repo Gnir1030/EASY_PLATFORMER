@@ -56,8 +56,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     delay: 1000,
                     callback: () => {
                         this.spawnBullet(this.direction, player, platform);
+                        this.firing = true
                     },//this.spawnBullet(this.direction, player, platform),
-                    loop: true
+                    loop: false
                 })
                 //this.spawnBullet(this.direction, player, platform)
             }
