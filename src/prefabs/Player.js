@@ -18,6 +18,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.hitted = false;
         this.scene = scene;
         this.enemyDir;
+        this.shadow = false;
         this.life = 3;
     }
 
@@ -84,16 +85,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         
-        if(this.hitted && !this.body.touching.none){
+        if(this.hitted && this.shadow){
             if(this.enemyDir == 'left'){
                 this.setVelocityX(700);
                 this.setVelocityY(-500);
-                this.hitted = true;
+                this.shadow = false;
             }
             else{
                 this.setVelocityX(-700);
                 this.setVelocityY(-500);
-                this.hitted = true;
+                this.shadow = false
             }
             this.alpha = 0.5;
         }
@@ -121,15 +122,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //let bullet = new Bullet(this.scene, this.x + 32,  this.y, 'bullet', 0, dir);
         //console.log(enemy);
         this.scene.physics.add.overlap(bullet, enemy, (obj1, obj2) => {
-            console.log("obj2 name : " + obj2);
-            obj2.setActive(false).setVisible(false);
+            //console.log("obj2 name : " + obj2);
+            obj2.shooterEvent.destroy();
             obj2.destroy();
-            obj1.setActive(false).setVisible(false);
             obj1.destroy();
         })
         this.scene.physics.add.collider(bullet, platform, (obj1, obj2) => {
-            console.log("obj2 name : " + obj2.yyName);
-            obj1.setActive(false).setVisible(false);
+            //console.log("obj2 name : " + obj2.yyName);
             obj1.destroy();
         })
         bullet.update();

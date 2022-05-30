@@ -69,6 +69,7 @@ class World1 extends Phaser.Scene {
         let playerPos  = map.findObject("Enemies", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
+        this.player.setMaxVelocity(1000, 900);
 
         // set up camera
         const viewH = 640;
@@ -91,11 +92,12 @@ class World1 extends Phaser.Scene {
         let collides;
         collides = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
-                {obj1.direction = 'left'}
+                {obj1.enemyDir = 'right'}
             else
-                {obj1.direction = 'right'}
+                {obj1.enemyDir = 'left'}
             collides.active = false;
             this.player.hitted = true;
+            this.player.shadow = true;
             this.player.life -= 1;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -177,6 +179,7 @@ class World1 extends Phaser.Scene {
             this.overlap.active = false;
             this.player.hitted = true;
             this.player.life -= 1;
+            this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
                     callback: ()=>{
