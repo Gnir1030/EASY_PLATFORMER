@@ -76,7 +76,7 @@ class World1 extends Phaser.Scene {
         });
 
         let playerPos  = map.findObject("Enemies", obj => obj.name === "player");
-        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, this.length, this.height).setOrigin(0,0);
+        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, keyX, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
 
@@ -246,9 +246,9 @@ class World1 extends Phaser.Scene {
 
     update() {
         if (!gameOver) {
-            if (Phaser.Input.Keyboard.JustDown(keyX)) {
-                swap(0, 1);
-            }
+            // if (Phaser.Input.Keyboard.JustDown(keyX)) {
+            //     swap(0, 1);
+            // }
             this.player.update(this.enemies, this.platforms);
             for (let i = 0; i < this.enemy.length; i++) {
                 this.enemy[i].update(this.player, this.platforms);

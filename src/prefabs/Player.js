@@ -1,6 +1,6 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
 
-    constructor(scene, x, y, texture, frame, kLeft, kRight, kUp, kSpace, mW, mH) {
+    constructor(scene, x, y, texture, frame, kLeft, kRight, kUp, kSpace, kX, mW, mH) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -9,6 +9,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyRight = kRight;
         this.keyUp = kUp;
         this.keySpace = kSpace;
+        this.keyX = kX;
         this.health = 3;
         this.mw = mW;
         this.mh = mH;
@@ -20,7 +21,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.enemyDir;
         this.shadow = false;
         this.life = 3;
-        this.active = chords[0];
+        this.active = 0;
     }
 
     preload() {
@@ -40,8 +41,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(enemy, platform) {
-        this.active = chords[0];
-        console.log(this.active);
+
+        if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
+            this.active = (this.active + 1) % chords.length;
+            console.log(this.active);
+        }
 
         if(!this.hitted){
         // move
@@ -106,26 +110,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     spawnBullet(dir, enemy, platform) {
-        //console.log(dir);
-        //console.log(enemy);
         let bullet;
         if(dir == 'left'){
-            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet' + this.active, 0, dir, this.active).setOrigin(0);
-            //bullet.setFrame(1);
-            //bullet.setOriginFromFrame();
-            //bullet.frame = 0;
+            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet' + chords[this.active], 0, dir, chords[this.active]).setOrigin(0);
         }
         else{
-            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet' + this.active, 0, dir, this.active).setOrigin(0);
-            //bullet.setFrame(1);
-            //bullet.setOriginFromFrame();
-            //bullet.frame = 0;
+            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet' + chords[this.active], 0, dir, chords[this.active]).setOrigin(0);
         }
-
-        //let bullet = new Bullet(this.scene, this.x + 32,  this.y, 'bullet', 0, dir);
-        //console.log(enemy);
         this.scene.physics.add.overlap(bullet, enemy, (obj1, obj2) => {
-            //console.log("obj2 name : " + obj2);
             if(obj2.shooterEvent)
                 obj2.shooterEvent.destroy();
             if (obj1.color == obj2.color) {
@@ -134,7 +126,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             obj1.destroy();
         })
         this.scene.physics.add.collider(bullet, platform, (obj1, obj2) => {
-            //console.log("obj2 name : " + obj2.yyName);
             obj1.destroy();
         })
         bullet.update();

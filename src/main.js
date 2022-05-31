@@ -42,11 +42,11 @@ let borderPadding = borderUISize / 3;
 
 let chords = [1];
 
-function swap(p1, p2) {
-    if (chords[p1] != null && chords[p2] != null) {
-        let temp = chords[p1];
-        chords[p1] = chords[p2];
-        chords[p2] = temp;
-    }
-    return;
-}
+// function swap(p1, p2) {
+//     if (chords[p1] != null && chords[p2] != null) {
+//         let temp = chords[p1];
+//         chords[p1] = chords[p2];
+//         chords[p2] = temp;
+//     }
+//     return;
+// }
