@@ -31,7 +31,7 @@ class Menu extends Phaser.Scene {
 
     // show menu text
     this.add.text(config.width/2, config.height/2 - borderUISize - borderPadding, 'Finding Sound', menuConfig).setOrigin(0.5);
-    this.add.text(config.width/2, config.height/2, 'Use ←→ arrows to move & (Space) to jump', menuConfig).setOrigin(0.5);
+    this.add.text(config.width/2, config.height/2, 'Use ←→ arrows to move, up arrow to Jump, & (Space) to shoot', menuConfig).setOrigin(0.5);
     menuConfig.backgroundColor = '#00FF00';
     menuConfig.color = '#000';
     this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding, 'Press ← to Play', menuConfig).setOrigin(0.5);

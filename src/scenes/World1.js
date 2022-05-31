@@ -228,7 +228,6 @@ class World1 extends Phaser.Scene {
             this.overlap2.active = false;
             this.overlap.active = false;
             this.player.hitted = true;
-            //this.player.life -= 1;
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -246,9 +245,6 @@ class World1 extends Phaser.Scene {
 
     update() {
         if (!gameOver) {
-            // if (Phaser.Input.Keyboard.JustDown(keyX)) {
-            //     swap(0, 1);
-            // }
             this.player.update(this.enemies, this.platforms);
             for (let i = 0; i < this.enemy.length; i++) {
                 this.enemy[i].update(this.player, this.platforms);
@@ -283,10 +279,6 @@ class World1 extends Phaser.Scene {
             this.player.life = 0;
             gameOver = true;
         }
-    }
-
-    looseHealth() {
-        this.player.life -= 1;
     }
     switchScene() {
         //this.player.destroy();
