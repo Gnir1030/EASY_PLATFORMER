@@ -104,7 +104,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             // obj2.destroy();
             obj1.setActive(false).setVisible(false);
             obj1.destroy();
-            //player.life -= 1;
+            player.life -= 1;
         })
         this.scene.physics.add.collider(bullet, platform, (obj1, obj2) => {
             //console.log("obj2 name : " + obj2.name);

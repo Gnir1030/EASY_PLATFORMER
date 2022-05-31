@@ -156,7 +156,7 @@ class Tutorial extends Phaser.Scene {
     }
     collectChord() {
         this.sound.play('Low_C_Chord');
-        this.item.addToItems(chords);
+        //this.item.addToItems(chords);
         this.item.destroy();
     }
 }

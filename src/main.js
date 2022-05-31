@@ -16,7 +16,7 @@ let config = {
 }
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM, keyT;
+let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM, keyT, keyX;
 
 let borderS = game.config.height/10;
 
@@ -40,4 +40,13 @@ let y = game.config.height;
 let borderUISize = game.config.width/15;
 let borderPadding = borderUISize / 3;
 
-let chords = [];
+let chords = [1];
+
+function swap(p1, p2) {
+    if (chords[p1] != null && chords[p2] != null) {
+        let temp = chords[p1];
+        chords[p1] = chords[p2];
+        chords[p2] = temp;
+    }
+    return;
+}

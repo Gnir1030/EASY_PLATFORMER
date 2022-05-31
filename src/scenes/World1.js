@@ -25,10 +25,11 @@ class World1 extends Phaser.Scene {
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
-
+        this.load.spritesheet('enemy2', './assets/RightFacingEnemy2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
+        this.load.image('chord2', './assets/High_C_Major_Chord.png');
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
@@ -54,6 +55,7 @@ class World1 extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
@@ -154,9 +156,10 @@ class World1 extends Phaser.Scene {
         this.portal.play('portal');
         this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
-        //item
-        // this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 'Low_C_chord').setOrigin(0);
-        // this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
+        // chord item
+        let chordPos = map.findObject("Items", obj => obj.name === "purple_chord");
+        this.chord = new Item(this, chordPos.x, chordPos.y, 'chord2', 0, 2).setOrigin(0);
+        this.physics.add.collider(this.player, this.chord, this.collectChord, null, this);
 
         // enmmey creation
         this.anims.create({
@@ -165,13 +168,24 @@ class World1 extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
+        this.anims.create({
+            key: 'idle3',
+            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 3, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
 
         // create enemies
         this.enemy = []
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
+        let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "purple");
         let index = 0;
         enemyObjects.map((element) => {
             this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
+            index += 1;
+        });
+        enemyObjects2.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);
@@ -186,7 +200,7 @@ class World1 extends Phaser.Scene {
             this.overlap.active = false;
             this.overlap2.active = false;
             this.player.hitted = true;
-            //this.player.life -= 1;
+            this.player.life -= 1;
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -228,11 +242,13 @@ class World1 extends Phaser.Scene {
                     loop: false
                 })
         });
-        //this.bullets.setGravity(false);
     }
 
     update() {
         if (!gameOver) {
+            if (Phaser.Input.Keyboard.JustDown(keyX)) {
+                swap(0, 1);
+            }
             this.player.update(this.enemies, this.platforms);
             for (let i = 0; i < this.enemy.length; i++) {
                 this.enemy[i].update(this.player, this.platforms);
@@ -240,7 +256,6 @@ class World1 extends Phaser.Scene {
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
         } else {
-            //console.log("else statement ran");
             if (this.count < 1) {
                 this.World_1_music.stop();
                 this.Game_over.play();
@@ -278,9 +293,9 @@ class World1 extends Phaser.Scene {
         this.World_1_music.stop();
         this.scene.start('hubScene');
     }
-    // collectChord() {
-    //     this.sound.play('Low_C_Chord');
-    //     this.item.addToItems(chords);
-    //     this.item.destroy();
-    // }
+    collectChord() {
+        //this.sound.play('Low_C_Chord');
+        this.chord.addToItems(chords);
+        this.chord.destroy();
+    }
 }

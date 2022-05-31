@@ -20,6 +20,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.enemyDir;
         this.shadow = false;
         this.life = 3;
+        this.active = chords[0];
     }
 
     preload() {
@@ -39,13 +40,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(enemy, platform) {
+        this.active = chords[0];
+        console.log(this.active);
 
         if(!this.hitted){
         // move
             if (this.keyLeft.isDown && this.x > 0) {
-                this.setVelocityX(-300);
+                this.setVelocityX(-400);
             } else if (this.keyRight.isDown && this.x <= this.mw - this.width) {
-                this.setVelocityX(300);
+                this.setVelocityX(400);
             } else {
                 //this.setVelocityX(0);
                 this.setDragX(1000);
@@ -107,13 +110,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //console.log(enemy);
         let bullet;
         if(dir == 'left'){
-            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet1', 0, dir, 1).setOrigin(0);
+            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet' + this.active, 0, dir, this.active).setOrigin(0);
             //bullet.setFrame(1);
             //bullet.setOriginFromFrame();
             //bullet.frame = 0;
         }
         else{
-            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet1', 0, dir, 1).setOrigin(0);
+            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet' + this.active, 0, dir, this.active).setOrigin(0);
             //bullet.setFrame(1);
             //bullet.setOriginFromFrame();
             //bullet.frame = 0;
