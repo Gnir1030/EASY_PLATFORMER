@@ -42,17 +42,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     update(enemy, platform) {
 
-        if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
-            this.active = (this.active + 1) % chords.length;
-            console.log(this.active);
-        }
-
         if(!this.hitted){
-        // move
+            if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
+                this.active = (this.active + 1) % chords.length;
+                console.log(this.active);
+            }
+            // move
             if (this.keyLeft.isDown && this.x > 0) {
-                this.setVelocityX(-400);
+                this.setVelocityX(-300);
             } else if (this.keyRight.isDown && this.x <= this.mw - this.width) {
-                this.setVelocityX(400);
+                this.setVelocityX(300);
             } else {
                 //this.setVelocityX(0);
                 this.setDragX(1000);
@@ -105,8 +104,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
             this.alpha = 0.5;
         }
-        
-        //console.log(this.life);
     }
 
     spawnBullet(dir, enemy, platform) {
