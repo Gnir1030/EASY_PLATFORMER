@@ -178,8 +178,9 @@ class World1 extends Phaser.Scene {
             else
                 {obj1.enemyDir = 'left'}
             this.overlap.active = false;
+            this.overlap2.active = false;
             this.player.hitted = true;
-            this.player.life -= 1;
+            //this.player.life -= 1;
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -188,6 +189,7 @@ class World1 extends Phaser.Scene {
                         this.player.hitted = false;
                         this.player.lifeHandler = false;
                         this.overlap.active = true;
+                        this.overlap2.active = true;
                     },
                     loop: false
                 })
@@ -196,6 +198,31 @@ class World1 extends Phaser.Scene {
         // add instruction text
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
         this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
+
+        this.bullets = this.add.group();
+        this.overlap2 = this.physics.add.overlap(this.player, this.bullets, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.enemyDir = 'right'}
+            else
+                {obj1.enemyDir = 'left'}
+            this.overlap2.active = false;
+            this.overlap.active = false;
+            this.player.hitted = true;
+            //this.player.life -= 1;
+            this.player.shadow = true;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.player.lifeHandler = false;
+                        this.overlap.active = true;
+                        this.overlap2.active = true;
+                    },
+                    loop: false
+                })
+        });
+        //this.bullets.setGravity(false);
     }
 
     update() {
