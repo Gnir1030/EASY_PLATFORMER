@@ -283,6 +283,7 @@ class World1 extends Phaser.Scene {
     switchScene() {
         //this.player.destroy();
         this.World_1_music.stop();
+        completed[0] = 1;
         this.scene.start('hubScene');
     }
     collectChord() {
