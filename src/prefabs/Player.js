@@ -57,7 +57,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
             // fire
             if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
-                this.gunshot.play();
                 this.isFire = true;
             } else {
                 this.isFire = false;
@@ -65,7 +64,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
             // jump
             if (this.keyUp.isDown && this.body.onFloor()) {
-                // this.jump.play();
                 this.setVelocityY(-900);
             }
 
