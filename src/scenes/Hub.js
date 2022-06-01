@@ -82,7 +82,7 @@ class Hub extends Phaser.Scene {
         this.anims.create({
             key: 'portal',
             frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 2,
+            frameRate: 4,
             repeat: -1
         });
         this.Hub_World_music.stop();
