@@ -100,6 +100,8 @@ class Hub extends Phaser.Scene {
         this.physics.add.collider(this.player, this.portal2, (obj1, obj2) => {
             this.scene.start(obj2.destination);
         }, null, this);
+        this.portal2.visible = false;
+        this.portal2.active = false;
     }
 
     update() {

@@ -40,6 +40,6 @@ let y = game.config.height;
 let borderUISize = game.config.width/15;
 let borderPadding = borderUISize / 3;
 
-let chords = [1,2];
+let chords = [1];
 
 let completed = [0, 0, 0];

@@ -23,8 +23,8 @@ class World2 extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-        this.load.spritesheet('enemy', './assets/purpleEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy2', './assets/redEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemyp', './assets/purpleEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemyr', './assets/redEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
@@ -55,6 +55,7 @@ class World2 extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -165,13 +166,13 @@ class World2 extends Phaser.Scene {
         // enmmey creation
         this.anims.create({
             key: 'idle2',
-            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 3, first: 0}),
+            frames: this.anims.generateFrameNumbers('enemyp', { start: 0, end: 3, first: 0}),
             frameRate: 1,
             repeat: -1
         });
         this.anims.create({
             key: 'idle3',
-            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 3, first: 0}),
+            frames: this.anims.generateFrameNumbers('enemyr', { start: 0, end: 3, first: 0}),
             frameRate: 1,
             repeat: -1
         });
@@ -182,11 +183,11 @@ class World2 extends Phaser.Scene {
         let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "red");
         let index = 0;
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemyp', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
             index += 1;
         });
         enemyObjects2.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemyr', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);
@@ -261,13 +262,13 @@ class World2 extends Phaser.Scene {
                 this.count += 1;
             }
             this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 32, 'Press (R) to Restart or <- to return to the Hub World', scoreConfig).setOrigin(0.5);
+            this.add.text(x, y + 32, 'Press (R) to Restart or M to return to the Hub World', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
                 this.scene.restart();
             }
-            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            if (Phaser.Input.Keyboard.JustDown(keyM)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
                 this.scene.start('hubScene');
@@ -284,6 +285,7 @@ class World2 extends Phaser.Scene {
     switchScene() {
         //this.player.destroy();
         this.World_1_music.stop();
+        completed[1] = 1;
         this.scene.start('hubScene');
     }
     collectChord() {
