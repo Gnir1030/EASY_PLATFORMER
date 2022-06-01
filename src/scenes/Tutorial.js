@@ -21,6 +21,14 @@ class Tutorial extends Phaser.Scene {
         this.load.image('background', './assets/background.png');
         this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.image('bullet', './assets/bullet.png');
+
+        //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
+        this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy2', './assets/RightFacingEnemy2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        //bullet image
+        this.load.image('bullet1', './assets/bullet1.png');
+        this.load.image('bullet2', './assets/bullet2.png');
+        this.load.image('chord2', './assets/High_C_Major_Chord.png');
     }
 
     create() {
@@ -34,6 +42,8 @@ class Tutorial extends Phaser.Scene {
         this.length = 55*64;
         this.height = 8*64;
         this.count = 0;
+        this.physics.world.gravity.y = 2000;
+        this.physics.world.setBounds(0, 0, this.length, this.height*2);
         
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
@@ -45,18 +55,23 @@ class Tutorial extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keySPACE.enabled = false;
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         this.add.text(20, 20, "Tutorial Level").setScrollFactor(0);
         this.healthText = this.add.text(700, 20, "Health: " + 3).setScrollFactor(0);
         this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes").setScrollFactor(0); //UI scroll
-
+        this.moveTuto = this.add.text(120, 540, "Press ←→ to Move");
+        this.jumpTuto = this.add.text(600, 470, "Press Up to Jump").setVisible(false);
+        this.dangerTuto = this.add.text(1555, 400, "CAUTION").setScale(1).setVisible(false);
+        this.enemyTuto = this.add.text(2500, 470, "DANGER!").setScale(2);
+        this.shootTuto = this.add.text(3200, 5*64, "Press SPACE to Shoot").setVisible(false);
 
         // map
         const map = this.make.tilemap({ key: 'map' });
         const tileSet = map.addTilesetImage('simple_tileset', 'tiles');
-        const platforms = map.createLayer('Platforms', tileSet, 0, 200);
-        platforms.setCollisionByExclusion(-1, true);
+        this.platforms = map.createLayer('Platforms', tileSet, 0, 200);
+        this.platforms.setCollisionByExclusion(-1, true);
 
         // player
         this.anims.create({
@@ -67,6 +82,8 @@ class Tutorial extends Phaser.Scene {
         });
         this.player = new Player(this, 0, 130, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, keyX, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
+        this.player.setMaxVelocity(1000, 900);
+        this.player.body.setCollideWorldBounds();
 
         // set up camera
         const viewH = 640;
@@ -76,7 +93,7 @@ class Tutorial extends Phaser.Scene {
         this.cam.startFollow(this.player);
 
         // collision
-        this.physics.add.collider(this.player, platforms);
+        this.physics.add.collider(this.player, this.platforms);
 
         // spikes
         this.spikes = this.physics.add.group({
@@ -87,10 +104,32 @@ class Tutorial extends Phaser.Scene {
             let sSprite = this.spikes.create(spike.x, spike.y + 200 - spike.height, 'spike').setOrigin(0);
             sSprite.body.setSize(spike.width, spike.height - 32).setOffset(0, 32);
         });
-        this.physics.add.collider(this.player, this.spikes, this.looseHealth, null, this);
+        this.collider = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.enemyDir = 'right'}
+            else
+                {obj1.enemyDir = 'left'}
+            this.collider.active = false;
+            this.overlap.active = false;
+            this.overlap2.active = false;
+            this.player.hitted = true;
+            this.player.shadow = true;
+            this.player.life -= 1;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.collider.active = true;
+                        this.overlap.active = true;
+                        this.overlap2.active = true;
+                    },
+                    loop: false
+                })
+        });
 
         // portal
-        this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0);
+        this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0).setActive(false).setVisible(false);
         this.anims.create({
             key: 'portal',
             frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
@@ -98,17 +137,73 @@ class Tutorial extends Phaser.Scene {
             repeat: -1
         });
         this.portal.play('portal');
-        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.portalSwitch = this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.portalSwitch.active = false;
 
         //item
         this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 1).setOrigin(0);
-        this.physics.add.collider(this.player, this.item, this.collectChord, null, this);
+        this.physics.add.overlap(this.player, this.item, this.collectChord, ()=>{
+            keySPACE.enabled = true;
+            this.shootTuto.setVisible(true);
+        }, this);
+
+        this.enemy = new Enemy(this, 3200, 0, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true);
+        this.physics.add.collider(this.enemy, this.platforms);
+
+        this.overlap = this.physics.add.overlap(this.player, this.enemy, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.enemyDir = 'right'}
+            else
+                {obj1.enemyDir = 'left'}
+            this.collider.active = false;
+            this.overlap.active = false;
+            this.overlap2.active = false;
+            this.player.hitted = true;
+            this.player.life -= 1;
+            this.player.shadow = true;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.collider.active = true;
+                        this.overlap.active = true;
+                        this.overlap2.active = true;
+                    },
+                    loop: false
+                })
+        });
+
+        this.bullets = this.add.group();
+        this.overlap2 = this.physics.add.overlap(this.player, this.bullets, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.enemyDir = 'right'}
+            else
+                {obj1.enemyDir = 'left'}
+            this.overlap2.active = false;
+            this.overlap.active = false;
+            this.collider.active = false;
+            this.player.hitted = true;
+            this.player.shadow = true;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.collider.active = true;
+                        this.overlap.active = true;
+                        this.overlap2.active = true;
+                    },
+                    loop: false
+                })
+        });
     }
 
     update() {
         this.healthText.setText("Health: " + this.player.health);
         if (!gameOver) {
-            this.player.update();
+            this.player.update(this.enemy, this.platforms);
+            this.enemy.update(this.player, this.platforms);
             if (this.player.y >= this.height) { // falling off a ledge
                 gameOver = true;
             }
@@ -133,6 +228,32 @@ class Tutorial extends Phaser.Scene {
                 this.scene.start('menuScene');
             }
         }
+        
+        if(this.enemy.y >=this.height){
+            this.enemy.shooterEvent.destroy();
+            this.enemy.destroy();
+        }
+
+        if(this.player.x > 460){
+            this.jumpTuto.setVisible(true);
+        }
+
+        if(this.player.x > 1400){
+            this.dangerTuto.setVisible(true);
+        }
+
+        if(!this.enemy.body){
+            this.time.addEvent({
+                delay: 700,
+                callback: ()=>{
+                    this.portalSwitch.active = true;
+                    this.portal.setActive(true).setVisible(true);
+                },
+                loop: false
+            })
+        }
+
+        
     }
 
     /*
