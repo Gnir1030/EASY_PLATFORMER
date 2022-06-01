@@ -7,6 +7,11 @@ class Menu extends Phaser.Scene {
         
         // load audio
         this.load.audio('menu_music', './assets/Menu_Music.wav');
+        this.load.audio('gunshot', './assets/gunshot.wav');
+        this.load.audio('explosion', './assets/explosion.wav');
+        this.load.audio('health', './assets/healthIncrease.wav');
+        this.load.audio('ineffective', './assets/not_effective.wav');
+        this.load.audio('damage', './assets/Damage.wav');
     }
 
     create() {

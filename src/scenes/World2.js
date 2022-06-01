@@ -1,34 +1,35 @@
-class World1 extends Phaser.Scene {
+class World2 extends Phaser.Scene {
     constructor() {
-        super("world1Scene");
+        super("world2Scene");
     }
-
     preload() {
         // load audio
         this.load.audio('Jump_noise', './assets/Jump.wav');
+        this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
         this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
         this.load.audio('World_1', './assets/World_1.wav');
 
 
         // load images, spritesheets, and tilemaps
-        this.load.image('tiles1', './assets/tilesheet1.png');
-        this.load.spritesheet("tile1_sheet", "./assets/tilesheet1.png", {
+        this.load.image('tiles2', './assets/tilesheet2.png');
+        this.load.spritesheet("tile2_sheet", "./assets/tilesheet2.png", {
             frameWidth: 32,
             frameHeight: 32
         });
 
-        this.load.tilemapTiledJSON('map1', './assets/world1.json');
+        this.load.tilemapTiledJSON('map2', './assets/world2.json');
         //this.load.image('spike', './assets/spike.png');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-        this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy2', './assets/RightFacingEnemy2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy', './assets/purpleEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy2', './assets/redEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
-        this.load.image('chord2', './assets/High_C_Major_Chord.png');
+        this.load.image('bullet3', './assets/bullet3.png');
+        this.load.image('red_chord', './assets/A_Major_Chord.png');
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
@@ -61,9 +62,9 @@ class World1 extends Phaser.Scene {
 
 
         // map
-        const map = this.make.tilemap({ key: 'map1' });
-        const tileSet = map.addTilesetImage('tile_sheet_1', 'tiles1');
-        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.5); // background layer
+        const map = this.make.tilemap({ key: 'map2' });
+        const tileSet = map.addTilesetImage('tile_sheet_2', 'tiles2');
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.75); // background layer
         const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
         this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
         this.platforms.setCollisionByExclusion(-1, true);
@@ -96,7 +97,7 @@ class World1 extends Phaser.Scene {
             immovable: true
         });
         map.getObjectLayer('Spikes').objects.forEach((spike) => {
-            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
+            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile2_sheet', 20).setOrigin(0);
             sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
         });
         let collides;
@@ -124,12 +125,12 @@ class World1 extends Phaser.Scene {
         // set up health pickups
         this.hPickUp = map.createFromObjects("Health", {
             name: "",
-            key: "tile1_sheet",
+            key: "tile2_sheet",
             frame: 13
         });
         this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
         this.hGroup = this.add.group(this.hPickUp);
-        this.hSFXManager = this.add.particles('tile1_sheet', 6);
+        this.hSFXManager = this.add.particles('tile2_sheet', 6);
         this.hSFX = this.hSFXManager.createEmitter({
             follow: this.player,
             quantity: 20,
@@ -145,20 +146,20 @@ class World1 extends Phaser.Scene {
         }, null, this);
 
         // portal
-        this.anims.create({
-            key: 'portal',
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 2,
-            repeat: -1
-        });
-        let portalPos  = map.findObject("Items", obj => obj.name === "portal");
-        this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
-        this.portal.play('portal');
-        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        // this.anims.create({
+        //     key: 'portal',
+        //     frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+        //     frameRate: 2,
+        //     repeat: -1
+        // });
+        // let portalPos  = map.findObject("Items", obj => obj.name === "portal");
+        // this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
+        // this.portal.play('portal');
+        // this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         // chord item
-        let chordPos = map.findObject("Items", obj => obj.name === "purple_chord");
-        this.chord = new Item(this, chordPos.x, chordPos.y, 'chord2', 0, 2).setOrigin(0);
+        let chordPos = map.findObject("Items", obj => obj.name === "red_chord");
+        this.chord = new Item(this, chordPos.x, chordPos.y, 'red_chord', 0, 2).setOrigin(0);
         this.physics.add.collider(this.player, this.chord, this.collectChord, null, this);
 
         // enmmey creation
@@ -178,14 +179,14 @@ class World1 extends Phaser.Scene {
         // create enemies
         this.enemy = []
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
-        let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "purple");
+        let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "red");
         let index = 0;
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
             index += 1;
         });
         enemyObjects2.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);
@@ -216,7 +217,7 @@ class World1 extends Phaser.Scene {
         });
 
         // add instruction text
-        this.add.text(20, 20, "Level 1").setScrollFactor(0);
+        this.add.text(20, 20, "Level 2").setScrollFactor(0);
         this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
 
         this.bullets = this.add.group();
@@ -283,7 +284,6 @@ class World1 extends Phaser.Scene {
     switchScene() {
         //this.player.destroy();
         this.World_1_music.stop();
-        completed[0] = 1;
         this.scene.start('hubScene');
     }
     collectChord() {

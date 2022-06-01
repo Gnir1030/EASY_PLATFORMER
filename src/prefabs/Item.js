@@ -9,6 +9,8 @@ class Item extends Phaser.Physics.Arcade.Sprite {
         this.body.allowGravity = false;
     }
     addToItems(items) {
-        items.push(this.name);
+        if (!items.includes(this.name)) {
+            items.push(this.name);
+        }
     }
 }

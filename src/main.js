@@ -12,11 +12,11 @@ let config = {
         }
     },
     //scene: [Menu, Tutorial, Hub, World1]
-    scene: [Menu, Tutorial, Hub, World1]
+    scene: [Menu, Tutorial, Hub, World1, World2]
 }
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM, keyT, keyX;
+let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM, keyT, keyA, keyD, keyW;
 
 let borderS = game.config.height/10;
 
@@ -40,4 +40,6 @@ let y = game.config.height;
 let borderUISize = game.config.width/15;
 let borderPadding = borderUISize / 3;
 
-let chords = [1];
+let chords = [1,2];
+
+let completed = [0, 0, 0];
