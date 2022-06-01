@@ -1,6 +1,6 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
 
-    constructor(scene, x, y, texture, frame, kLeft, kRight, kUp, kSpace, kX, mW, mH) {
+    constructor(scene, x, y, texture, frame, kLeft, kRight, kUp, kSpace, kL, kR, mW, mH) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -9,7 +9,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyRight = kRight;
         this.keyUp = kUp;
         this.keySpace = kSpace;
-        this.keyX = kX;
+        this.keyL = kL;
+        this.keyR = kR;
         this.health = 3;
         this.mw = mW;
         this.mh = mH;
@@ -43,9 +44,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update(enemy, platform) {
 
         if(!this.hitted){
-            if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyL)) {
+                this.active = (this.active + chords.length - 1) % chords.length;
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
                 this.active = (this.active + 1) % chords.length;
-                console.log(this.active);
+                //console.log(this.active);
             }
             // move
             if (this.keyLeft.isDown && this.x > 0) {

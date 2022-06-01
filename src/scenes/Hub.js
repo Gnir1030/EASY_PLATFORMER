@@ -43,7 +43,9 @@ class Hub extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-        keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.add.text(20, 20, "Main Hub").setScrollFactor(0);
         this.add.text(84, 84, 'Press M for Menu').setScrollFactor(0);
         //this.add.text(84, 84 + 64, chords[0]);
@@ -63,7 +65,7 @@ class Hub extends Phaser.Scene {
             repeat: -1
         });
         let playerPos  = map.findObject("Player", obj => obj.name === "player");
-        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, keyX, this.length, this.height).setOrigin(0,0);
+        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
 
         // set up camera

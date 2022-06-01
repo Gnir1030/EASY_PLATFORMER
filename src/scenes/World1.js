@@ -54,8 +54,10 @@ class World1 extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
@@ -76,7 +78,7 @@ class World1 extends Phaser.Scene {
         });
 
         let playerPos  = map.findObject("Enemies", obj => obj.name === "player");
-        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyLEFT, keyRIGHT, keyUP, keySPACE, keyX, this.length, this.height).setOrigin(0,0);
+        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
 
