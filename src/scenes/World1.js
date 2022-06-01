@@ -140,7 +140,6 @@ class World1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
             this.hSFX.explode();
-            //console.log(this.player.hitted);
             this.player.life += 1; // add 1 to player health
         }, null, this);
 
