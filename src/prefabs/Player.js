@@ -26,13 +26,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     preload() {
-        this.load.audio('Jump_noise', './assets/Jump.wav');
         //this.load.image('bullet', './assets/bullet.png');
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
     create() {
-        this.jump = this.sound.add('Jump_noise');
         this.setMaxVelocity(200, 2000);
         if(this.hitted){
             this.alpha = 0.5;
@@ -70,7 +68,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
             // jump
             if (this.keyUp.isDown && this.body.onFloor()) {
-                // this.jump.play();
                 this.setVelocityY(-900);
             }
 

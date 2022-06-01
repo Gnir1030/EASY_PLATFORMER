@@ -8,6 +8,7 @@ class Hub extends Phaser.Scene {
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
         this.load.audio('Hub_World', './assets/Hub_World.wav');
+        this.load.audio('gunshot', './assets/gunshot.wav');
 
 
         // load images, spritesheets, and tilemaps
