@@ -57,7 +57,7 @@ class Tutorial extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keySPACE.enabled = false;
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        //keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -66,8 +66,8 @@ class Tutorial extends Phaser.Scene {
         this.add.text(20, 20, "Tutorial Level").setScrollFactor(0);
         this.healthText = this.add.text(700, 20, "Health: " + 3).setScrollFactor(0);
         this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes").setScrollFactor(0); //UI scroll
-        this.moveTuto = this.add.text(120, 540, "Press ←→ to Move");
-        this.jumpTuto = this.add.text(600, 470, "Press Up to Jump").setVisible(false);
+        this.moveTuto = this.add.text(120, 540, "Press A D to Move");
+        this.jumpTuto = this.add.text(600, 470, "Press W to Jump").setVisible(false);
         this.dangerTuto = this.add.text(1555, 400, "CAUTION").setScale(1).setVisible(false);
         this.enemyTuto = this.add.text(2500, 470, "DANGER!").setScale(2);
         this.shootTuto = this.add.text(3200, 5*64, "Press SPACE to Shoot").setVisible(false);
