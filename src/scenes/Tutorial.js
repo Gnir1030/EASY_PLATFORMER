@@ -134,7 +134,7 @@ class Tutorial extends Phaser.Scene {
         });
 
         // portal
-        this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'hubScene').setOrigin(0).setActive(false).setVisible(false);
+        this.portal = new Portal(this, this.length - 64, 5*64, 'portal', 0, 'instructionsScene').setOrigin(0).setActive(false).setVisible(false);
         this.anims.create({
             key: 'portal',
             frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),

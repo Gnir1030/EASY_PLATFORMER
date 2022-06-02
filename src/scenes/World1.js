@@ -23,8 +23,8 @@ class World1 extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-        this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy2', './assets/RightFacingEnemy2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');

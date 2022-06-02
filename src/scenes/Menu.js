@@ -50,7 +50,7 @@ class Menu extends Phaser.Scene {
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.menu_music.stop();
-            this.scene.start('hubScene');
+            this.scene.start('instructionsScene');
         }
         else if (Phaser.Input.Keyboard.JustDown(keyT)) {
             this.menu_music.stop();
