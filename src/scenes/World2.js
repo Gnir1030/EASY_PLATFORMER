@@ -29,7 +29,7 @@ class World2 extends Phaser.Scene {
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
         this.load.image('bullet3', './assets/bullet3.png');
-        this.load.image('red_chord', './assets/A_Major_Chord.png');
+        this.load.image('red_chord', './assets/redStar.png');
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
