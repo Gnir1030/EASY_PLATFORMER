@@ -84,9 +84,9 @@ class World1 extends Phaser.Scene {
         this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
         this.UI = this.add.text(this.player.x - 20, this.player.y - 17);
-        this.physics.add.existing(this.UI);
-        this.UI.body.allowGravity = false;
-        this.UI.body.setVelocityX(50);
+        //this.physics.add.existing(this.UI);
+        //this.UI.body.allowGravity = false;
+        //this.UI.body.setVelocityX(50);
 
         // set up camera
         const viewH = 640;
