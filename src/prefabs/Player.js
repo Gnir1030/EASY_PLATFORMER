@@ -32,6 +32,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     create() {
         this.setMaxVelocity(200, 2000);
+        this.add.text(0, -100, "ooooooo!")
         if(this.hitted){
             this.alpha = 0.5;
             this.life -= 1;
