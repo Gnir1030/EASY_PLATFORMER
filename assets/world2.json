@@ -282,36 +282,36 @@
                  "height":32,
                  "id":72,
                  "name":"",
-                 "rotation":269.325963102015,
+                 "rotation":269.326,
                  "type":"",
                  "visible":true,
                  "width":32,
                  "x":896.87,
-                 "y":319.810670579686
+                 "y":319.811
                 }, 
                 {
                  "gid":2147483669,
                  "height":32,
                  "id":73,
                  "name":"",
-                 "rotation":270.438236524974,
+                 "rotation":270.438,
                  "type":"",
                  "visible":true,
                  "width":32,
                  "x":896.87,
-                 "y":352.121909516007
+                 "y":352.122
                 }, 
                 {
                  "gid":2147483669,
                  "height":32,
                  "id":74,
                  "name":"",
-                 "rotation":270.455622837262,
+                 "rotation":270.456,
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":896.872261555577,
-                 "y":384.126726670696
+                 "x":896.872,
+                 "y":384.127
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1169,7 +1169,7 @@
                  "gid":6,
                  "height":32,
                  "id":55,
-                 "name":"",
+                 "name":"portal",
                  "rotation":0,
                  "type":"",
                  "visible":true,

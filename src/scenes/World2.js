@@ -23,8 +23,8 @@ class World2 extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-        this.load.spritesheet('enemyp', './assets/purpleEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemyr', './assets/redEnemy.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemyp', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemyr', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
@@ -147,16 +147,16 @@ class World2 extends Phaser.Scene {
         }, null, this);
 
         // portal
-        // this.anims.create({
-        //     key: 'portal',
-        //     frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-        //     frameRate: 2,
-        //     repeat: -1
-        // });
-        // let portalPos  = map.findObject("Items", obj => obj.name === "portal");
-        // this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
-        // this.portal.play('portal');
-        // this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.anims.create({
+            key: 'portal',
+            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
+        let portalPos  = map.findObject("Items", obj => obj.name === "portal");
+        this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
+        this.portal.play('portal');
+        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         // chord item
         let chordPos = map.findObject("Items", obj => obj.name === "red_chord");

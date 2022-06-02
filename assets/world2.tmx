@@ -391,6 +391,6 @@
  </objectgroup>
  <objectgroup id="6" name="Items">
   <object id="54" name="red_chord" gid="6" x="3040" y="160" width="32" height="32"/>
-  <object id="55" gid="6" x="1580" y="2580" width="32" height="32"/>
+  <object id="55" name="portal" gid="6" x="1580" y="2580" width="32" height="32"/>
  </objectgroup>
 </map>
