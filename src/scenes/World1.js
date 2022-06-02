@@ -54,6 +54,7 @@ class World1 extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -269,7 +270,7 @@ class World1 extends Phaser.Scene {
                 this.Game_over.stop();
                 this.scene.restart();
             }
-            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            if (Phaser.Input.Keyboard.JustDown(keyM)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
                 this.scene.start('hubScene');

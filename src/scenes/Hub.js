@@ -97,12 +97,19 @@ class Hub extends Phaser.Scene {
         this.physics.add.collider(this.player, this.portal, (obj1, obj2) => {
             this.scene.start(obj2.destination);
         }, null, this);
-        this.physics.add.collider(this.player, this.portal2, (obj1, obj2) => {
+        
+        this.portal2Collides = this.physics.add.collider(this.player, this.portal2, (obj1, obj2) => {
             this.scene.start(obj2.destination);
         }, null, this);
+        this.portal2Collides.active = false;
+        this.portal2.visible = false;
     }
 
     update() {
+        if (completed[0] == 1) {
+            this.portal2Collides.active = true;
+            this.portal2.visible = true;
+        }
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
             this.Hub_World_music.stop();
             this.scene.start('menuScene');
