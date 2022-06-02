@@ -40,7 +40,7 @@ class World1 extends Phaser.Scene {
 
         // base settings for this scene
         gameOver = false;
-        this.chord;
+        this.chords;
         this.length = 100*32;
         this.height = 100*32;
         this.count = 0;
@@ -257,15 +257,15 @@ class World1 extends Phaser.Scene {
     update() {
         switch(this.player.active){
             case 0:
-                this.chord = 'BLUE'
+                this.chords = 'BLUE'
                 break;
             case 1:
-                this.chord = 'PURPLE'
+                this.chords = 'PURPLE'
                 break;
         }
         this.UI.x = this.player.x - 20;
         this.UI.y = this.player.y - 17;
-        this.UI.text = "Weapon: " + this.chord;
+        this.UI.text = "Weapon: " + this.chords;
 
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
