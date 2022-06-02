@@ -171,14 +171,14 @@ class World1 extends Phaser.Scene {
         // enmmey creation
         this.anims.create({
             key: 'idle2',
-            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: 'idle3',
-            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
+            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
             repeat: -1
         });
 
@@ -189,10 +189,12 @@ class World1 extends Phaser.Scene {
         let index = 0;
         enemyObjects.map((element) => {
             this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle2');
             index += 1;
         });
         enemyObjects2.map((element) => {
             this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle3');
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);
