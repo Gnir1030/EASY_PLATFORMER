@@ -41,6 +41,7 @@ class World2 extends Phaser.Scene {
 
         // base settings for this scene
         gameOver = false;
+        this.chord;
         this.length = 100*32;
         this.height = 100*32;
         this.count = 0;
@@ -82,6 +83,7 @@ class World2 extends Phaser.Scene {
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
+        this.UI = this.add.text();
 
         // set up camera
         const viewH = 640;
@@ -101,13 +103,14 @@ class World2 extends Phaser.Scene {
             let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile2_sheet', 20).setOrigin(0);
             sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
         });
-        let collides;
-        collides = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+        this.collider = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
                 {obj1.enemyDir = 'right'}
             else
                 {obj1.enemyDir = 'left'}
-            collides.active = false;
+            this.collider.active = false;
+            this.overlap.active = false;
+            this.overlap2.active = false;
             this.player.hitted = true;
             this.player.shadow = true;
             this.player.life -= 1;
@@ -116,8 +119,9 @@ class World2 extends Phaser.Scene {
                     callback: ()=>{
                         this.player.alpha = 1;
                         this.player.hitted = false;
-                        this.player.lifeHandler = false;
-                        collides.active = true;
+                        this.collider.active = false;
+                        this.overlap.active = false;
+                        this.overlap2.active = false;
                     },
                     loop: false
                 })
@@ -199,6 +203,7 @@ class World2 extends Phaser.Scene {
                 {obj1.enemyDir = 'right'}
             else
                 {obj1.enemyDir = 'left'}
+                this.collider.active = false;
             this.overlap.active = false;
             this.overlap2.active = false;
             this.player.hitted = true;
@@ -209,7 +214,7 @@ class World2 extends Phaser.Scene {
                     callback: ()=>{
                         this.player.alpha = 1;
                         this.player.hitted = false;
-                        this.player.lifeHandler = false;
+                        this.collider.active = true;
                         this.overlap.active = true;
                         this.overlap2.active = true;
                     },
@@ -227,16 +232,18 @@ class World2 extends Phaser.Scene {
                 {obj1.enemyDir = 'right'}
             else
                 {obj1.enemyDir = 'left'}
+            this.collider.active = false;
             this.overlap2.active = false;
             this.overlap.active = false;
             this.player.hitted = true;
+            this.player.life -= 1;
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
                     callback: ()=>{
                         this.player.alpha = 1;
                         this.player.hitted = false;
-                        this.player.lifeHandler = false;
+                        this.collider.active = true;
                         this.overlap.active = true;
                         this.overlap2.active = true;
                     },
@@ -246,6 +253,18 @@ class World2 extends Phaser.Scene {
     }
 
     update() {
+        switch(this.player.active){
+            case 0:
+                this.chord = 'BLUE'
+                break;
+            case 1:
+                this.chord = 'PURPLE'
+                break;
+        }
+        this.UI.x = this.player.x - 20;
+        this.UI.y = this.player.y - 17;
+        this.UI.text = "Weapon: " + this.chord;
+
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             for (let i = 0; i < this.enemy.length; i++) {
@@ -261,8 +280,9 @@ class World2 extends Phaser.Scene {
                 y = this.player.y;
                 this.count += 1;
             }
-            this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 32, 'Press (R) to Restart or M to return to the Hub World', scoreConfig).setOrigin(0.5);
+            this.physics.pause();
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
