@@ -23,6 +23,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.shadow = false;
         this.life = 3;
         this.active = 0;
+        this.magazine = 10;
     }
 
     preload() {
@@ -61,7 +62,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
 
             // fire
-            if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+            if (Phaser.Input.Keyboard.JustDown(this.keySpace) ) {
                 this.isFire = true;
             } else {
                 this.isFire = false;
@@ -81,12 +82,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 //this.dir = 'left';
             }
 
-            if(this.isFire) {
+            if(this.isFire && this.magazine > 0) {
                 if (!this.flipX) {
                     this.spawnBullet('right', enemy, platform);
+                    this.magazine -= 1;
                 }
                 else if (this.flipX) {
                     this.spawnBullet('left', enemy, platform);
+                    this.magazine -= 1;
                 }
                 this.isFire = false;
             }

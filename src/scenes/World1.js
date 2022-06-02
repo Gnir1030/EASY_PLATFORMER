@@ -166,7 +166,7 @@ class World1 extends Phaser.Scene {
         // chord item
         let chordPos = map.findObject("Items", obj => obj.name === "purple_chord");
         this.chord = new Item(this, chordPos.x, chordPos.y, 'chord2', 0, 2).setOrigin(0);
-        this.physics.add.collider(this.player, this.chord, this.collectChord, null, this);
+        this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
 
         // enmmey creation
         this.anims.create({
@@ -226,6 +226,7 @@ class World1 extends Phaser.Scene {
         // add instruction text
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
         this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
+        this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
 
         //bullet hitback
         this.bullets = this.add.group();
@@ -253,7 +254,7 @@ class World1 extends Phaser.Scene {
                 })
         });
     }
-
+ 
     update() {
         switch(this.player.active){
             case 0:
@@ -277,6 +278,7 @@ class World1 extends Phaser.Scene {
             }
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
+            this.magazineText.text = this.player.magazine + " bullets";
         } else {
             if (this.count < 1) {
                 this.World_1_music.stop();
@@ -314,6 +316,7 @@ class World1 extends Phaser.Scene {
     collectChord() {
         //this.sound.play('Low_C_Chord');
         this.chord.addToItems(chords);
-        this.chord.destroy();
+        this.player.magazine = 20;
+        //this.chord.destroy();
     }
 }
