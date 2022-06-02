@@ -92,7 +92,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         
-        if(this.hitted && this.shadow){
+        if(this.hitted && this.shadow && this.life > 0){
             if(this.enemyDir == 'left'){
                 this.setVelocityX(700);
                 this.setVelocityY(-500);

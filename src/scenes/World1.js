@@ -57,6 +57,7 @@ class World1 extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
@@ -99,13 +100,15 @@ class World1 extends Phaser.Scene {
             let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
             sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
         });
-        let collides;
-        collides = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+
+        this.collider = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
             if(obj1.x - obj2.x  < 0)
                 {obj1.enemyDir = 'right'}
             else
                 {obj1.enemyDir = 'left'}
-            collides.active = false;
+            this.collider.active = false;
+            this.overlap.active = false;
+            this.overlap2.active = false;
             this.player.hitted = true;
             this.player.shadow = true;
             this.player.life -= 1;
@@ -114,8 +117,9 @@ class World1 extends Phaser.Scene {
                     callback: ()=>{
                         this.player.alpha = 1;
                         this.player.hitted = false;
-                        this.player.lifeHandler = false;
-                        collides.active = true;
+                        this.collider.active = true;
+                        this.overlap.active = true;
+                        this.overlap2.active = true;
                     },
                     loop: false
                 })
@@ -207,7 +211,6 @@ class World1 extends Phaser.Scene {
                     callback: ()=>{
                         this.player.alpha = 1;
                         this.player.hitted = false;
-                        this.player.lifeHandler = false;
                         this.overlap.active = true;
                         this.overlap2.active = true;
                     },
@@ -229,13 +232,13 @@ class World1 extends Phaser.Scene {
             this.overlap2.active = false;
             this.overlap.active = false;
             this.player.hitted = true;
+            this.player.life -= 1;
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
                     callback: ()=>{
                         this.player.alpha = 1;
                         this.player.hitted = false;
-                        this.player.lifeHandler = false;
                         this.overlap.active = true;
                         this.overlap2.active = true;
                     },
@@ -256,12 +259,11 @@ class World1 extends Phaser.Scene {
             if (this.count < 1) {
                 this.World_1_music.stop();
                 this.Game_over.play();
-                x = this.player.x;
-                y = this.player.y;
                 this.count += 1;
             }
-            this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 32, 'Press (R) to Restart or <- to return to the Hub World', scoreConfig).setOrigin(0.5);
+            this.physics.pause();
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return to the Hub World', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
