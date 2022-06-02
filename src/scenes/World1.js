@@ -40,7 +40,7 @@ class World1 extends Phaser.Scene {
 
         // base settings for this scene
         gameOver = false;
-        this.chords;
+        this.weapon;
         this.length = 100*32;
         this.height = 100*32;
         this.count = 0;
@@ -83,7 +83,10 @@ class World1 extends Phaser.Scene {
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
-        this.UI = this.add.text();
+        this.UI = this.add.text(this.player.x - 20, this.player.y - 17);
+        this.physics.add.existing(this.UI);
+        this.UI.body.allowGravity = false;
+        this.UI.body.setVelocityX(50);
 
         // set up camera
         const viewH = 640;
@@ -257,15 +260,18 @@ class World1 extends Phaser.Scene {
     update() {
         switch(this.player.active){
             case 0:
-                this.chords = 'BLUE'
+                this.weapon = 'BLUE'
                 break;
             case 1:
-                this.chords = 'PURPLE'
+                this.weapon = 'PURPLE'
+                break;
+            case 2:
+                this.weapon = 'RED'
                 break;
         }
         this.UI.x = this.player.x - 20;
         this.UI.y = this.player.y - 17;
-        this.UI.text = "Weapon: " + this.chords;
+        this.UI.text = "Weapon: " + this.weapon;
 
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);

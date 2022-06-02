@@ -41,7 +41,7 @@ class World2 extends Phaser.Scene {
 
         // base settings for this scene
         gameOver = false;
-        this.chords;
+        this.weapon;
         this.length = 100*32;
         this.height = 100*32;
         this.count = 0;
@@ -164,7 +164,7 @@ class World2 extends Phaser.Scene {
 
         // chord item
         let chordPos = map.findObject("Items", obj => obj.name === "red_chord");
-        this.chord = new Item(this, chordPos.x, chordPos.y, 'red_chord', 0, 2).setOrigin(0);
+        this.chord = new Item(this, chordPos.x, chordPos.y, 'red_chord', 0, 3).setOrigin(0);
         this.physics.add.collider(this.player, this.chord, this.collectChord, null, this);
 
         // enmmey creation
@@ -253,17 +253,21 @@ class World2 extends Phaser.Scene {
     }
 
     update() {
+        console.log(chords)
         switch(this.player.active){
             case 0:
-                this.chords = 'BLUE'
+                this.weapon = 'BLUE'
                 break;
             case 1:
-                this.chords = 'PURPLE'
+                this.weapon = 'PURPLE'
+                break;
+            case 2:
+                this.weapon = 'RED'
                 break;
         }
         this.UI.x = this.player.x - 20;
         this.UI.y = this.player.y - 17;
-        this.UI.text = "Weapon: " + this.chords;
+        this.UI.text = "Weapon: " + this.weapon;
 
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);

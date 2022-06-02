@@ -15,6 +15,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.time = scene.time;
         this.firing = true;
         this.shooterEvent;
+        this.trace = false;
     }
 
     update(player, platform) {
@@ -25,7 +26,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.direction = 'left';
         }
 
-        if (this.body) {
+        if((this.y - player.y < 50 && this.y - player.y > -50) && (this.x - player.x < 420 && this.x-player.x > -420)){
+            this.trace = true;
+        }
+
+        if (this.body && this.trace) {
             // enemy ai
             if (this.detect(player) == 'left') {
                 this.body.setVelocityX(-50);
@@ -66,7 +71,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     detect(player) {
-        let maxDist = 5 * 64
+        let maxDist = 6 * 64
         let dist = Phaser.Math.Distance.BetweenPoints(this, player);
         let dir = player.x - this.x;
 

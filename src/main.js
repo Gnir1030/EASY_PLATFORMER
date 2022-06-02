@@ -11,7 +11,7 @@ let config = {
             debug: true
         }
     },
-    //scene: [Menu, Tutorial, Hub, World1]
+    //scene: [World2]
     scene: [Menu, Tutorial, Instructions, Hub, World1, World2]
 }
 let game = new Phaser.Game(config);
