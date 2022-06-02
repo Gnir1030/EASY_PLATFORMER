@@ -164,7 +164,7 @@ class World2 extends Phaser.Scene {
 
         // chord item
         let chordPos = map.findObject("Items", obj => obj.name === "red_chord");
-        this.chord = new Item(this, chordPos.x, chordPos.y, 'red_chord', 0, 2).setOrigin(0);
+        this.chord = new Item(this, chordPos.x, chordPos.y, 'red_chord', 0, 3).setOrigin(0);
         this.physics.add.collider(this.player, this.chord, this.collectChord, null, this);
 
         // enmmey creation
