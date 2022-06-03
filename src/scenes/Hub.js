@@ -96,12 +96,15 @@ class Hub extends Phaser.Scene {
         // portals
         let portalPos  = map.findObject("Portals", obj => obj.name === "portal1");
         this.portal = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world1Scene').setOrigin(0);
+        this.clear1 = this.add.text(portalPos.x, portalPos.y + 175, 'Cleared').setVisible(false);
 
         portalPos  = map.findObject("Portals", obj => obj.name === "portal2");
         this.portal2 = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world2Scene').setOrigin(0);
+        this.clear2 = this.add.text(portalPos.x, portalPos.y + 175, 'Cleared').setVisible(false);
 
         portalPos  = map.findObject("Portals", obj => obj.name === "portal3");
         this.portal3 = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world3Scene').setOrigin(0);
+        this.clear3 = this.add.text(portalPos.x, portalPos.y + 175, 'Cleared').setVisible(false);
 
         this.anims.create({
             key: 'portal',
@@ -134,10 +137,20 @@ class Hub extends Phaser.Scene {
         if (completed[0] == 1) {
             this.portal2Collides.active = true;
             this.portal2.visible = true;
+            this.clear1.setVisible(true);
+        }
+        if(completed[1] == 1){
+            this.clear2.setVisible(true);
         }
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
             this.Hub_World_music.stop();
             this.scene.start('menuScene');
+        }
+
+        if(completed[0] == 1 && completed[1] == 1 && completed[2] == 1){
+            this.physics.pause();
+            this.add.text(config.width/2, config.height/2 , "Thanks for playing!");
+            //this.add.text(84, 84, 'Press M for Menu');
         }
         this.player.update();
     }

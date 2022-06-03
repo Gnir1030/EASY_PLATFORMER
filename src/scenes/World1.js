@@ -257,7 +257,6 @@ class World1 extends Phaser.Scene {
     }
  
     update() {
-        console.log(chords)
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             this.UI.update(this.player);
