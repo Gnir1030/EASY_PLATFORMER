@@ -40,10 +40,11 @@ class World2 extends Phaser.Scene {
         this.World_1_music.loop = true;
 
         // base settings for this scene
+        this.complete = false;
         gameOver = false;
         this.weapon;
         this.length = 100*32;
-        this.height = 100*32;
+        this.height = 101*32;
         this.count = 0;
         this.physics.world.gravity.y = 2000;
         
