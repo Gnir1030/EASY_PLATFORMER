@@ -87,15 +87,20 @@ class Hub extends Phaser.Scene {
 
         portalPos  = map.findObject("Portals", obj => obj.name === "portal2");
         this.portal2 = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world2Scene').setOrigin(0);
+
+        portalPos  = map.findObject("Portals", obj => obj.name === "portal3");
+        this.portal3 = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world3Scene').setOrigin(0);
+
         this.anims.create({
             key: 'portal',
             frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 4,
+            frameRate: 10,
             repeat: -1
         });
         this.Hub_World_music.stop();
         this.portal.play('portal');
         this.portal2.play('portal');
+        this.portal3.play('portal');
         this.physics.add.collider(this.player, this.portal, (obj1, obj2) => {
             this.scene.start(obj2.destination);
         }, null, this);
@@ -105,6 +110,12 @@ class Hub extends Phaser.Scene {
         }, null, this);
         this.portal2Collides.active = false;
         this.portal2.visible = false;
+
+        this.portal3Collides = this.physics.add.collider(this.player, this.portal3, (obj1, obj2) => {
+            this.scene.start(obj2.destination);
+        }, null, this);
+        // this.portal3Collides.active = false;
+        // this.portal3.visible = false;
     }
 
     update() {

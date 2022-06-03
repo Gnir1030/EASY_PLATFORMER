@@ -40,10 +40,11 @@ class World2 extends Phaser.Scene {
         this.World_1_music.loop = true;
 
         // base settings for this scene
+        this.complete = false;
         gameOver = false;
         this.weapon;
         this.length = 100*32;
-        this.height = 100*32;
+        this.height = 101*32;
         this.count = 0;
         this.physics.world.gravity.y = 2000;
         
@@ -170,31 +171,33 @@ class World2 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
         this.chordTuto = this.add.text(chordPos.x - 100, chordPos.y - 50, "PRESS (T) to recharge bullets", {color: '#000000'});
 
-        // enmmey creation
+        // create enemies
+        // enemey animation
         this.anims.create({
             key: 'idle2',
-            frames: this.anims.generateFrameNumbers('enemyp', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
+            frames: this.anims.generateFrameNumbers('enemyp', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: 'idle3',
-            frames: this.anims.generateFrameNumbers('enemyr', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
+            frames: this.anims.generateFrameNumbers('enemyr', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
             repeat: -1
         });
-
-        // create enemies
+        // enemy array creation
         this.enemy = []
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
         let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "red");
         let index = 0;
         enemyObjects.map((element) => {
             this.enemy[index] = new Enemy(this, element.x, element.y, 'enemyp', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle2');
             index += 1;
         });
         enemyObjects2.map((element) => {
             this.enemy[index] = new Enemy(this, element.x, element.y, 'enemyr', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle3');
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);

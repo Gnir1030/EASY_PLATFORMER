@@ -1,6 +1,6 @@
-class World1 extends Phaser.Scene {
+class World3 extends Phaser.Scene {
     constructor() {
-        super("world1Scene");
+        super("world3Scene");
     }
 
     preload() {
@@ -12,23 +12,27 @@ class World1 extends Phaser.Scene {
 
 
         // load images, spritesheets, and tilemaps
-        this.load.image('tiles1', './assets/tilesheet1.png');
-        this.load.spritesheet("tile1_sheet", "./assets/tilesheet1.png", {
+        this.load.image('tiles3', './assets/tilesheet3.png');
+        this.load.spritesheet("tile3_sheet", "./assets/tilesheet3.png", {
             frameWidth: 32,
             frameHeight: 32
         });
 
-        this.load.tilemapTiledJSON('map1', './assets/world1.json');
+        this.load.tilemapTiledJSON('map3', './assets/world3.json');
         //this.load.image('spike', './assets/spike.png');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-        this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy_blue', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy_purple', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy_red', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy_green', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
-        this.load.image('chord2', './assets/purpleStar.png');
+        this.load.image('bullet3', './assets/bullet3.png');
+        this.load.image('bullet4', './assets/bullet4.png');
+        this.load.image('green_chord', './assets/greenStar.png');
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
@@ -59,13 +63,13 @@ class World1 extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
         // map
-        const map = this.make.tilemap({ key: 'map1' });
-        const tileSet = map.addTilesetImage('tile_sheet_1', 'tiles1');
+        const map = this.make.tilemap({ key: 'map3' });
+        const tileSet = map.addTilesetImage('tile_sheet_3', 'tiles3');
         const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.5); // background layer
         const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
         this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
@@ -95,79 +99,78 @@ class World1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platforms);
 
         // spikes
-        this.spikes = this.physics.add.group({
-            allowGravity: false,
-            immovable: true
-        });
-        map.getObjectLayer('Spikes').objects.forEach((spike) => {
-            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
-            sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
-        });
+        // this.spikes = this.physics.add.group({
+        //     allowGravity: false,
+        //     immovable: true
+        // });
+        // map.getObjectLayer('Spikes').objects.forEach((spike) => {
+        //     let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
+        //     sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
+        // });
 
-        this.collider = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
-            if(obj1.x - obj2.x  < 0)
-                {obj1.enemyDir = 'right'}
-            else
-                {obj1.enemyDir = 'left'}
-            this.collider.active = false;
-            this.overlap.active = false;
-            this.overlap2.active = false;
-            this.player.hitted = true;
-            this.player.shadow = true;
-            this.player.life -= 1;
-                this.timedEvent = this.time.addEvent({
-                    delay: 700,
-                    callback: ()=>{
-                        this.player.alpha = 1;
-                        this.player.hitted = false;
-                        this.collider.active = true;
-                        this.overlap.active = true;
-                        this.overlap2.active = true;
-                    },
-                    loop: false
-                })
-        });
+        // this.collider = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+        //     if(obj1.x - obj2.x  < 0)
+        //         {obj1.enemyDir = 'right'}
+        //     else
+        //         {obj1.enemyDir = 'left'}
+        //     this.collider.active = false;
+        //     this.overlap.active = false;
+        //     this.overlap2.active = false;
+        //     this.player.hitted = true;
+        //     this.player.shadow = true;
+        //     this.player.life -= 1;
+        //         this.timedEvent = this.time.addEvent({
+        //             delay: 700,
+        //             callback: ()=>{
+        //                 this.player.alpha = 1;
+        //                 this.player.hitted = false;
+        //                 this.collider.active = true;
+        //                 this.overlap.active = true;
+        //                 this.overlap2.active = true;
+        //             },
+        //             loop: false
+        //         })
+        // });
 
         // set up health pickups
-        this.hPickUp = map.createFromObjects("Health", {
-            name: "",
-            key: "tile1_sheet",
-            frame: 13
-        });
-        this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
-        this.hGroup = this.add.group(this.hPickUp);
-        this.hSFXManager = this.add.particles('tile1_sheet', 6);
-        this.hSFX = this.hSFXManager.createEmitter({
-            follow: this.player,
-            quantity: 20,
-            scale: {start: 1.0, end: 0.0},  // start big, end small
-            speed: {min: 50, max: 100}, // speed up
-            lifespan: 800,   // short lifespan
-            on: false   // do not immediately start, will trigger in collision
-        });
-        this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
-            obj2.destroy(); // remove coin on overlap
-            this.hSFX.explode();
-            this.player.life += 1; // add 1 to player health
-        }, null, this);
+        // this.hPickUp = map.createFromObjects("Health", {
+        //     name: "",
+        //     key: "tile3_sheet",
+        //     frame: 13
+        // });
+        // this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
+        // this.hGroup = this.add.group(this.hPickUp);
+        // this.hSFXManager = this.add.particles('tile3_sheet', 6);
+        // this.hSFX = this.hSFXManager.createEmitter({
+        //     follow: this.player,
+        //     quantity: 20,
+        //     scale: {start: 1.0, end: 0.0},  // start big, end small
+        //     speed: {min: 50, max: 100}, // speed up
+        //     lifespan: 800,   // short lifespan
+        //     on: false   // do not immediately start, will trigger in collision
+        // });
+        // this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
+        //     obj2.destroy(); // remove coin on overlap
+        //     this.hSFX.explode();
+        //     this.player.life += 1; // add 1 to player health
+        // }, null, this);
 
         // portal
-        this.anims.create({
-            key: 'portal',
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 2,
-            repeat: -1
-        });
-        let portalPos  = map.findObject("Items", obj => obj.name === "portal");
-        this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
-        this.portal.play('portal');
-        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        // this.anims.create({
+        //     key: 'portal',
+        //     frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+        //     frameRate: 2,
+        //     repeat: -1
+        // });
+        // let portalPos  = map.findObject("Items", obj => obj.name === "portal");
+        // this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
+        // this.portal.play('portal');
+        // this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
         // chord item
-        let chordPos = map.findObject("Items", obj => obj.name === "purple_chord");
-        this.chord = new Item(this, chordPos.x, chordPos.y, 'chord2', 0, 2).setOrigin(0);
+        let chordPos = map.findObject("Items", obj => obj.name === "green_chord");
+        this.chord = new Item(this, chordPos.x, chordPos.y, 'green_chord', 0, 4).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
-        this.chordTuto = this.add.text(chordPos.x - 50, chordPos.y - 50, "PRESS (T) to recharge bullets");
 
         // enmmey creation
         this.anims.create({
@@ -184,47 +187,47 @@ class World1 extends Phaser.Scene {
         });
 
         // create enemies
-        this.enemy = []
-        let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
-        let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "purple");
-        let index = 0;
-        enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
-            this.enemy[index].play('idle2');
-            index += 1;
-        });
-        enemyObjects2.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
-            this.enemy[index].play('idle3');
-            index += 1;
-        });
-        this.enemies = this.physics.add.group(this.enemy);
-        this.physics.add.collider(this.enemies, this.platforms);
+        // this.enemy = []
+        // let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
+        // let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "purple");
+        // let index = 0;
+        // enemyObjects.map((element) => {
+        //     this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
+        //     this.enemy[index].play('idle2');
+        //     index += 1;
+        // });
+        // enemyObjects2.map((element) => {
+        //     this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+        //     this.enemy[index].play('idle3');
+        //     index += 1;
+        // });
+        // this.enemies = this.physics.add.group(this.enemy);
+        // this.physics.add.collider(this.enemies, this.platforms);
 
-        // do damage if player collides with enemies
-        this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
-            if(obj1.x - obj2.x  < 0)
-                {obj1.enemyDir = 'right'}
-            else
-                {obj1.enemyDir = 'left'}
-            this.collider.active = false;
-            this.overlap.active = false;
-            this.overlap2.active = false;
-            this.player.hitted = true;
-            this.player.life -= 1;
-            this.player.shadow = true;
-                this.timedEvent = this.time.addEvent({
-                    delay: 700,
-                    callback: ()=>{
-                        this.player.alpha = 1;
-                        this.player.hitted = false;
-                        this.collider.active = true;
-                        this.overlap.active = true;
-                        this.overlap2.active = true;
-                    },
-                    loop: false
-                })
-        });
+        // // do damage if player collides with enemies
+        // this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
+        //     if(obj1.x - obj2.x  < 0)
+        //         {obj1.enemyDir = 'right'}
+        //     else
+        //         {obj1.enemyDir = 'left'}
+        //     this.collider.active = false;
+        //     this.overlap.active = false;
+        //     this.overlap2.active = false;
+        //     this.player.hitted = true;
+        //     this.player.life -= 1;
+        //     this.player.shadow = true;
+        //         this.timedEvent = this.time.addEvent({
+        //             delay: 700,
+        //             callback: ()=>{
+        //                 this.player.alpha = 1;
+        //                 this.player.hitted = false;
+        //                 this.collider.active = true;
+        //                 this.overlap.active = true;
+        //                 this.overlap2.active = true;
+        //             },
+        //             loop: false
+        //         })
+        // });
 
         // add instruction text
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
@@ -259,6 +262,23 @@ class World1 extends Phaser.Scene {
     }
  
     update() {
+        switch(this.player.active){
+            case 0:
+                this.weapon = 'BLUE'
+                break;
+            case 1:
+                this.weapon = 'PURPLE'
+                break;
+            case 2:
+                this.weapon = 'RED'
+                break;
+            case 3:
+                this.weapon = 'GREEN'
+                break;
+        }
+        //this.UI.setPosition(this.player.x - 20,this.player.y - 17);
+        //this.UI.text = "Weapon: " + this.weapon;
+
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             this.UI.update(this.player);
@@ -268,17 +288,6 @@ class World1 extends Phaser.Scene {
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
-
-            if(!this.chord.body.touching.none){
-                this.chordTuto.setVisible(true);
-                if (Phaser.Input.Keyboard.JustDown(keyT)) {
-                    this.player.magazine = 20;
-                }
-            }
-            else{
-                this.chordTuto.setVisible(false);
-            }
-
         } else {
             if (this.count < 1) {
                 this.World_1_music.stop();
@@ -287,7 +296,7 @@ class World1 extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
@@ -310,11 +319,13 @@ class World1 extends Phaser.Scene {
     switchScene() {
         //this.player.destroy();
         this.World_1_music.stop();
-        completed[0] = 1;
+        completed[2] = 1;
         this.scene.start('hubScene');
     }
     collectChord() {
         //this.sound.play('Low_C_Chord');
         this.chord.addToItems(chords);
+        this.player.magazine = 20;
+        //this.chord.destroy();
     }
 }
