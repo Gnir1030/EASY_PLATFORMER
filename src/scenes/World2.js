@@ -135,6 +135,9 @@ class World2 extends Phaser.Scene {
             key: "tile2_sheet",
             frame: 13
         });
+        for (let i = 0; i < this.hPickUp.length; i++) {
+            this.hPickUp[i].y += 96;
+        }
         this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
         this.hGroup = this.add.group(this.hPickUp);
         this.hSFXManager = this.add.particles('tile2_sheet', 6);
