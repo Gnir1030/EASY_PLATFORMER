@@ -40,11 +40,13 @@ class Menu extends Phaser.Scene {
     menuConfig.backgroundColor = '#00FF00';
     menuConfig.color = '#000';
     this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding, 'Press ← to Play', menuConfig).setOrigin(0.5);
-    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +32, 'or Press T to play the Tutorial', menuConfig).setOrigin(0.5);
+    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +32, 'Press (T) to play the Tutorial', menuConfig).setOrigin(0.5);
+    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +64, 'Press (R) to see credit', menuConfig).setOrigin(0.5);
     // define keys
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+    keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
 
     update() {
@@ -55,6 +57,10 @@ class Menu extends Phaser.Scene {
         else if (Phaser.Input.Keyboard.JustDown(keyT)) {
             this.menu_music.stop();
             this.scene.start('tutorialScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.menu_music.stop();
+            this.scene.start('creditScene');
         }
     }
 }

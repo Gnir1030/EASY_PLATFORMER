@@ -12,7 +12,7 @@ let config = {
         }
     },
     //scene: [World2]
-    scene: [Menu, Tutorial, Instructions, Hub, World1, World2, World3]
+    scene: [Menu, Tutorial, Instructions, Credit, Hub, World1, World2, World3]
 }
 let game = new Phaser.Game(config);
 
