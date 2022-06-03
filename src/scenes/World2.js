@@ -160,13 +160,13 @@ class World2 extends Phaser.Scene {
         // chord item
         let chordPos = map.findObject("Items", obj => obj.name === "red_chord");
         this.chord = new Item(this, chordPos.x, chordPos.y, 'chord3', 0, 3).setOrigin(0);
-        this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
+        this.physics.add.overlap(this.player, this.chord, ()=>{this.collectChord(this.chord)}, null, this);
         this.chordTuto = this.add.text(chordPos.x - 100, chordPos.y - 50, "PRESS (T) to recharge bullets", {color: '#000000'});
 
         // purple chord item
         let chordPos2 = map.findObject("Items", obj => obj.name === "purple_chord");
         this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord2', 0, 2).setOrigin(0);
-        this.physics.add.overlap(this.player, this.chord2, this.collectChord, null, this);
+        this.physics.add.overlap(this.player, this.chord2, ()=>{this.collectChord(this.chord2)}, null, this);
         this.chordTuto2 = this.add.text(chordPos2.x - 100, chordPos2.y - 50, "PRESS (T) to recharge bullets",{color: '#000000'});
         
         // create enemies
@@ -189,12 +189,12 @@ class World2 extends Phaser.Scene {
         let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "red");
         let index = 0;
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemyp', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
             this.enemy[index].play('idle2');
             index += 1;
         });
         enemyObjects2.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemyr', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy3', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
             this.enemy[index].play('idle3');
             index += 1;
         });
@@ -323,9 +323,9 @@ class World2 extends Phaser.Scene {
         completed[1] = 1;
         this.scene.start('hubScene');
     }
-    collectChord() {
+    collectChord(chord) {
         //this.sound.play('Low_C_Chord');
-        this.chord.addToItems(chords);
+        chord.addToItems(chords);
         //this.player.magazine = 30;
     }
 }

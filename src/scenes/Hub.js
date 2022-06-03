@@ -25,6 +25,10 @@ class Hub extends Phaser.Scene {
         this.load.image('chord1', './assets/blueStar.png');
         this.load.image('chord2', './assets/purpleStar.png');
         this.load.image('chord3', './assets/redStar.png');
+
+        this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy3', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
     }
 
     create() {

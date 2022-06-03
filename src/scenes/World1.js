@@ -19,8 +19,6 @@ class World1 extends Phaser.Scene {
         });
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
-        this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
     }
 
     create() {
@@ -160,13 +158,13 @@ class World1 extends Phaser.Scene {
         // purple chord item
         let chordPos2 = map.findObject("Items", obj => obj.name === "purple_chord");
         this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord2', 0, 2).setOrigin(0);
-        this.physics.add.overlap(this.player, this.chord2, this.collectChord, null, this);
+        this.physics.add.overlap(this.player, this.chord2, ()=>{this.collectChord(this.chord2)}, null, this);
         this.chordTuto2 = this.add.text(chordPos2.x - 50, chordPos2.y - 50, "PRESS (T) to recharge bullets");
 
         // blue chord item
         let chordPos = map.findObject("Items", obj => obj.name === "blue_chord");
         this.chord = new Item(this, chordPos.x, chordPos.y, 'chord1', 0, 1).setOrigin(0);
-        this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
+        this.physics.add.overlap(this.player, this.chord, ()=>{this.collectChord(this.chord)}, null, this);
         this.chordTuto = this.add.text(chordPos.x - 50, chordPos.y - 50, "PRESS (T) to recharge bullets");
 
         // enmmey creation
@@ -259,6 +257,7 @@ class World1 extends Phaser.Scene {
     }
  
     update() {
+        console.log(chords)
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             this.UI.update(this.player);
@@ -324,8 +323,8 @@ class World1 extends Phaser.Scene {
         completed[0] = 1;
         this.scene.start('hubScene');
     }
-    collectChord() {
+    collectChord(chord) {
         //this.sound.play('Low_C_Chord');
-        this.chord.addToItems(chords);
+        chord.addToItems(chords);
     }
 }
