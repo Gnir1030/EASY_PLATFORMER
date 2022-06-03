@@ -266,29 +266,13 @@ class World3 extends Phaser.Scene {
     }
  
     update() {
-        switch(this.player.active){
-            case 0:
-                this.weapon = 'BLUE'
-                break;
-            case 1:
-                this.weapon = 'PURPLE'
-                break;
-            case 2:
-                this.weapon = 'RED'
-                break;
-            case 3:
-                this.weapon = 'GREEN'
-                break;
-        }
-        //this.UI.setPosition(this.player.x - 20,this.player.y - 17);
-        //this.UI.text = "Weapon: " + this.weapon;
 
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             this.UI.update(this.player);
-            for (let i = 0; i < this.enemy.length; i++) {
-                this.enemy[i].update(this.player, this.platforms);
-            }
+            //for (let i = 0; i < this.enemy.length; i++) {
+                //this.enemy[i].update(this.player, this.platforms);
+            //}
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
