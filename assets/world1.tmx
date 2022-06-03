@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="76">
+<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="77">
  <editorsettings>
   <export target="world1.json" format="json"/>
  </editorsettings>
@@ -390,5 +390,6 @@
  <objectgroup id="8" name="Items">
   <object id="57" name="portal" gid="6" x="1355.5" y="635" width="32" height="32"/>
   <object id="58" name="purple_chord" gid="6" x="945" y="1951" width="32" height="32"/>
+  <object id="76" name="blue_chord" gid="6" x="2878" y="2248" width="32" height="32"/>
  </objectgroup>
 </map>

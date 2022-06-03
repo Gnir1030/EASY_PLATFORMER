@@ -864,7 +864,7 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":107.2727,
+                 "x":107.273,
                  "y":3095.64
                 }, 
                 {
@@ -1152,6 +1152,18 @@
                  "width":32,
                  "x":945,
                  "y":1951
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":76,
+                 "name":"blue_chord",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":2878,
+                 "y":2248
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1160,10 +1172,10 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":76,
+ "nextobjectid":77,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.8.4",
+ "tiledversion":"1.8.5",
  "tileheight":32,
  "tilesets":[
         {
