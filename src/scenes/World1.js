@@ -268,6 +268,9 @@ class World1 extends Phaser.Scene {
             case 2:
                 this.weapon = 'RED'
                 break;
+            case 3:
+                this.weapon = 'GREEN'
+                break;
         }
         //this.UI.setPosition(this.player.x - 20,this.player.y - 17);
         //this.UI.text = "Weapon: " + this.weapon;

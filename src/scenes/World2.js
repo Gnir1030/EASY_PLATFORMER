@@ -268,6 +268,9 @@ class World2 extends Phaser.Scene {
             case 2:
                 this.weapon = 'RED'
                 break;
+            case 3:
+                this.weapon = 'GREEN'
+                break;
         }
 
         if (!gameOver) {
