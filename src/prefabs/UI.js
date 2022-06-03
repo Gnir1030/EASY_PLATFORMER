@@ -6,7 +6,7 @@ class UI extends Phaser.GameObjects.Sprite {
     
     update(player) {
         this.setPosition(player.x + 12, player.y - 17);
-        this.setTexture ('bullet' + (player.active + 1));
+        this.setTexture ('bullet' + (chords[player.active]));
         //console.log(this.texture);
     }
 }

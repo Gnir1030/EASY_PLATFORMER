@@ -152,7 +152,15 @@ class Tutorial extends Phaser.Scene {
             this.shootTuto.setVisible(true);
         }, this);
 
+        this.anims.create({
+            key: 'idle2',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
         this.enemy = new Enemy(this, 3200, 400, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true);
+        this.enemy.play('idle2');
         //this.enemy.setMaxVelocity(900,500);
         this.physics.add.collider(this.enemy, this.platforms);
 
