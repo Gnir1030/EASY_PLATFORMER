@@ -23,8 +23,8 @@ class Tutorial extends Phaser.Scene {
         this.load.image('bullet', './assets/bullet.png');
 
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-        this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy2', './assets/RightFacingEnemy2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        //this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
@@ -68,8 +68,8 @@ class Tutorial extends Phaser.Scene {
         this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes").setScrollFactor(0); //UI scroll
         this.moveTuto = this.add.text(120, 540, "Press A D to Move");
         this.jumpTuto = this.add.text(600, 470, "Press W to Jump").setVisible(false);
-        this.dangerTuto = this.add.text(1555, 400, "CAUTION").setScale(1).setVisible(false);
-        this.enemyTuto = this.add.text(2500, 470, "DANGER!").setScale(2);
+        this.dangerTuto = this.add.text(1500, 400, "CAUTION ↓").setScale(2).setVisible(false);
+        this.enemyTuto = this.add.text(2500, 470, "DANGER! →").setScale(2).setVisible(false);
         this.shootTuto = this.add.text(3200, 5*64, "Press SPACE to Shoot").setVisible(false);
 
         // map
@@ -152,7 +152,8 @@ class Tutorial extends Phaser.Scene {
             this.shootTuto.setVisible(true);
         }, this);
 
-        this.enemy = new Enemy(this, 3200, 0, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true);
+        this.enemy = new Enemy(this, 3200, 400, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true);
+        //this.enemy.setMaxVelocity(900,500);
         this.physics.add.collider(this.enemy, this.platforms);
 
         this.overlap = this.physics.add.overlap(this.player, this.enemy, (obj1, obj2) => {
@@ -220,8 +221,9 @@ class Tutorial extends Phaser.Scene {
                 y = game.config.height/2;
                 this.count += 1;
             }
-            this.add.text(x, y, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(x, y + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.physics.pause();
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.tutorial_music.stop();
                 this.Game_over.stop();
@@ -235,9 +237,11 @@ class Tutorial extends Phaser.Scene {
         }
         
         if(this.enemy.y >=this.height){
-            this.enemy.shooterEvent.destroy();
+            if(this.enemy.shooterEvent)
+                this.enemy.shooterEvent.destroy();
             this.enemy.destroy();
         }
+        
 
         if(this.player.x > 460){
             this.jumpTuto.setVisible(true);
@@ -247,9 +251,13 @@ class Tutorial extends Phaser.Scene {
             this.dangerTuto.setVisible(true);
         }
 
+        if(this.player.x > 2400){
+            this.enemyTuto.setVisible(true);
+        }
+
         if(!this.enemy.body){
             this.time.addEvent({
-                delay: 700,
+                delay: 2000,
                 callback: ()=>{
                     this.portalSwitch.active = true;
                     this.portal.setActive(true).setVisible(true);

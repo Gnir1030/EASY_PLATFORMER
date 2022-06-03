@@ -59,7 +59,7 @@ class World1 extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
@@ -167,6 +167,7 @@ class World1 extends Phaser.Scene {
         let chordPos = map.findObject("Items", obj => obj.name === "purple_chord");
         this.chord = new Item(this, chordPos.x, chordPos.y, 'chord2', 0, 2).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
+        this.chordTuto = this.add.text(chordPos.x - 50, chordPos.y - 50, "PRESS (T) to recharge bullets");
 
         // enmmey creation
         this.anims.create({
@@ -256,20 +257,6 @@ class World1 extends Phaser.Scene {
     }
  
     update() {
-        switch(this.player.active){
-            case 0:
-                this.weapon = 'BLUE'
-                break;
-            case 1:
-                this.weapon = 'PURPLE'
-                break;
-            case 2:
-                this.weapon = 'RED'
-                break;
-        }
-        //this.UI.setPosition(this.player.x - 20,this.player.y - 17);
-        //this.UI.text = "Weapon: " + this.weapon;
-
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             this.UI.update(this.player);
@@ -279,6 +266,17 @@ class World1 extends Phaser.Scene {
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
+
+            if(!this.chord.body.touching.none){
+                this.chordTuto.setVisible(true);
+                if (Phaser.Input.Keyboard.JustDown(keyT)) {
+                    this.player.magazine = 20;
+                }
+            }
+            else{
+                this.chordTuto.setVisible(false);
+            }
+
         } else {
             if (this.count < 1) {
                 this.World_1_music.stop();
@@ -287,7 +285,7 @@ class World1 extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
@@ -316,7 +314,5 @@ class World1 extends Phaser.Scene {
     collectChord() {
         //this.sound.play('Low_C_Chord');
         this.chord.addToItems(chords);
-        this.player.magazine = 20;
-        //this.chord.destroy();
     }
 }

@@ -60,6 +60,7 @@ class World2 extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
@@ -167,6 +168,7 @@ class World2 extends Phaser.Scene {
         let chordPos = map.findObject("Items", obj => obj.name === "red_chord");
         this.chord = new Item(this, chordPos.x, chordPos.y, 'red_chord', 0, 3).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
+        this.chordTuto = this.add.text(chordPos.x - 100, chordPos.y - 50, "PRESS (T) to recharge bullets", {color: '#000000'});
 
         // enmmey creation
         this.anims.create({
@@ -255,18 +257,6 @@ class World2 extends Phaser.Scene {
     }
 
     update() {
-        switch(this.player.active){
-            case 0:
-                this.weapon = 'BLUE'
-                break;
-            case 1:
-                this.weapon = 'PURPLE'
-                break;
-            case 2:
-                this.weapon = 'RED'
-                break;
-        }
-
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             this.UI.update(this.player);
@@ -276,6 +266,16 @@ class World2 extends Phaser.Scene {
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
+
+            if(!this.chord.body.touching.none){
+                this.chordTuto.setVisible(true);
+                if (Phaser.Input.Keyboard.JustDown(keyT)) {
+                    this.player.magazine = 30;
+                }
+            }
+            else{
+                this.chordTuto.setVisible(false);
+            }
         } else {
             if (this.count < 1) {
                 this.World_1_music.stop();
@@ -315,6 +315,6 @@ class World2 extends Phaser.Scene {
     collectChord() {
         //this.sound.play('Low_C_Chord');
         this.chord.addToItems(chords);
-        this.player.magazine = 30;
+        //this.player.magazine = 30;
     }
 }
