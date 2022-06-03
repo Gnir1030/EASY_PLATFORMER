@@ -93,6 +93,7 @@ class World3 extends Phaser.Scene {
         const viewH = 640;
         const viewW = 800;
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
+        this.cameras.main.setBackgroundColor('#400000');
         this.cameras.main.startFollow(this.player);
 
         // collision with platforms
@@ -133,27 +134,30 @@ class World3 extends Phaser.Scene {
         // });
 
         // set up health pickups
-        // this.hPickUp = map.createFromObjects("Health", {
-        //     name: "",
-        //     key: "tile3_sheet",
-        //     frame: 13
-        // });
-        // this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
-        // this.hGroup = this.add.group(this.hPickUp);
-        // this.hSFXManager = this.add.particles('tile3_sheet', 6);
-        // this.hSFX = this.hSFXManager.createEmitter({
-        //     follow: this.player,
-        //     quantity: 20,
-        //     scale: {start: 1.0, end: 0.0},  // start big, end small
-        //     speed: {min: 50, max: 100}, // speed up
-        //     lifespan: 800,   // short lifespan
-        //     on: false   // do not immediately start, will trigger in collision
-        // });
-        // this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
-        //     obj2.destroy(); // remove coin on overlap
-        //     this.hSFX.explode();
-        //     this.player.life += 1; // add 1 to player health
-        // }, null, this);
+        this.hPickUp = map.createFromObjects("Health", {
+            name: "",
+            key: "tile3_sheet",
+            frame: 13
+        });
+        for (let i = 0; i < this.hPickUp.length; i++) {
+            this.hPickUp[i].y += 96;
+        }
+        this.physics.world.enable(this.hPickUp, Phaser.Physics.Arcade.STATIC_BODY);
+        this.hGroup = this.add.group(this.hPickUp);
+        this.hSFXManager = this.add.particles('tile3_sheet', 6);
+        this.hSFX = this.hSFXManager.createEmitter({
+            follow: this.player,
+            quantity: 20,
+            scale: {start: 1.0, end: 0.0},  // start big, end small
+            speed: {min: 50, max: 100}, // speed up
+            lifespan: 800,   // short lifespan
+            on: false   // do not immediately start, will trigger in collision
+        });
+        this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
+            obj2.destroy(); // remove coin on overlap
+            this.hSFX.explode();
+            this.player.life += 1; // add 1 to player health
+        }, null, this);
 
         // portal
         // this.anims.create({
@@ -174,60 +178,60 @@ class World3 extends Phaser.Scene {
 
         // enmmey creation
         this.anims.create({
-            key: 'idle2',
-            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 4, first: 0}),
+            key: 'idle1',
+            frames: this.anims.generateFrameNumbers('enemy_blue', { start: 0, end: 4, first: 0}),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
-            key: 'idle3',
+            key: 'idle2',
             frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 4, first: 0}),
             frameRate: 10,
             repeat: -1
         });
 
         // create enemies
-        // this.enemy = []
-        // let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
+        this.enemy = []
+        let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
         // let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "purple");
-        // let index = 0;
-        // enemyObjects.map((element) => {
-        //     this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
-        //     this.enemy[index].play('idle2');
-        //     index += 1;
-        // });
+        let index = 0;
+        enemyObjects.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_blue', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle1');
+            index += 1;
+        });
         // enemyObjects2.map((element) => {
         //     this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
         //     this.enemy[index].play('idle3');
         //     index += 1;
         // });
-        // this.enemies = this.physics.add.group(this.enemy);
-        // this.physics.add.collider(this.enemies, this.platforms);
+        this.enemies = this.physics.add.group(this.enemy);
+        this.physics.add.collider(this.enemies, this.platforms);
 
-        // // do damage if player collides with enemies
-        // this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
-        //     if(obj1.x - obj2.x  < 0)
-        //         {obj1.enemyDir = 'right'}
-        //     else
-        //         {obj1.enemyDir = 'left'}
-        //     this.collider.active = false;
-        //     this.overlap.active = false;
-        //     this.overlap2.active = false;
-        //     this.player.hitted = true;
-        //     this.player.life -= 1;
-        //     this.player.shadow = true;
-        //         this.timedEvent = this.time.addEvent({
-        //             delay: 700,
-        //             callback: ()=>{
-        //                 this.player.alpha = 1;
-        //                 this.player.hitted = false;
-        //                 this.collider.active = true;
-        //                 this.overlap.active = true;
-        //                 this.overlap2.active = true;
-        //             },
-        //             loop: false
-        //         })
-        // });
+        // do damage if player collides with enemies
+        this.overlap = this.physics.add.overlap(this.player, this.enemies, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.enemyDir = 'right'}
+            else
+                {obj1.enemyDir = 'left'}
+            this.collider.active = false;
+            this.overlap.active = false;
+            this.overlap2.active = false;
+            this.player.hitted = true;
+            this.player.life -= 1;
+            this.player.shadow = true;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.collider.active = true;
+                        this.overlap.active = true;
+                        this.overlap2.active = true;
+                    },
+                    loop: false
+                })
+        });
 
         // add instruction text
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
@@ -310,6 +314,6 @@ class World3 extends Phaser.Scene {
         //this.sound.play('Low_C_Chord');
         this.chord.addToItems(chords);
         this.player.magazine = 20;
-        //this.chord.destroy();
+        this.chord.destroy();
     }
 }
