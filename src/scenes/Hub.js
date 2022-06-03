@@ -21,10 +21,12 @@ class Hub extends Phaser.Scene {
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
         this.load.image('bullet3', './assets/bullet3.png');
+        this.load.image('bullet4', './assets/bullet4.png');
 
         this.load.image('chord1', './assets/blueStar.png');
         this.load.image('chord2', './assets/purpleStar.png');
         this.load.image('chord3', './assets/redStar.png');
+        this.load.image('chord4', './assets/greenStar.png');
 
         this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
@@ -60,9 +62,13 @@ class Hub extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.add.text(20, 20, "Main Hub").setScrollFactor(0);
         this.add.text(84, 84, 'Press M for Menu').setScrollFactor(0);
+        this.gameclear = this.add.text(480, 640, "Thanks for playing!").setScale(2).setScrollFactor(0.5).setVisible(false);
+        this.gameclear2 = this.add.text(84, 104, "Press (R) to reset").setScale(1).setScrollFactor(0).setVisible(false);
         //this.add.text(84, 84 + 64, chords[0]);
+        
 
 
         // map
@@ -116,7 +122,7 @@ class Hub extends Phaser.Scene {
         this.portal.play('portal');
         this.portal2.play('portal');
         this.portal3.play('portal');
-        this.physics.add.collider(this.player, this.portal, (obj1, obj2) => {
+        this.portal1Collides = this.physics.add.collider(this.player, this.portal, (obj1, obj2) => {
             this.scene.start(obj2.destination);
         }, null, this);
         
@@ -142,14 +148,27 @@ class Hub extends Phaser.Scene {
         if(completed[1] == 1){
             this.clear2.setVisible(true);
         }
+        if(completed[2] == 1){
+            this.clear3.setVisible(true);
+        }
+
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
             this.Hub_World_music.stop();
             this.scene.start('menuScene');
         }
 
         if(completed[0] == 1 && completed[1] == 1 && completed[2] == 1){
-            this.physics.pause();
-            this.add.text(config.width/2, config.height/2 , "Thanks for playing!");
+            this.portal3Collides.active = false;
+            this.portal2Collides.active = false;
+            this.portal1Collides.active = false;
+            this.gameclear.setVisible(true);
+            this.gameclear2.setVisible(true);
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                completed[0] = 0;
+                completed[1] = 0;
+                completed[2] = 0;
+                this.scene.start('menuScene');
+            }
             //this.add.text(84, 84, 'Press M for Menu');
         }
         this.player.update();

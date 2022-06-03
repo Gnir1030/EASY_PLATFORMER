@@ -27,12 +27,7 @@ class World3 extends Phaser.Scene {
         this.load.spritesheet('enemy_purple', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy_red', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy_green', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        //bullet image
-        this.load.image('bullet1', './assets/bullet1.png');
-        this.load.image('bullet2', './assets/bullet2.png');
-        this.load.image('bullet3', './assets/bullet3.png');
-        this.load.image('bullet4', './assets/bullet4.png');
-        this.load.image('green_chord', './assets/greenStar.png');
+        
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
@@ -64,6 +59,7 @@ class World3 extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
@@ -160,21 +156,28 @@ class World3 extends Phaser.Scene {
         }, null, this);
 
         // portal
-        // this.anims.create({
-        //     key: 'portal',
-        //     frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-        //     frameRate: 2,
-        //     repeat: -1
-        // });
-        // let portalPos  = map.findObject("Items", obj => obj.name === "portal");
-        // this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
-        // this.portal.play('portal');
-        // this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.anims.create({
+            key: 'portal',
+            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
+        let portalPos  = map.findObject("Items", obj => obj.name === "portal");
+        this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
+        this.portal.play('portal');
+        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
 
-        // chord item
+        // green chord
         let chordPos = map.findObject("Items", obj => obj.name === "green_chord");
-        this.chord = new Item(this, chordPos.x, chordPos.y, 'green_chord', 0, 4).setOrigin(0);
-        this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
+        this.chord = new Item(this, chordPos.x, chordPos.y, 'chord4', 0, 4).setOrigin(0);
+        this.physics.add.overlap(this.player, this.chord, ()=>{this.collectChord(this.chord)}, null, this);
+        this.chordTuto = this.add.text(chordPos.x - 50, chordPos.y - 50, "PRESS (T) to recharge bullets");
+
+        //yellow chord
+        let chordPos2 = map.findObject("Items", obj => obj.name === "yellow_chord");
+        this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord2', 0, 2).setOrigin(0);
+        this.physics.add.overlap(this.player, this.chord2, ()=>{this.collectChord(this.chord2)}, null, this);
+        this.chordTuto2 = this.add.text(chordPos2.x - 50, chordPos2.y - 50, "PRESS (T) to recharge bullets");
 
         // enmmey creation
         this.anims.create({
@@ -276,6 +279,27 @@ class World3 extends Phaser.Scene {
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
+
+            //chord tuto
+            if(!this.chord.body.touching.none){
+                this.chordTuto.setVisible(true);
+                if (Phaser.Input.Keyboard.JustDown(keyT)) {
+                    this.player.magazine = 20;
+                }
+            }
+            else{
+                this.chordTuto.setVisible(false);
+            }
+
+            if(!this.chord2.body.touching.none){
+                this.chordTuto2.setVisible(true);
+                if (Phaser.Input.Keyboard.JustDown(keyT)) {
+                    this.player.magazine = 20;
+                }
+            }
+            else{
+                this.chordTuto2.setVisible(false);
+            }
         } else {
             if (this.count < 1) {
                 this.World_1_music.stop();
@@ -310,10 +334,8 @@ class World3 extends Phaser.Scene {
         completed[2] = 1;
         this.scene.start('hubScene');
     }
-    collectChord() {
+    collectChord(chord) {
         //this.sound.play('Low_C_Chord');
-        this.chord.addToItems(chords);
-        this.player.magazine = 20;
-        this.chord.destroy();
+        chord.addToItems(chords);
     }
 }

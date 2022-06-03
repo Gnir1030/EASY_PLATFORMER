@@ -250,8 +250,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":1791.33333333333,
-                 "y":1664.66666666667
+                 "x":1791.33,
+                 "y":1664.67
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -442,8 +442,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":3070.66666666667,
-                 "y":161.333333333333
+                 "x":2942.2243723121,
+                 "y":148.226303297153
                 }, 
                 {
                  "gid":6,
@@ -454,8 +454,20 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":830.666666666667,
-                 "y":2241.33333333333
+                 "x":830.667,
+                 "y":2241.33
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":9,
+                 "name":"portal",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":1147.87466721278,
+                 "y":2828.69711243088
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -464,10 +476,10 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":9,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.8.4",
+ "tiledversion":"1.8.5",
  "tileheight":32,
  "tilesets":[
         {
