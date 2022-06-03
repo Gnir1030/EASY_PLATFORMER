@@ -8,7 +8,7 @@ class World2 extends Phaser.Scene {
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
         this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
-        this.load.audio('World_1', './assets/World_1.wav');
+        this.load.audio('World_2', './assets/World_2.wav');
 
 
         // load images, spritesheets, and tilemaps
@@ -25,9 +25,9 @@ class World2 extends Phaser.Scene {
 
     create() {
         // World 1 Music
-        this.World_1_music = this.sound.add('World_1', {volume: 0.50});
-        this.World_1_music.play();
-        this.World_1_music.loop = true;
+        this.World_2_music = this.sound.add('World_2', {volume: 0.50});
+        this.World_2_music.play();
+        this.World_2_music.loop = true;
 
         // base settings for this scene
         this.complete = false;
@@ -289,7 +289,7 @@ class World2 extends Phaser.Scene {
             }
         } else {
             if (this.count < 1) {
-                this.World_1_music.stop();
+                this.World_2_music.stop();
                 this.Game_over.play();
                 x = this.player.x;
                 y = this.player.y;
@@ -299,12 +299,12 @@ class World2 extends Phaser.Scene {
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                this.World_1_music.stop();
+                this.World_2_music.stop();
                 this.Game_over.stop();
                 this.scene.restart();
             }
             if (Phaser.Input.Keyboard.JustDown(keyM)) {
-                this.World_1_music.stop();
+                this.World_2_music.stop();
                 this.Game_over.stop();
                 this.scene.start('hubScene');
             }
@@ -319,7 +319,7 @@ class World2 extends Phaser.Scene {
     }
     switchScene() {
         //this.player.destroy();
-        this.World_1_music.stop();
+        this.World_2_music.stop();
         completed[1] = 1;
         this.scene.start('hubScene');
     }
