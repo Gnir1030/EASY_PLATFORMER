@@ -100,38 +100,38 @@ class World3 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platforms);
 
         // spikes
-        // this.spikes = this.physics.add.group({
-        //     allowGravity: false,
-        //     immovable: true
-        // });
-        // map.getObjectLayer('Spikes').objects.forEach((spike) => {
-        //     let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
-        //     sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
-        // });
+        this.spikes = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+        map.getObjectLayer('Spikes').objects.forEach((spike) => {
+            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
+            sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
+        });
 
-        // this.collider = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
-        //     if(obj1.x - obj2.x  < 0)
-        //         {obj1.enemyDir = 'right'}
-        //     else
-        //         {obj1.enemyDir = 'left'}
-        //     this.collider.active = false;
-        //     this.overlap.active = false;
-        //     this.overlap2.active = false;
-        //     this.player.hitted = true;
-        //     this.player.shadow = true;
-        //     this.player.life -= 1;
-        //         this.timedEvent = this.time.addEvent({
-        //             delay: 700,
-        //             callback: ()=>{
-        //                 this.player.alpha = 1;
-        //                 this.player.hitted = false;
-        //                 this.collider.active = true;
-        //                 this.overlap.active = true;
-        //                 this.overlap2.active = true;
-        //             },
-        //             loop: false
-        //         })
-        // });
+        this.collider = this.physics.add.overlap(this.player, this.spikes, (obj1, obj2) => {
+            if(obj1.x - obj2.x  < 0)
+                {obj1.enemyDir = 'right'}
+            else
+                {obj1.enemyDir = 'left'}
+            this.collider.active = false;
+            this.overlap.active = false;
+            this.overlap2.active = false;
+            this.player.hitted = true;
+            this.player.shadow = true;
+            this.player.life -= 1;
+                this.timedEvent = this.time.addEvent({
+                    delay: 700,
+                    callback: ()=>{
+                        this.player.alpha = 1;
+                        this.player.hitted = false;
+                        this.collider.active = true;
+                        this.overlap.active = true;
+                        this.overlap2.active = true;
+                    },
+                    loop: false
+                })
+        });
 
         // set up health pickups
         this.hPickUp = map.createFromObjects("Health", {
@@ -192,7 +192,7 @@ class World3 extends Phaser.Scene {
 
         // create enemies
         this.enemy = []
-        let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
+        let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "blue");
         // let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "purple");
         let index = 0;
         enemyObjects.map((element) => {
