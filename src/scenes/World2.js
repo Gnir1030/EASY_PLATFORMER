@@ -19,18 +19,8 @@ class World2 extends Phaser.Scene {
         });
 
         this.load.tilemapTiledJSON('map2', './assets/world2.json');
-        //this.load.image('spike', './assets/spike.png');
-        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
-        this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
-        //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemyp', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemyr', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        //bullet image
-        this.load.image('bullet1', './assets/bullet1.png');
-        this.load.image('bullet2', './assets/bullet2.png');
-        this.load.image('bullet3', './assets/bullet3.png');
-        this.load.image('red_chord', './assets/redStar.png');
-        //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
     create() {
@@ -85,7 +75,6 @@ class World2 extends Phaser.Scene {
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
-        this.player.magazine = 30;
         this.UI = new UI(this, 0, 0, 'bullet1', 0).setOrigin(0,0);
 
         // set up camera
@@ -170,10 +159,16 @@ class World2 extends Phaser.Scene {
 
         // chord item
         let chordPos = map.findObject("Items", obj => obj.name === "red_chord");
-        this.chord = new Item(this, chordPos.x, chordPos.y, 'red_chord', 0, 3).setOrigin(0);
+        this.chord = new Item(this, chordPos.x, chordPos.y, 'chord3', 0, 3).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord, this.collectChord, null, this);
         this.chordTuto = this.add.text(chordPos.x - 100, chordPos.y - 50, "PRESS (T) to recharge bullets", {color: '#000000'});
 
+        // purple chord item
+        let chordPos2 = map.findObject("Items", obj => obj.name === "purple_chord");
+        this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord2', 0, 2).setOrigin(0);
+        this.physics.add.overlap(this.player, this.chord2, this.collectChord, null, this);
+        this.chordTuto2 = this.add.text(chordPos2.x - 100, chordPos2.y - 50, "PRESS (T) to recharge bullets",{color: '#000000'});
+        
         // create enemies
         // enemey animation
         this.anims.create({
@@ -276,11 +271,21 @@ class World2 extends Phaser.Scene {
             if(!this.chord.body.touching.none){
                 this.chordTuto.setVisible(true);
                 if (Phaser.Input.Keyboard.JustDown(keyT)) {
-                    this.player.magazine = 30;
+                    this.player.magazine = 20;
                 }
             }
             else{
                 this.chordTuto.setVisible(false);
+            }
+
+            if(!this.chord2.body.touching.none){
+                this.chordTuto2.setVisible(true);
+                if (Phaser.Input.Keyboard.JustDown(keyT)) {
+                    this.player.magazine = 20;
+                }
+            }
+            else{
+                this.chordTuto2.setVisible(false);
             }
         } else {
             if (this.count < 1) {
