@@ -23,7 +23,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.shadow = false;
         this.life = 3;
         this.active = 0;
-        this.magazine = 20;
+        this.magazine = 30;
     }
 
     preload() {

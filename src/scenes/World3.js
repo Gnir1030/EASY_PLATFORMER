@@ -317,7 +317,7 @@ class World3 extends Phaser.Scene {
             if(!this.chord.body.touching.none){
                 this.chordTuto.setVisible(true);
                 if (Phaser.Input.Keyboard.JustDown(keyT)) {
-                    this.player.magazine = 20;
+                    this.player.magazine = 30;
                 }
             }
             else{
@@ -327,7 +327,7 @@ class World3 extends Phaser.Scene {
             if(!this.chord2.body.touching.none){
                 this.chordTuto2.setVisible(true);
                 if (Phaser.Input.Keyboard.JustDown(keyT)) {
-                    this.player.magazine = 20;
+                    this.player.magazine = 30;
                 }
             }
             else{
