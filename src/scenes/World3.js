@@ -67,9 +67,9 @@ class World3 extends Phaser.Scene {
         // map
         const map = this.make.tilemap({ key: 'map3' });
         const tileSet = map.addTilesetImage('tile_sheet_3', 'tiles3');
-        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.75); // background layer
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.25); // background layer
         const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
-        this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
+        this.platforms = map.createLayer('Platforms', tileSet, 0, 96); // platform layer
         this.platforms.setCollisionByExclusion(-1, true);
 
         // player
@@ -90,7 +90,9 @@ class World3 extends Phaser.Scene {
         const viewH = 640;
         const viewW = 800;
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
-        this.cameras.main.setBackgroundColor('#400000');
+        //this.cameras.main.setBackgroundColor('#400000');
+        //this.cameras.main.setBackgroundColor('#3b0000');
+        this.cameras.main.setBackgroundColor('#1f0000');
         this.cameras.main.roundPixels = true;
         this.cameras.main.startFollow(this.player);
 

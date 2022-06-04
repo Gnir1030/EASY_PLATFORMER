@@ -56,7 +56,7 @@ class World1 extends Phaser.Scene {
         // map
         const map = this.make.tilemap({ key: 'map1' });
         const tileSet = map.addTilesetImage('tile_sheet_1', 'tiles1');
-        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.5); // background layer
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.25); // background layer
         const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
         this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
         this.platforms.setCollisionByExclusion(-1, true);
