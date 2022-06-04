@@ -192,7 +192,19 @@ class World3 extends Phaser.Scene {
         });
         this.anims.create({
             key: 'idle2',
-            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 4, first: 0}),
+            frames: this.anims.generateFrameNumbers('enemy_purple', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idle3',
+            frames: this.anims.generateFrameNumbers('enemy_red', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idle4',
+            frames: this.anims.generateFrameNumbers('enemy_green', { start: 0, end: 4, first: 0}),
             frameRate: 10,
             repeat: -1
         });
@@ -200,18 +212,33 @@ class World3 extends Phaser.Scene {
         // create enemies
         this.enemy = []
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "blue");
-        // let enemyObjects2 = map.filterObjects("Enemies", obj => obj.name === "purple");
         let index = 0;
         enemyObjects.map((element) => {
             this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_blue', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
             this.enemy[index].play('idle1');
             index += 1;
         });
-        // enemyObjects2.map((element) => {
-        //     this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
-        //     this.enemy[index].play('idle3');
-        //     index += 1;
-        // });
+
+        enemyObjects = map.filterObjects("Enemies", obj => obj.name === "purple");
+        enemyObjects.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_purple', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle2');
+            index += 1;
+        });
+
+        enemyObjects = map.filterObjects("Enemies", obj => obj.name === "red");
+        enemyObjects.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_red', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle3');
+            index += 1;
+        });
+
+        enemyObjects = map.filterObjects("Enemies", obj => obj.name === "green");
+        enemyObjects.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_green', 0, this.length, this.height, 4).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle4');
+            index += 1;
+        });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
 
@@ -243,7 +270,7 @@ class World3 extends Phaser.Scene {
         });
 
         // add instruction text
-        this.add.text(20, 20, "Level 1").setScrollFactor(0);
+        this.add.text(20, 20, "Level 3").setScrollFactor(0);
         this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
         this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
 
@@ -279,9 +306,9 @@ class World3 extends Phaser.Scene {
         if (!gameOver) {
             this.player.update(this.enemies, this.platforms);
             this.UI.update(this.player);
-            //for (let i = 0; i < this.enemy.length; i++) {
-                //this.enemy[i].update(this.player, this.platforms);
-            //}
+            for (let i = 0; i < this.enemy.length; i++) {
+                this.enemy[i].update(this.player, this.platforms);
+            }
             this.checkHealth();
             this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
@@ -335,7 +362,6 @@ class World3 extends Phaser.Scene {
         }
     }
     switchScene() {
-        //this.player.destroy();
         this.World_3_music.stop();
         completed[2] = 1;
         this.scene.start('hubScene');
