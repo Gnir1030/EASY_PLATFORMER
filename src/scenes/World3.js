@@ -66,7 +66,7 @@ class World3 extends Phaser.Scene {
         // map
         const map = this.make.tilemap({ key: 'map3' });
         const tileSet = map.addTilesetImage('tile_sheet_3', 'tiles3');
-        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.5); // background layer
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.75); // background layer
         const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
         this.platforms = map.createLayer('Platforms', tileSet, 0, 96);
         this.platforms.setCollisionByExclusion(-1, true);
@@ -90,6 +90,7 @@ class World3 extends Phaser.Scene {
         const viewW = 800;
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
         this.cameras.main.setBackgroundColor('#400000');
+        this.cameras.main.roundPixels = true;
         this.cameras.main.startFollow(this.player);
 
         // collision with platforms
@@ -101,7 +102,7 @@ class World3 extends Phaser.Scene {
             immovable: true
         });
         map.getObjectLayer('Spikes').objects.forEach((spike) => {
-            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile1_sheet', 20).setOrigin(0);
+            let sSprite = this.spikes.create(spike.x, spike.y + 96 - spike.height, 'tile3_sheet', 20).setOrigin(0);
             sSprite.body.setSize(spike.width, spike.height - 16).setOffset(0, 16);
         });
 
