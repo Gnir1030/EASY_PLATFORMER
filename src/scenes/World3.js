@@ -8,7 +8,8 @@ class World3 extends Phaser.Scene {
         this.load.audio('Jump_noise', './assets/Jump.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
         this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
-        this.load.audio('World_1', './assets/World_1.wav');
+        this.load.audio('World_3', './assets/World_3.wav');
+        this.load.audio('Take_Damage', './assets/Damage.wav');
 
 
         // load images, spritesheets, and tilemaps
@@ -33,9 +34,9 @@ class World3 extends Phaser.Scene {
 
     create() {
         // World 1 Music
-        this.World_1_music = this.sound.add('World_1', {volume: 0.50});
-        this.World_1_music.play();
-        this.World_1_music.loop = true;
+        this.World_3_music = this.sound.add('World_3', {volume: 0.50});
+        this.World_3_music.play();
+        this.World_3_music.loop = true;
 
         // base settings for this scene
         gameOver = false;
@@ -222,6 +223,7 @@ class World3 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.player.life -= 1;
+            this.sound.play("Take_Damage");
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -231,6 +233,7 @@ class World3 extends Phaser.Scene {
                         this.collider.active = true;
                         this.overlap.active = true;
                         this.overlap2.active = true;
+                        this.sound.stop("Take_Damage");
                     },
                     loop: false
                 })
@@ -302,7 +305,7 @@ class World3 extends Phaser.Scene {
             }
         } else {
             if (this.count < 1) {
-                this.World_1_music.stop();
+                this.World_3_music.stop();
                 this.Game_over.play();
                 this.count += 1;
             }
@@ -310,12 +313,12 @@ class World3 extends Phaser.Scene {
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                this.World_1_music.stop();
+                this.World_3_music.stop();
                 this.Game_over.stop();
                 this.scene.restart();
             }
             if (Phaser.Input.Keyboard.JustDown(keyM)) {
-                this.World_1_music.stop();
+                this.World_3_music.stop();
                 this.Game_over.stop();
                 this.scene.start('hubScene');
             }
@@ -330,7 +333,7 @@ class World3 extends Phaser.Scene {
     }
     switchScene() {
         //this.player.destroy();
-        this.World_1_music.stop();
+        this.World_3_music.stop();
         completed[2] = 1;
         this.scene.start('hubScene');
     }
