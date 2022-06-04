@@ -58,7 +58,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             if(this.isFire && this.firing) {
                 this.firing = false;
                 this.shooterEvent = this.time.addEvent({
-                    delay: 1000,
+                    delay: 2000,
                     callback: () => {
                         this.spawnBullet(this.direction, player, platform);
                         this.firing = true

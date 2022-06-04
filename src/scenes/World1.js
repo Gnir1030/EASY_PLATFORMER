@@ -9,6 +9,7 @@ class World1 extends Phaser.Scene {
         this.load.audio('Game_over', './assets/Game_Over.wav');
         this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
         this.load.audio('World_1', './assets/World_1.wav');
+        this.load.audio('Take_Damage', './assets/Damage.wav');
 
 
         // load images, spritesheets, and tilemaps
