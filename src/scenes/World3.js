@@ -28,7 +28,7 @@ class World3 extends Phaser.Scene {
         this.load.spritesheet('enemy_purple', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy_red', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy_green', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        
+        this.load.spritesheet("healthBar", "./assets/healthBar.png", {frameWidth: 128, frameHeight: 32, startFrame: 0, endFrame: 3});
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
@@ -90,11 +90,12 @@ class World3 extends Phaser.Scene {
         const viewH = 640;
         const viewW = 800;
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
-        //this.cameras.main.setBackgroundColor('#400000');
-        //this.cameras.main.setBackgroundColor('#3b0000');
         this.cameras.main.setBackgroundColor('#1f0000');
         this.cameras.main.roundPixels = true;
         this.cameras.main.startFollow(this.player);
+        
+        //healthBar
+        this.healthBar = this.add.image(710, 30, 'healthBar', 3).setScrollFactor(0);
 
         // collision with platforms
         this.physics.add.collider(this.player, this.platforms);
@@ -119,7 +120,7 @@ class World3 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.player.shadow = true;
-            this.player.life -= 1;
+            this.looseHealth();
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
                     callback: ()=>{
@@ -156,7 +157,7 @@ class World3 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
             this.hSFX.explode();
-            this.player.life += 1; // add 1 to player health
+            this.gainHealth(); // add 1 to player health
         }, null, this);
 
         // portal
@@ -252,7 +253,7 @@ class World3 extends Phaser.Scene {
             this.overlap.active = false;
             this.overlap2.active = false;
             this.player.hitted = true;
-            this.player.life -= 1;
+            this.looseHealth();
             //this.sound.play("Take_Damage");
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
@@ -271,7 +272,6 @@ class World3 extends Phaser.Scene {
 
         // add instruction text
         this.add.text(20, 20, "Level 3").setScrollFactor(0);
-        this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
         this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
 
         //bullet hitback
@@ -285,7 +285,7 @@ class World3 extends Phaser.Scene {
             this.overlap2.active = false;
             this.overlap.active = false;
             this.player.hitted = true;
-            this.player.life -= 1;
+            this.looseHealth();
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -310,7 +310,6 @@ class World3 extends Phaser.Scene {
                 this.enemy[i].update(this.player, this.platforms);
             }
             this.checkHealth();
-            this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
 
             //chord tuto
@@ -369,5 +368,33 @@ class World3 extends Phaser.Scene {
     collectChord(chord) {
         //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
+    }
+
+    looseHealth() {
+        this.player.life -= 1;
+        if (this.player.life >= 3) {
+            this.healthBar.setFrame(3);
+        }
+        else if (this.player.life <= 0) {
+            this.player.life = 0;
+            gameOver = true;
+            this.healthBar.setFrame(0);
+        } else {
+            this.healthBar.setFrame(this.player.life);
+        }
+    }
+
+    gainHealth() {
+        this.player.life += 1;
+        if (this.player.life >= 3) {
+            this.healthBar.setFrame(3);
+        }
+        else if (this.player.life <= 0) {
+            this.player.life = 0;
+            gameOver = true;
+            this.healthBar.setFrame(0);
+        } else {
+            this.healthBar.setFrame(this.player.life);
+        }
     }
 }
