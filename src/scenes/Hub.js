@@ -15,6 +15,9 @@ class Hub extends Phaser.Scene {
         this.load.image('tilesH', './assets/hub_tilesheet.png');
         this.load.tilemapTiledJSON('mapH', './assets/hub_level.json');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
+        //this.load.atlas('player_atlas', 'colorlessPlayerIdle.png', 'colorlessPlayerJump.png', 'colorlessPlayerWalk.png', 'greymap.json');
+        this.load.spritesheet('player_idle', './assets/playerIdle.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('player_walk', './assets/playerWalk.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         this.load.image('bullet', './assets/bullet.png');
 
@@ -78,15 +81,71 @@ class Hub extends Phaser.Scene {
         platforms.setCollisionByExclusion(-1, true);
 
         // player
+        // this.anims.create({
+        //     key: 'idle',
+        //     frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
+        //     frameRate: 1,
+        //     repeat: -1
+        // });
+
+        // this.anims.create({
+        //     key: 'idle',
+        //     frames: this.anims.generateFrameNames('player_atlas', {
+        //         prefix: 'idle_',
+        //         start: 1,
+        //         end: 5,
+        //         suffix: '',
+        //         zeroPad: 4
+        //     }),
+        //     frameRate: 15,
+        //     repeat: -1,
+        //     repeatDelay: 5000,
+        //     yoyo: true
+        // });
+        // this.anims.create({
+        //     key: 'jump',
+        //     frames: this.anims.generateFrameNames('player_atlas', {
+        //         prefix: 'jump_',
+        //         start: 1,
+        //         end: 4,
+        //         suffix: '',
+        //         zeroPad: 4
+        //     }),
+        //     frameRate: 15,
+        //     repeat: -1,
+        //     repeatDelay: 5000,
+        //     yoyo: true
+        // });
+        // this.anims.create({
+        //     key: 'run',
+        //     frames: this.anims.generateFrameNames('player_atlas2', {
+        //         prefix: 'run_',
+        //         start: 1,
+        //         end: 3,
+        //         suffix: '',
+        //         zeroPad: 4
+        //     }),
+        //     frameRate: 15,
+        //     repeat: -1,
+        //     repeatDelay: 5000,
+        //     yoyo: true
+        // });
+        let playerPos  = map.findObject("Player", obj => obj.name === "player");
+        this.player = new Player(this, playerPos.x, playerPos.y, 'player_idle', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
+        //this.player.play('idle');
         this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
+            key: 'player_idle',
+            frames: this.anims.generateFrameNumbers('player_idle', { start: 0, end: 4, first: 0}),
             frameRate: 1,
             repeat: -1
         });
-        let playerPos  = map.findObject("Player", obj => obj.name === "player");
-        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
-        this.player.play('idle');
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('player_walk', { start: 0, end: 3, first: 0}),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.player.play('player_idle');
         this.player.setMaxVelocity(1000, 900);
 
         // set up camera
@@ -95,6 +154,7 @@ class Hub extends Phaser.Scene {
         this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
         this.cam.setBounds(0,0,map.widthInPixels, map.heightInPixels + 128 + 64);
         this.cam.startFollow(this.player);
+        this.cam.setBackgroundColor('#256187');
 
         // collision
         this.physics.add.collider(this.player, platforms);
@@ -172,5 +232,9 @@ class Hub extends Phaser.Scene {
             //this.add.text(84, 84, 'Press M for Menu');
         }
         this.player.update();
+        // if(this.player.body.velocity.x < 0) {
+        //     console.log("no we can't");
+        //     this.player.anims.play('walk', true);
+        // }
     }
 }

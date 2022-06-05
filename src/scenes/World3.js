@@ -253,7 +253,7 @@ class World3 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.player.life -= 1;
-            this.sound.play("Take_Damage");
+            //this.sound.play("Take_Damage");
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -263,7 +263,7 @@ class World3 extends Phaser.Scene {
                         this.collider.active = true;
                         this.overlap.active = true;
                         this.overlap2.active = true;
-                        this.sound.stop("Take_Damage");
+                        //this.sound.stop("Take_Damage");
                     },
                     loop: false
                 })
