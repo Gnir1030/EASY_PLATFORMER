@@ -18,6 +18,7 @@ class World1 extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 32
         });
+        this.load.spritesheet("healthBar", "./assets/healthBar.png", {frameWidth: 128, frameHeight: 32, startFrame: 0, endFrame: 3});
 
         this.load.tilemapTiledJSON('map1', './assets/world1.json');
     }
@@ -84,6 +85,9 @@ class World1 extends Phaser.Scene {
         // collision with platforms
         this.physics.add.collider(this.player, this.platforms);
 
+        //healthBar
+        this.healthBar = this.add.image(710, 30, 'healthBar', 3).setScrollFactor(0);
+
         // spikes
         this.spikes = this.physics.add.group({
             allowGravity: false,
@@ -104,7 +108,8 @@ class World1 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.player.shadow = true;
-            this.player.life -= 1;
+            //this.player.life -= 1;
+            this.looseHealth();
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
                     callback: ()=>{
@@ -141,7 +146,8 @@ class World1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
             this.hSFX.explode();
-            this.player.life += 1; // add 1 to player health
+            //this.player.life += 1; // add 1 to player health
+            this.gainHealth();
         }, null, this);
 
         // portal
@@ -210,7 +216,8 @@ class World1 extends Phaser.Scene {
             this.overlap.active = false;
             this.overlap2.active = false;
             this.player.hitted = true;
-            this.player.life -= 1;
+            //this.player.life -= 1;
+            this.looseHealth();
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -227,7 +234,6 @@ class World1 extends Phaser.Scene {
 
         // add instruction text
         this.add.text(20, 20, "Level 1").setScrollFactor(0);
-        this.healthText = this.add.text(680, 20, "Health: " + 3).setScrollFactor(0);
         this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
 
         //bullet hitback
@@ -241,7 +247,8 @@ class World1 extends Phaser.Scene {
             this.overlap2.active = false;
             this.overlap.active = false;
             this.player.hitted = true;
-            this.player.life -= 1;
+            //this.player.life -= 1;
+            this.looseHealth();
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -265,7 +272,6 @@ class World1 extends Phaser.Scene {
                 this.enemy[i].update(this.player, this.platforms);
             }
             this.checkHealth();
-            this.healthText.text = "Health: " + this.player.life;
             this.magazineText.text = this.player.magazine + " bullets";
 
             //chord tuto
@@ -326,5 +332,33 @@ class World1 extends Phaser.Scene {
     collectChord(chord) {
         //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
+    }
+
+    looseHealth() {
+        this.player.life -= 1;
+        if (this.player.life >= 3) {
+            this.healthBar.setFrame(3);
+        }
+        else if (this.player.life <= 0) {
+            this.player.life = 0;
+            gameOver = true;
+            this.healthBar.setFrame(0);
+        } else {
+            this.healthBar.setFrame(this.player.life);
+        }
+    }
+
+    gainHealth() {
+        this.player.life += 1;
+        if (this.player.life >= 3) {
+            this.healthBar.setFrame(3);
+        }
+        else if (this.player.life <= 0) {
+            this.player.life = 0;
+            gameOver = true;
+            this.healthBar.setFrame(0);
+        } else {
+            this.healthBar.setFrame(this.player.life);
+        }
     }
 }
