@@ -12,8 +12,8 @@ class Hub extends Phaser.Scene {
 
 
         // load images, spritesheets, and tilemaps
-        this.load.image('tilesH', './assets/hub_tilesheet.png');
-        this.load.tilemapTiledJSON('mapH', './assets/hub_level.json');
+        this.load.image('tilesH', './assets/tilesheet0.png');
+        this.load.tilemapTiledJSON('mapH', './assets/worldHub.json');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         //this.load.atlas('player_atlas', 'colorlessPlayerIdle.png', 'colorlessPlayerJump.png', 'colorlessPlayerWalk.png', 'greymap.json');
         this.load.spritesheet('player_idle', './assets/playerIdle.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
@@ -45,8 +45,8 @@ class Hub extends Phaser.Scene {
 
         // base settings for this scene
         gameOver = false;
-        this.length = 30*64;
-        this.height = 15*64;
+        this.length = 40*32;
+        this.height = 15*32;
         this.count = 0;
         this.physics.world.gravity.y = 2000;
         
@@ -76,17 +76,17 @@ class Hub extends Phaser.Scene {
 
         // map
         const map = this.make.tilemap({ key: 'mapH' });
-        const tileSet = map.addTilesetImage('hub_tiles', 'tilesH');
-        const platforms = map.createLayer('Platforms', tileSet, 0, 200);
+        const tileSet = map.addTilesetImage('tile_sheet_0', 'tilesH');
+        const platforms = map.createLayer('Platforms', tileSet, 0, 96);
         platforms.setCollisionByExclusion(-1, true);
 
         // player
-        // this.anims.create({
-        //     key: 'idle',
-        //     frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
-        //     frameRate: 1,
-        //     repeat: -1
-        // });
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
 
         // this.anims.create({
         //     key: 'idle',
@@ -131,7 +131,7 @@ class Hub extends Phaser.Scene {
         //     yoyo: true
         // });
         let playerPos  = map.findObject("Player", obj => obj.name === "player");
-        this.player = new Player(this, playerPos.x, playerPos.y, 'player_idle', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
+        this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         //this.player.play('idle');
         this.anims.create({
             key: 'player_idle',
@@ -145,32 +145,32 @@ class Hub extends Phaser.Scene {
             frameRate: 15,
             repeat: -1
         });
-        this.player.play('player_idle');
+        this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
 
         // set up camera
         const viewH = 640;
         const viewW = 800;
         this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
-        this.cam.setBounds(0,0,map.widthInPixels, map.heightInPixels + 128 + 64);
+        this.cam.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
         this.cam.startFollow(this.player);
-        this.cam.setBackgroundColor('#256187');
+        this.cam.setBackgroundColor('#cfd8dc');
 
         // collision
         this.physics.add.collider(this.player, platforms);
 
         // portals
         let portalPos  = map.findObject("Portals", obj => obj.name === "portal1");
-        this.portal = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world1Scene').setOrigin(0);
-        this.clear1 = this.add.text(portalPos.x, portalPos.y + 175, 'Cleared').setVisible(false);
+        this.portal = new Portal(this, portalPos.x, portalPos.y + 43, 'portal', 0, 'world1Scene').setOrigin(0);
+        this.clear1 = this.add.text(portalPos.x, portalPos.y + 135, 'Cleared', clearConfig).setVisible(false);
 
         portalPos  = map.findObject("Portals", obj => obj.name === "portal2");
-        this.portal2 = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world2Scene').setOrigin(0);
-        this.clear2 = this.add.text(portalPos.x, portalPos.y + 175, 'Cleared').setVisible(false);
+        this.portal2 = new Portal(this, portalPos.x, portalPos.y + 43, 'portal', 0, 'world2Scene').setOrigin(0);
+        this.clear2 = this.add.text(portalPos.x, portalPos.y + 135, 'Cleared', clearConfig).setVisible(false);
 
         portalPos  = map.findObject("Portals", obj => obj.name === "portal3");
-        this.portal3 = new Portal(this, portalPos.x, portalPos.y + 128 +64, 'portal', 0, 'world3Scene').setOrigin(0);
-        this.clear3 = this.add.text(portalPos.x, portalPos.y + 175, 'Cleared').setVisible(false);
+        this.portal3 = new Portal(this, portalPos.x, portalPos.y + 43, 'portal', 0, 'world3Scene').setOrigin(0);
+        this.clear3 = this.add.text(portalPos.x, portalPos.y + 135, 'Cleared', clearConfig).setVisible(false);
 
         this.anims.create({
             key: 'portal',
@@ -227,6 +227,7 @@ class Hub extends Phaser.Scene {
                 completed[0] = 0;
                 completed[1] = 0;
                 completed[2] = 0;
+                chords = [1];
                 this.scene.start('menuScene');
             }
             //this.add.text(84, 84, 'Press M for Menu');

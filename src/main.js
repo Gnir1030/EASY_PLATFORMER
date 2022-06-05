@@ -24,15 +24,18 @@ let gameOver = false;
 
 let scoreConfig = {
     fontFamily: 'Courier',
-    fontSize: '25px',
+    fontSize: '10px',
     backgroundColor: '#F3B141',
     color: '#843605',
     align: 'center',
-    padding: {
-    top: 5,
-    bottom: 5,
-    },
-    fixedWidth: 550
+};
+
+let clearConfig = {
+    fontFamily: 'VT323',
+    fontSize: '20px',
+    backgroundColor: '#00c853',
+    color: '#ffffff',
+    align: 'center',
 };
 
 let x = game.config.width;
