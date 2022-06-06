@@ -13,7 +13,10 @@ class Menu extends Phaser.Scene {
         this.load.audio('ineffective', './assets/not_effective.wav');
         this.load.audio('damage', './assets/Damage.wav');
         //this.load.atlas('player_atlas', './assets/colorlessPlayerIdle.png', './assets/colorlessPlayerJump.png', './assets/colorlessPlayerWalk.png', './assets/greymap.json');
+        this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('player_idle', './assets/playerIdle.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('player_walk', './assets/playerWalk.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('player_jump', './assets/playerJump.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
 
         this.load.image('bullet1', './assets/bullet1.png');
@@ -53,6 +56,7 @@ class Menu extends Phaser.Scene {
         }
 
         //animation preload
+        //player animation
         this.anims.create({
             key: 'idle',
             frames: this.anims.generateFrameNumbers('player_idle', { 
@@ -64,6 +68,29 @@ class Menu extends Phaser.Scene {
             repeat: -1,
             //repeatDelay: 5000
         });
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('player_walk', { 
+                start: 0, 
+                end: 2, 
+                first: 0
+            }),
+            frameRate: 3,
+            repeat: -1,
+            //repeatDelay: 5000
+        });
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('player_jump', { 
+                start: 0, 
+                end: 3, 
+                first: 0
+            }),
+            frameRate: 4,
+            repeat: -1
+        });
+
+        //enemy animation
         this.anims.create({
             key: 'idle2',
             frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 4, first: 0}),
@@ -90,6 +117,7 @@ class Menu extends Phaser.Scene {
             repeat: -1
         });
 
+        //portal animation
         this.anims.create({
             key: 'portal',
             frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),

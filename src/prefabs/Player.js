@@ -15,7 +15,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.mw = mW;
         this.mh = mH;
         this.setScale(0.7);
-        this.setBounce(0.1);
+        //this.setBounce(0.1);
         this.isFire = false;
         this.hitted = false;
         this.scene = scene;
@@ -54,14 +54,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // move
             if (this.keyLeft.isDown && this.x > 0) {
                 this.setVelocityX(-300);
-                //this.anims.play('run', true);
+                this.anims.play('walk', true);
             } else if (this.keyRight.isDown && this.x <= this.mw - this.width) {
                 this.setVelocityX(300);
-                //this.anims.play('run', true);
+                this.anims.play('walk', true);
             } else {
                 //this.setVelocityX(0);
                 this.setDragX(1000);
-                //this.anims.play('idle', true);
+                this.anims.play('idle', true);
             }
 
             // fire
@@ -74,6 +74,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // jump
             if (this.keyUp.isDown && this.body.onFloor()) {
                 this.setVelocityY(-900);
+            }
+
+            if(!this.body.onFloor()){
+                console.log(1);
+                this.anims.play('jump', true);
             }
 
             // change direction
