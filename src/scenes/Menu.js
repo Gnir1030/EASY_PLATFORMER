@@ -16,7 +16,7 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('player_idle', './assets/playerIdle.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('player_walk', './assets/playerWalk.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
-        this.load.spritesheet('player_jump', './assets/playerJump.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('player_jump', './assets/playerJump2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
 
         this.load.image('bullet1', './assets/bullet1.png');
