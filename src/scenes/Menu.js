@@ -81,10 +81,10 @@ class Menu extends Phaser.Scene {
         });
         this.anims.create({
             key: 'jump',
-            frames: this.anims.generateFrameNumbers('player_jump', { 
-                start: 0, 
-                end: 3, 
-                first: 0
+            frames: this.anims.generateFrameNumbers('player_walk', { 
+                start: 1, 
+                end: 1, 
+                first: 1
             }),
             frameRate: 4,
             repeat: -1
