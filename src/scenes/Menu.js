@@ -75,7 +75,7 @@ class Menu extends Phaser.Scene {
                 end: 2, 
                 first: 0
             }),
-            frameRate: 3,
+            frameRate: 9,
             repeat: -1,
             //repeatDelay: 5000
         });
