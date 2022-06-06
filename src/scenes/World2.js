@@ -175,12 +175,14 @@ class World2 extends Phaser.Scene {
         
         // create enemies
         // enemey animation
+        /*
         this.anims.create({
             key: 'idle3',
             frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 4, first: 0}),
             frameRate: 10,
             repeat: -1
         });
+        */
         this.anims.create({
             key: 'idle4',
             frames: this.anims.generateFrameNumbers('enemy3', { start: 0, end: 4, first: 0}),

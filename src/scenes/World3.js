@@ -24,10 +24,10 @@ class World3 extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-        this.load.spritesheet('enemy_blue', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy_purple', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy_red', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy_green', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+       // this.load.spritesheet('enemy_blue', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+       // this.load.spritesheet('enemy_purple', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        //this.load.spritesheet('enemy_red', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        //this.load.spritesheet('enemy_green', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet("healthBar", "./assets/healthBar.png", {frameWidth: 128, frameHeight: 32, startFrame: 0, endFrame: 3});
         //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
@@ -185,6 +185,7 @@ class World3 extends Phaser.Scene {
         this.chordTuto2 = this.add.text(chordPos2.x - 50, chordPos2.y - 50, "PRESS (T) to recharge bullets");
 
         // enmmey creation
+        /*
         this.anims.create({
             key: 'idle1',
             frames: this.anims.generateFrameNumbers('enemy_blue', { start: 0, end: 4, first: 0}),
@@ -203,9 +204,10 @@ class World3 extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
+        */
         this.anims.create({
-            key: 'idle4',
-            frames: this.anims.generateFrameNumbers('enemy_green', { start: 0, end: 4, first: 0}),
+            key: 'idle5',
+            frames: this.anims.generateFrameNumbers('enemy4', { start: 0, end: 4, first: 0}),
             frameRate: 10,
             repeat: -1
         });
@@ -215,29 +217,29 @@ class World3 extends Phaser.Scene {
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "blue");
         let index = 0;
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_blue', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
-            this.enemy[index].play('idle1');
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle2');
             index += 1;
         });
 
         enemyObjects = map.filterObjects("Enemies", obj => obj.name === "purple");
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_purple', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
-            this.enemy[index].play('idle2');
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy2', 0, this.length, this.height, 2).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle3');
             index += 1;
         });
 
         enemyObjects = map.filterObjects("Enemies", obj => obj.name === "red");
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_red', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
-            this.enemy[index].play('idle3');
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy3', 0, this.length, this.height, 3).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle4');
             index += 1;
         });
 
         enemyObjects = map.filterObjects("Enemies", obj => obj.name === "green");
         enemyObjects.map((element) => {
-            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy_green', 0, this.length, this.height, 4).setOrigin(0,0).setImmovable(true); 
-            this.enemy[index].play('idle4');
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy4', 0, this.length, this.height, 4).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle5');
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);
