@@ -15,6 +15,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.mw = mW;
         this.mh = mH;
         this.setScale(0.7);
+        this.setOffset(21.5,0); // move hitbox to front
+        this.setMaxVelocity(1000, 900);
         //this.setBounce(0.1);
         this.isFire = false;
         this.hitted = false;
@@ -26,19 +28,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.magazine = 30;
     }
 
-    preload() {
-        //this.load.image('bullet', './assets/bullet.png');
-        //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
-    }
-
     create() {
         this.setMaxVelocity(200, 2000);
-        //this.add.text(0, -100, "ooooooo!")
-        if(this.hitted){
-            this.alpha = 0.5;
-            this.life -= 1;
-        }
-        //this.color = this.anims.generateFrameNumbers('bullet', { start: 0, end: 0, first: 0});
     }
 
     update(enemy, platform) {

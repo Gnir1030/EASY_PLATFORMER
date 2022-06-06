@@ -64,6 +64,7 @@ class Hub extends Phaser.Scene {
         let playerPos  = map.findObject("Player", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.setMaxVelocity(1000, 900);
+        //this.player.body.setSize(64, , 50, 25);
 
         // set up camera
         const viewH = 640;
