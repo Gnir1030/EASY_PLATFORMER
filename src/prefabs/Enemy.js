@@ -41,6 +41,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.body.setVelocityX(0);
                 this.isFire = false;
+                if(this.shooterEvent)
+                    this.shooterEvent.destroy();
             }
 
             // change the direction

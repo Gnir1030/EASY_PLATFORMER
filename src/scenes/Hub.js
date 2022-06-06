@@ -71,7 +71,7 @@ class Hub extends Phaser.Scene {
         this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
         this.cam.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
         this.cam.startFollow(this.player);
-        //this.cam.setBackgroundColor('#cfd8dc');
+        this.cam.setBackgroundColor('#cfd8dc');
 
         // collision
         this.physics.add.collider(this.player, platforms);

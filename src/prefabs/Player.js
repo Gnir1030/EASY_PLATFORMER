@@ -77,7 +77,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
 
             if(!this.body.onFloor()){
-                console.log(1);
+                //console.log(1);
                 this.anims.play('jump', true);
             }
 
@@ -100,6 +100,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     this.magazine -= 1;
                 }
                 this.isFire = false;
+            }
+
+            if(this.life > 3){
+                this.life = 3;
             }
         }
 
