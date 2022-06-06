@@ -22,7 +22,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.enemyDir;
         this.shadow = false;
         this.life = 3;
-        this.active = 0;
+        this.bullet = 0;
         this.magazine = 30;
     }
 
@@ -33,7 +33,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     create() {
         this.setMaxVelocity(200, 2000);
-        this.add.text(0, -100, "ooooooo!")
+        //this.add.text(0, -100, "ooooooo!")
         if(this.hitted){
             this.alpha = 0.5;
             this.life -= 1;
@@ -45,10 +45,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if(!this.hitted){
             if (Phaser.Input.Keyboard.JustDown(this.keyL)) {
-                this.active = (this.active + chords.length - 1) % chords.length;
+                this.bullet = (this.bullet + chords.length - 1) % chords.length;
             }
             if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
-                this.active = (this.active + 1) % chords.length;
+                this.bullet = (this.bullet + 1) % chords.length;
                 //console.log(this.active);
             }
             // move
@@ -117,10 +117,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     spawnBullet(dir, enemy, platform) {
         let bullet;
         if(dir == 'left'){
-            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet' + chords[this.active], 0, dir, chords[this.active]).setOrigin(0);
+            bullet = new Bullet(this.scene, this.x - 24,  this.y + 60, 'bullet' + chords[this.bullet], 0, dir, chords[this.bullet]).setOrigin(0);
         }
         else{
-            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet' + chords[this.active], 0, dir, chords[this.active]).setOrigin(0);
+            bullet = new Bullet(this.scene, this.x + 82,  this.y + 60, 'bullet' + chords[this.bullet], 0, dir, chords[this.bullet]).setOrigin(0);
         }
         this.scene.physics.add.overlap(bullet, enemy, (obj1, obj2) => {
             if(obj2.shooterEvent)

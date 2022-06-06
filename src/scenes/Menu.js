@@ -12,8 +12,24 @@ class Menu extends Phaser.Scene {
         this.load.audio('health', './assets/healthIncrease.wav');
         this.load.audio('ineffective', './assets/not_effective.wav');
         this.load.audio('damage', './assets/Damage.wav');
-        //this.load.atlas('player_atlas', 'colorlessPlayerIdle.png', 'colorlessPlayerJump.png', 'colorlessPlayerWalk.png', 'greymap.json');
-        //this.load.atlas('player_atlas', 'colorlessPlayerIdle.png', 'greymap.json');
+        //this.load.atlas('player_atlas', './assets/colorlessPlayerIdle.png', './assets/colorlessPlayerJump.png', './assets/colorlessPlayerWalk.png', './assets/greymap.json');
+        this.load.spritesheet('player_idle', './assets/playerIdle.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
+
+        this.load.image('bullet1', './assets/bullet1.png');
+        this.load.image('bullet2', './assets/bullet2.png');
+        this.load.image('bullet3', './assets/bullet3.png');
+        this.load.image('bullet4', './assets/bullet4.png');
+
+        this.load.image('chord1', './assets/blueStar.png');
+        this.load.image('chord2', './assets/purpleStar.png');
+        this.load.image('chord3', './assets/redStar.png');
+        this.load.image('chord4', './assets/greenStar.png');
+
+        this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy3', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy4', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
     }
 
     create() {
@@ -35,6 +51,51 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
+
+        //animation preload
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('player_idle', { 
+                start: 0, 
+                end: 4, 
+                first: 0
+            }),
+            frameRate: 5,
+            repeat: -1,
+            //repeatDelay: 5000
+        });
+        this.anims.create({
+            key: 'idle2',
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idle3',
+            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idle4',
+            frames: this.anims.generateFrameNumbers('enemy3', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        
+        this.anims.create({
+            key: 'idle5',
+            frames: this.anims.generateFrameNumbers('enemy4', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'portal',
+            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
 
     // show menu text
     this.add.text(config.width/2, config.height/2 - borderUISize - borderPadding, 'Finding Color', menuConfig).setOrigin(0.5);

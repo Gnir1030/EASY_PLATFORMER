@@ -63,13 +63,6 @@ class World1 extends Phaser.Scene {
         this.platforms.setCollisionByExclusion(-1, true);
 
         // player
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
-            repeat: -1
-        });
-
         let playerPos  = map.findObject("Enemies", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
@@ -151,12 +144,6 @@ class World1 extends Phaser.Scene {
         }, null, this);
 
         // portal
-        this.anims.create({
-            key: 'portal',
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 2,
-            repeat: -1
-        });
         let portalPos  = map.findObject("Items", obj => obj.name === "portal");
         this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
         this.portal.play('portal');
@@ -173,20 +160,6 @@ class World1 extends Phaser.Scene {
         this.chord = new Item(this, chordPos.x, chordPos.y, 'chord1', 0, 1).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord, ()=>{this.collectChord(this.chord)}, null, this);
         this.chordTuto = this.add.text(chordPos.x - 50, chordPos.y - 50, "PRESS (T) to recharge bullets");
-
-        // enmmey creation
-        this.anims.create({
-            key: 'idle2',
-            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idle3',
-            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
 
         // create enemies
         this.enemy = []

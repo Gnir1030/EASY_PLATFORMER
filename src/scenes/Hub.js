@@ -15,26 +15,9 @@ class Hub extends Phaser.Scene {
         this.load.image('tilesH', './assets/tilesheet0.png');
         this.load.tilemapTiledJSON('mapH', './assets/worldHub.json');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
-        //this.load.atlas('player_atlas', 'colorlessPlayerIdle.png', 'colorlessPlayerJump.png', 'colorlessPlayerWalk.png', 'greymap.json');
+        //this.load.atlas('player_atlas', './assets/colorlessPlayerIdle.png', './assets/greymap.json');
         this.load.spritesheet('player_idle', './assets/playerIdle.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('player_walk', './assets/playerWalk.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
-        this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
-        this.load.image('bullet', './assets/bullet.png');
-
-        this.load.image('bullet1', './assets/bullet1.png');
-        this.load.image('bullet2', './assets/bullet2.png');
-        this.load.image('bullet3', './assets/bullet3.png');
-        this.load.image('bullet4', './assets/bullet4.png');
-
-        this.load.image('chord1', './assets/blueStar.png');
-        this.load.image('chord2', './assets/purpleStar.png');
-        this.load.image('chord3', './assets/redStar.png');
-        this.load.image('chord4', './assets/greenStar.png');
-
-        this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy3', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('enemy4', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
     }
 
     create() {
@@ -82,27 +65,23 @@ class Hub extends Phaser.Scene {
         platforms.setCollisionByExclusion(-1, true);
 
         // player
+        /*
         this.anims.create({
             key: 'idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
-            repeat: -1
+            frames: this.anims.generateFrameNames('player_atlas', {
+                prefix: 'idle_',
+                start: 1,
+                end: 5,
+                suffix: '',
+                zeroPad: 4
+            }),
+           frameRate: 1,
+           repeat: -1,
+           repeatDelay: 5000,
+           yoyo: true
         });
+        */
 
-        // this.anims.create({
-        //     key: 'idle',
-        //     frames: this.anims.generateFrameNames('player_atlas', {
-        //         prefix: 'idle_',
-        //         start: 1,
-        //         end: 5,
-        //         suffix: '',
-        //         zeroPad: 4
-        //     }),
-        //     frameRate: 15,
-        //     repeat: -1,
-        //     repeatDelay: 5000,
-        //     yoyo: true
-        // });
         // this.anims.create({
         //     key: 'jump',
         //     frames: this.anims.generateFrameNames('player_atlas', {
@@ -133,7 +112,9 @@ class Hub extends Phaser.Scene {
         // });
         let playerPos  = map.findObject("Player", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
-        //this.player.play('idle');
+        this.player.play('idle');
+        console.log(this.player.anims)
+        /*
         this.anims.create({
             key: 'player_idle',
             frames: this.anims.generateFrameNumbers('player_idle', { start: 0, end: 4, first: 0}),
@@ -146,7 +127,8 @@ class Hub extends Phaser.Scene {
             frameRate: 15,
             repeat: -1
         });
-        this.player.play('idle');
+        */
+        //this.player.play('idle');
         this.player.setMaxVelocity(1000, 900);
 
         // set up camera
@@ -173,12 +155,6 @@ class Hub extends Phaser.Scene {
         this.portal3 = new Portal(this, portalPos.x, portalPos.y + 43, 'portal', 0, 'world3Scene').setOrigin(0);
         this.clear3 = this.add.text(portalPos.x, portalPos.y + 135, 'Cleared', clearConfig).setVisible(false);
 
-        this.anims.create({
-            key: 'portal',
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
         this.Hub_World_music.stop();
         this.portal.play('portal');
         this.portal2.play('portal');
@@ -190,8 +166,8 @@ class Hub extends Phaser.Scene {
         this.portal2Collides = this.physics.add.collider(this.player, this.portal2, (obj1, obj2) => {
             this.scene.start(obj2.destination);
         }, null, this);
-        this.portal2Collides.active = false;
-        this.portal2.visible = false;
+        //this.portal2Collides.active = false;
+        //this.portal2.visible = false;
 
         this.portal3Collides = this.physics.add.collider(this.player, this.portal3, (obj1, obj2) => {
             this.scene.start(obj2.destination);

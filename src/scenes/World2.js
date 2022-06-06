@@ -65,12 +65,6 @@ class World2 extends Phaser.Scene {
         this.platforms.setCollisionByExclusion(-1, true);
 
         // player
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
-            repeat: -1
-        });
 
         let playerPos  = map.findObject("Enemies", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
@@ -150,12 +144,6 @@ class World2 extends Phaser.Scene {
         }, null, this);
 
         // portal
-        this.anims.create({
-            key: 'portal',
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 2,
-            repeat: -1
-        });
         let portalPos  = map.findObject("Items", obj => obj.name === "portal");
         this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
         this.portal.play('portal');
@@ -173,22 +161,6 @@ class World2 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.chord2, ()=>{this.collectChord(this.chord2)}, null, this);
         this.chordTuto2 = this.add.text(chordPos2.x - 100, chordPos2.y - 50, "PRESS (T) to recharge bullets",{color: '#000000'});
         
-        // create enemies
-        // enemey animation
-        /*
-        this.anims.create({
-            key: 'idle3',
-            frames: this.anims.generateFrameNumbers('enemy2', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        */
-        this.anims.create({
-            key: 'idle4',
-            frames: this.anims.generateFrameNumbers('enemy3', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
         // enemy array creation
         this.enemy = []
         let enemyObjects = map.filterObjects("Enemies", obj => obj.name === "");
@@ -301,7 +273,7 @@ class World2 extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_2_music.stop();
                 this.Game_over.stop();

@@ -73,13 +73,6 @@ class World3 extends Phaser.Scene {
         this.platforms.setCollisionByExclusion(-1, true);
 
         // player
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3, first: 0}),
-            frameRate: 1,
-            repeat: -1
-        });
-
         let playerPos  = map.findObject("Enemies", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.play('idle');
@@ -161,12 +154,6 @@ class World3 extends Phaser.Scene {
         }, null, this);
 
         // portal
-        this.anims.create({
-            key: 'portal',
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
-            frameRate: 2,
-            repeat: -1
-        });
         let portalPos  = map.findObject("Items", obj => obj.name === "portal");
         this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
         this.portal.play('portal');
@@ -183,34 +170,6 @@ class World3 extends Phaser.Scene {
         this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord2', 0, 2).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord2, ()=>{this.collectChord(this.chord2)}, null, this);
         this.chordTuto2 = this.add.text(chordPos2.x - 50, chordPos2.y - 50, "PRESS (T) to recharge bullets");
-
-        // enmmey creation
-        /*
-        this.anims.create({
-            key: 'idle1',
-            frames: this.anims.generateFrameNumbers('enemy_blue', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idle2',
-            frames: this.anims.generateFrameNumbers('enemy_purple', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idle3',
-            frames: this.anims.generateFrameNumbers('enemy_red', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        */
-        this.anims.create({
-            key: 'idle5',
-            frames: this.anims.generateFrameNumbers('enemy4', { start: 0, end: 4, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
 
         // create enemies
         this.enemy = []
@@ -342,7 +301,7 @@ class World3 extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or <- to return', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_3_music.stop();
                 this.Game_over.stop();

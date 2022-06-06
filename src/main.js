@@ -24,7 +24,7 @@ let gameOver = false;
 
 let scoreConfig = {
     fontFamily: 'Courier',
-    fontSize: '10px',
+    fontSize: '28px',
     backgroundColor: '#F3B141',
     color: '#843605',
     align: 'center',
@@ -43,6 +43,6 @@ let y = game.config.height;
 let borderUISize = game.config.width/15;
 let borderPadding = borderUISize / 3;
 
-let chords = [1];
+let chords = [1,2,3,4];
 
 let completed = [0, 0, 0];
