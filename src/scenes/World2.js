@@ -204,6 +204,8 @@ class World2 extends Phaser.Scene {
 
         // add magazine text
         this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
+        this.gameoverText = this.add.text(350, 300, "GAME OVER", scoreConfig).setScrollFactor(0).setVisible(false);
+        this.gameoverText2 = this.add.text(120, 350, 'Press (R) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
 
         this.bullets = this.add.group();
         this.overlap2 = this.physics.add.overlap(this.player, this.bullets, (obj1, obj2) => {
@@ -268,9 +270,9 @@ class World2 extends Phaser.Scene {
                 y = this.player.y;
                 this.count += 1;
             }
+            this.gameoverText.setVisible(true);
+            this.gameoverText2.setVisible(true);
             this.physics.pause();
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_2_music.stop();
                 this.Game_over.stop();
@@ -281,6 +283,11 @@ class World2 extends Phaser.Scene {
                 this.Game_over.stop();
                 this.scene.start('hubScene');
             }
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyP)) {
+            this.World_2_music.stop();
+            this.Game_over.stop();
+            this.scene.restart();
         }
     }
 
