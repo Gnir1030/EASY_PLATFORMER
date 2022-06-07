@@ -51,6 +51,7 @@ class World1 extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+        keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
@@ -264,7 +265,6 @@ class World1 extends Phaser.Scene {
             else{
                 this.chordTuto2.setVisible(false);
             }
-
         } else {
             if (this.count < 1) {
                 this.World_1_music.stop();
@@ -273,17 +273,17 @@ class World1 extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                this.World_1_music.stop();
-                this.Game_over.stop();
-                this.scene.restart();
-            }
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (P) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyM)) {
                 this.World_1_music.stop();
                 this.Game_over.stop();
                 this.scene.start('hubScene');
             }
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyP)) {
+            this.World_1_music.stop();
+            this.Game_over.stop();
+            this.scene.restart();
         }
     }
 

@@ -270,17 +270,17 @@ class World2 extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                this.World_2_music.stop();
-                this.Game_over.stop();
-                this.scene.restart();
-            }
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (P) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyM)) {
                 this.World_2_music.stop();
                 this.Game_over.stop();
                 this.scene.start('hubScene');
             }
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyP)) {
+            this.World_2_music.stop();
+            this.Game_over.stop();
+            this.scene.restart();
         }
     }
 
