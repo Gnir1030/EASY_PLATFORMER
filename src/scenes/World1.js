@@ -247,15 +247,6 @@ class World1 extends Phaser.Scene {
             this.checkHealth();
             this.magazineText.text = this.player.magazine + " bullets";
 
-            //global pause
-            if (Phaser.Input.Keyboard.JustDown(keyESC)) {
-                this.physics.pause();
-            }
-
-            if (Phaser.Input.Keyboard.JustDown(keyR)){
-                this.physics.resume();
-            }
-
             //chord tuto
             if(!this.chord.body.touching.none){
                 this.chordTuto.setVisible(true);
