@@ -307,7 +307,6 @@ class World1 extends Phaser.Scene {
         this.scene.start('hubScene');
     }
     collectChord(chord) {
-        //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
     }
 
