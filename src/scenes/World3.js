@@ -229,8 +229,7 @@ class World3 extends Phaser.Scene {
                 })
         });
 
-        // add instruction text
-        this.add.text(20, 20, "Level 3").setScrollFactor(0);
+        // add magazine text
         this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
 
         //bullet hitback
