@@ -19,9 +19,9 @@ class Hub extends Phaser.Scene {
     create() {
         // Hub World music
 
-        this.Hub_World_music = this.sound.add('Hub_World', {volume: 0.50});
-        this.Hub_World_music.play();
-        this.Hub_World_music.loop = true;
+        this.hub_music = this.sound.add('Hub_World', {volume: 0.50});
+        this.hub_music.play();
+        this.hub_music.loop = true;
 
         // base settings for this scene
         gameOver = false;
@@ -92,7 +92,7 @@ class Hub extends Phaser.Scene {
         this.portal3 = new Portal(this, portalPos.x, portalPos.y + 43, 'portal', 0, 'world3Scene').setOrigin(0);
         this.clear3 = this.add.text(portalPos.x, portalPos.y + 135, 'Cleared', clearConfig).setVisible(false);
 
-        this.Hub_World_music.stop();
+        this.hub_music.stop();
         this.portal.play('portal');
         this.portal2.play('portal');
         this.portal3.play('portal');
@@ -129,7 +129,7 @@ class Hub extends Phaser.Scene {
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
-            this.Hub_World_music.stop();
+            this.hub_music.stop();
             this.scene.start('menuScene');
         }
 
