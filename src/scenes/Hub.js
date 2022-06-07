@@ -46,10 +46,10 @@ class Hub extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        this.add.text(20, 20, "Main Hub").setScrollFactor(0);
-        this.add.text(84, 84, 'Press M for Menu').setScrollFactor(0);
-        this.gameclear = this.add.text(360, 520, "Thanks for playing!").setScale(2).setScrollFactor(0.5).setVisible(false);
-        this.gameclear2 = this.add.text(84, 104, "Press (R) to reset").setScale(1).setScrollFactor(0).setVisible(false);
+        //this.add.text(20, 20, "Main Hub").setScrollFactor(0);
+        this.add.text(84, 84, 'Press M for Menu', clearConfig).setScrollFactor(0);
+        this.gameclear = this.add.text(360, 520, "Thanks for playing!", clearConfig).setScale(2).setScrollFactor(0.5).setVisible(false);
+        this.gameclear2 = this.add.text(84, 104, "Press (R) to reset", clearConfig).setScale(1).setScrollFactor(0).setVisible(false);
         //this.add.text(84, 84 + 64, chords[0]);
         
 
@@ -57,6 +57,8 @@ class Hub extends Phaser.Scene {
         // map
         const map = this.make.tilemap({ key: 'mapH' });
         const tileSet = map.addTilesetImage('tile_sheet_0', 'tilesH');
+        const backgroundLayer = map.createLayer("Background", tileSet, 0, 96).setScrollFactor(0.25); // background layer
+        const groundLayer = map.createLayer("Ground", tileSet, 0, 96); // background layer
         const platforms = map.createLayer('Platforms', tileSet, 0, 96);
         platforms.setCollisionByExclusion(-1, true);
 
@@ -146,9 +148,5 @@ class Hub extends Phaser.Scene {
             }
         }
         this.player.update();
-        // if(this.player.body.velocity.x < 0) {
-        //     console.log("no we can't");
-        //     this.player.anims.play('walk', true);
-        // }
     }
 }
