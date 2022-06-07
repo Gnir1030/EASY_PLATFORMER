@@ -22,6 +22,7 @@ class Tutorial extends Phaser.Scene {
 
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet("healthBar", "./assets/healthBar.png", {frameWidth: 128, frameHeight: 32, startFrame: 0, endFrame: 3});
         //this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
@@ -54,14 +55,14 @@ class Tutorial extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keySPACE.enabled = false;
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        //keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
         this.add.text(20, 20, "Tutorial Level").setScrollFactor(0);
-        this.healthText = this.add.text(700, 20, "Health: " + 3).setScrollFactor(0);
+        this.healthBar = this.add.image(710, 30, 'healthBar', 3).setScrollFactor(0);
         this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes").setScrollFactor(0); //UI scroll
         this.moveTuto = this.add.text(120, 540, "Press A D to Move");
         this.jumpTuto = this.add.text(600, 470, "Press W to Jump").setVisible(false);
@@ -117,7 +118,7 @@ class Tutorial extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.player.shadow = true;
-            this.player.life -= 1;
+            this.looseHealth();
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
                     callback: ()=>{
@@ -171,7 +172,7 @@ class Tutorial extends Phaser.Scene {
             this.overlap.active = false;
             this.overlap2.active = false;
             this.player.hitted = true;
-            this.player.life -= 1;
+            this.looseHealth();
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -196,6 +197,7 @@ class Tutorial extends Phaser.Scene {
             this.overlap.active = false;
             this.collider.active = false;
             this.player.hitted = true;
+            this.looseHealth();
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -212,7 +214,7 @@ class Tutorial extends Phaser.Scene {
     }
 
     update() {
-        this.healthText.setText("Health: " + this.player.life);
+        //this.healthText.setText("Health: " + this.player.life);
         if (!gameOver) {
             this.player.update(this.enemy, this.platforms);
             this.enemy.update(this.player, this.platforms);
@@ -229,8 +231,8 @@ class Tutorial extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (M) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (P) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
+            if (Phaser.Input.Keyboard.JustDown(keyP)) {
                 this.tutorial_music.stop();
                 this.Game_over.stop();
                 this.scene.restart();
@@ -280,17 +282,6 @@ class Tutorial extends Phaser.Scene {
         this.debug.cameraInfo(this.cam, 32, 32);
     }
     */
-
-    looseHealth() {
-        this.player.health -= 1;
-        this.sound.play('Take_Damage');
-        if (this.player.health <= 0) {
-            this.player.health = 0;
-            gameOver = true;
-        }
-        this.player.x -= 50;
-        this.player.setVelocity(0,0);
-    }
     switchScene() {
         this.scene.start(this.portal.destination);
         this.tutorial_music.stop();
@@ -298,5 +289,18 @@ class Tutorial extends Phaser.Scene {
     collectChord() {
         //this.item.addToItems(chords);
         this.item.destroy();
+    }
+    looseHealth() {
+        this.player.life -= 1;
+        if (this.player.life >= 3) {
+            this.healthBar.setFrame(3);
+        }
+        else if (this.player.life <= 0) {
+            this.player.life = 0;
+            gameOver = true;
+            this.healthBar.setFrame(0);
+        } else {
+            this.healthBar.setFrame(this.player.life);
+        }
     }
 }
