@@ -11,7 +11,6 @@ let config = {
             debug: false
         }
     },
-    //scene: [World2]
     scene: [Menu, Tutorial, Instructions, Credit, Hub, World1, World2, World3]
 }
 let game = new Phaser.Game(config);
@@ -39,7 +38,9 @@ let clearConfig = {
 };
 
 let ammoConfig = {
-    backgroundColor: '#00c853'
+    fontSize: '20px',
+    backgroundColor: '#455a64',
+    color: '#ffffff'
 }
 
 let x = game.config.width;
