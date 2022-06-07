@@ -9,11 +9,11 @@ class Instructions extends Phaser.Scene {
 
     create() {
         this.add.image(0,0, 'background', 0).setOrigin(0,0);
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     update() {
-        if(Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        if(Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start('hubScene');
         }
     }

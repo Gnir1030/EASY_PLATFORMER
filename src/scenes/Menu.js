@@ -33,6 +33,8 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy3', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy4', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+
+        this.load.image('title', './assets/Title.png');
     }
 
     create() {
@@ -133,7 +135,9 @@ class Menu extends Phaser.Scene {
     this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding, 'Press ← to Play', menuConfig).setOrigin(0.5);
     this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +32, 'Press (T) to play the Tutorial', menuConfig).setOrigin(0.5);
     this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +64, 'Press (R) to see credit', menuConfig).setOrigin(0.5);
+    this.add.image(0,0, 'title', 0).setOrigin(0,0);
     // define keys
+    keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
@@ -141,7 +145,7 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.menu_music.stop();
             this.scene.start('instructionsScene');
         }
