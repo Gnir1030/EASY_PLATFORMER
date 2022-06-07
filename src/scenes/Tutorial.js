@@ -20,10 +20,8 @@ class Tutorial extends Phaser.Scene {
         this.load.image('background', './assets/background.png');
         this.load.image('bullet', './assets/bullet.png');
 
-        //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
         this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet("healthBar", "./assets/healthBar.png", {frameWidth: 128, frameHeight: 32, startFrame: 0, endFrame: 3});
-        //this.load.spritesheet('enemy', './assets/RightFacingEnemy1.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
@@ -46,8 +44,6 @@ class Tutorial extends Phaser.Scene {
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
 
-        // background
-        //this.add.image(0, 0,'background').setOrigin(0, 0);
         // move keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -160,7 +156,6 @@ class Tutorial extends Phaser.Scene {
 
         this.enemy = new Enemy(this, 3200, 400, 'enemy', 0, this.length, this.height, 1).setOrigin(0,0).setImmovable(true);
         this.enemy.play('idle2');
-        //this.enemy.setMaxVelocity(900,500);
         this.physics.add.collider(this.enemy, this.platforms);
 
         this.overlap = this.physics.add.overlap(this.player, this.enemy, (obj1, obj2) => {
@@ -214,7 +209,6 @@ class Tutorial extends Phaser.Scene {
     }
 
     update() {
-        //this.healthText.setText("Health: " + this.player.life);
         if (!gameOver) {
             this.player.update(this.enemy, this.platforms);
             this.enemy.update(this.player, this.platforms);
@@ -277,17 +271,11 @@ class Tutorial extends Phaser.Scene {
         
     }
 
-    /*
-    render(){
-        this.debug.cameraInfo(this.cam, 32, 32);
-    }
-    */
     switchScene() {
         this.scene.start(this.portal.destination);
         this.tutorial_music.stop();
     }
     collectChord() {
-        //this.item.addToItems(chords);
         this.item.destroy();
     }
     looseHealth() {
