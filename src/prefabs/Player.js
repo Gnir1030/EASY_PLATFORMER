@@ -126,7 +126,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if(obj2.shooterEvent)
                 obj2.shooterEvent.destroy();
             if (obj1.color == obj2.color) {
-                obj2.destroy();
+                obj1.alpha = 0;
+                obj2.alpha = 0;
+                let boom = this.scene.add.sprite(obj2.x, obj2.y, 'explosion').setOrigin(0, 0);
+                boom.anims.play('explode');
+                boom.on('animationcomplete', () => {
+                    obj2.destroy();
+                    boom.destroy();
+                });
             }
             obj1.destroy();
         })

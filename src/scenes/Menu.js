@@ -18,6 +18,7 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('player_walk', './assets/playerWalk3.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
         this.load.spritesheet('player_jump', './assets/playerJump2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
+        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
 
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
@@ -125,6 +126,13 @@ class Menu extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5, first: 0}),
             frameRate: 2,
             repeat: -1
+        });
+
+        //explosion animation
+        this.anims.create({
+            key: 'explode',
+            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
+            frameRate: 30
         });
 
     // show menu text
