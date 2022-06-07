@@ -75,7 +75,7 @@ class Menu extends Phaser.Scene {
                 end: 2, 
                 first: 0
             }),
-            frameRate: 3,
+            frameRate: 5,
             repeat: -1,
             //repeatDelay: 5000
         });
@@ -86,7 +86,7 @@ class Menu extends Phaser.Scene {
                 end: 3, 
                 first: 0
             }),
-            frameRate: 4,
+            frameRate: 5,
             repeat: -1
         });
 
