@@ -165,7 +165,7 @@ class World3 extends Phaser.Scene {
 
         //yellow chord
         let chordPos2 = map.findObject("Items", obj => obj.name === "yellow_chord");
-        this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord2', 0, 2).setOrigin(0);
+        this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord5', 0, 5).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord2, ()=>{this.collectChord(this.chord2)}, null, this);
         this.chordTuto2 = this.add.text(chordPos2.x - 50, chordPos2.y - 50, "PRESS (T) to recharge bullets");
 
@@ -197,6 +197,13 @@ class World3 extends Phaser.Scene {
         enemyObjects.map((element) => {
             this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy4', 0, this.length, this.height, 4).setOrigin(0,0).setImmovable(true); 
             this.enemy[index].play('idle5');
+            index += 1;
+        });
+
+        enemyObjects = map.filterObjects("Enemies", obj => obj.name === "yellow");
+        enemyObjects.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy5', 0, this.length, this.height, 5).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle6');
             index += 1;
         });
         this.enemies = this.physics.add.group(this.enemy);

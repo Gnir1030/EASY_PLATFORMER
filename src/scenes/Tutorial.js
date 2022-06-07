@@ -211,7 +211,7 @@ class Tutorial extends Phaser.Scene {
     }
 
     update() {
-        this.healthText.setText("Health: " + this.player.health);
+        this.healthText.setText("Health: " + this.player.life);
         if (!gameOver) {
             this.player.update(this.enemy, this.platforms);
             this.enemy.update(this.player, this.platforms);
