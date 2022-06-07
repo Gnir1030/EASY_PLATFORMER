@@ -33,8 +33,6 @@ class Hub extends Phaser.Scene {
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
 
-        // background
-        //this.add.image(0, 0,'background').setOrigin(0, 0);
         // move keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -92,22 +90,24 @@ class Hub extends Phaser.Scene {
         this.portal3 = new Portal(this, portalPos.x, portalPos.y + 43, 'portal', 0, 'world3Scene').setOrigin(0);
         this.clear3 = this.add.text(portalPos.x, portalPos.y + 135, 'Cleared', clearConfig).setVisible(false);
 
-        this.hub_music.stop();
         this.portal.play('portal');
         this.portal2.play('portal');
         this.portal3.play('portal');
         this.portal1Collides = this.physics.add.collider(this.player, this.portal, (obj1, obj2) => {
             this.scene.start(obj2.destination);
+            this.hub_music.stop();
         }, null, this);
         
         this.portal2Collides = this.physics.add.collider(this.player, this.portal2, (obj1, obj2) => {
             this.scene.start(obj2.destination);
+            this.hub_music.stop();
         }, null, this);
         this.portal2Collides.active = false;
         this.portal2.visible = false;
 
         this.portal3Collides = this.physics.add.collider(this.player, this.portal3, (obj1, obj2) => {
             this.scene.start(obj2.destination);
+            this.hub_music.stop();
         }, null, this);
          this.portal3Collides.active = false;
          this.portal3.visible = false;

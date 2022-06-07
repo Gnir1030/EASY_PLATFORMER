@@ -52,7 +52,6 @@ class World1 extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
         // map
