@@ -92,6 +92,7 @@ class Tutorial extends Phaser.Scene {
         const viewW = 800;
         this.cam = this.cameras.main.setViewport(0, 0, viewW, viewH).setZoom(1);
         this.cam.setBounds(0,0,this.length, this.height);
+        this.cam.setBackgroundColor('#48a7cf');
         this.cam.startFollow(this.player);
 
         // collision

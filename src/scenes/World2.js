@@ -74,6 +74,7 @@ class World2 extends Phaser.Scene {
         const viewH = 640;
         const viewW = 800;
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
+        this.cameras.main.setBackgroundColor('#ffd080');
         this.cameras.main.startFollow(this.player);
 
         //healthBar
