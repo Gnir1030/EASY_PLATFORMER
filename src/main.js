@@ -38,6 +38,10 @@ let clearConfig = {
     align: 'center',
 };
 
+let ammoConfig = {
+    backgroundColor: '#00c853'
+}
+
 let x = game.config.width;
 let y = game.config.height;
 let borderUISize = game.config.width/15;
