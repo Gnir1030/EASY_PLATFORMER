@@ -18,6 +18,7 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('player_walk', './assets/playerWalk3.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
         this.load.spritesheet('player_jump', './assets/playerJump2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
+        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
 
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
@@ -33,6 +34,8 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy3', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy4', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+
+        this.load.image('title', './assets/Title.png');
     }
 
     create() {
@@ -86,7 +89,7 @@ class Menu extends Phaser.Scene {
                 end: 1, 
                 first: 1
             }),
-            frameRate: 4,
+            frameRate: 5,
             repeat: -1
         });
 
@@ -125,15 +128,17 @@ class Menu extends Phaser.Scene {
             repeat: -1
         });
 
+        //explosion animation
+        this.anims.create({
+            key: 'explode',
+            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
+            frameRate: 30
+        });
+
     // show menu text
-    this.add.text(config.width/2, config.height/2 - borderUISize - borderPadding, 'Finding Color', menuConfig).setOrigin(0.5);
-    //this.add.text(config.width/2, config.height/2, 'Use ←→ arrows to move, up arrow to Jump, \n& (Space) to shoot', menuConfig).setOrigin(0.5);
-    menuConfig.backgroundColor = '#00FF00';
-    menuConfig.color = '#000';
-    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding, 'Press ← to Play', menuConfig).setOrigin(0.5);
-    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +32, 'Press (T) to play the Tutorial', menuConfig).setOrigin(0.5);
-    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +64, 'Press (R) to see credit', menuConfig).setOrigin(0.5);
+    this.add.image(0,0, 'title', 0).setOrigin(0,0);
     // define keys
+    keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
@@ -141,7 +146,7 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.menu_music.stop();
             this.scene.start('instructionsScene');
         }

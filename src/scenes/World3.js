@@ -229,8 +229,7 @@ class World3 extends Phaser.Scene {
                 })
         });
 
-        // add instruction text
-        this.add.text(20, 20, "Level 3").setScrollFactor(0);
+        // add magazine text
         this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
         this.gameoverText = this.add.text(350, 300, "GAME OVER", scoreConfig).setScrollFactor(0).setVisible(false);
         this.gameoverText2 = this.add.text(120, 350, 'Press (R) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
@@ -312,6 +311,11 @@ class World3 extends Phaser.Scene {
                 this.Game_over.stop();
                 this.scene.start('hubScene');
             }
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyP)) {
+            this.World_3_music.stop();
+            this.Game_over.stop();
+            this.scene.restart();
         }
     }
 

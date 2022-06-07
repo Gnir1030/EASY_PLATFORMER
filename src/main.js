@@ -8,7 +8,7 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 600},
-            debug: true
+            debug: false
         }
     },
     //scene: [World2]
@@ -16,7 +16,7 @@ let config = {
 }
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM, keyT, keyA, keyD, keyW;
+let keyLEFT, keyRIGHT, keyUP, keySPACE, keyR, keyM, keyT, keyA, keyD, keyW, keyP;
 
 let borderS = game.config.height/10;
 
@@ -31,7 +31,7 @@ let scoreConfig = {
 };
 
 let clearConfig = {
-    fontFamily: 'VT323',
+    fontFamily: 'Roboto',
     fontSize: '20px',
     backgroundColor: '#00c853',
     color: '#ffffff',
