@@ -128,13 +128,6 @@ class Menu extends Phaser.Scene {
         });
 
     // show menu text
-    this.add.text(config.width/2, config.height/2 - borderUISize - borderPadding, 'Finding Color', menuConfig).setOrigin(0.5);
-    //this.add.text(config.width/2, config.height/2, 'Use ←→ arrows to move, up arrow to Jump, \n& (Space) to shoot', menuConfig).setOrigin(0.5);
-    menuConfig.backgroundColor = '#00FF00';
-    menuConfig.color = '#000';
-    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding, 'Press ← to Play', menuConfig).setOrigin(0.5);
-    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +32, 'Press (T) to play the Tutorial', menuConfig).setOrigin(0.5);
-    this.add.text(config.width/2, config.height/2 + borderUISize + borderPadding +64, 'Press (R) to see credit', menuConfig).setOrigin(0.5);
     this.add.image(0,0, 'title', 0).setOrigin(0,0);
     // define keys
     keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
