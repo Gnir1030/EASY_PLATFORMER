@@ -48,7 +48,6 @@ class Hub extends Phaser.Scene {
         this.add.text(84, 84, 'Press M for Menu', clearConfig).setScrollFactor(0);
         this.gameclear = this.add.text(360, 520, "Thanks for playing!", clearConfig).setScale(2).setScrollFactor(0.5).setVisible(false);
         this.gameclear2 = this.add.text(84, 104, "Press (R) to reset", clearConfig).setScale(1).setScrollFactor(0).setVisible(false);
-        //this.add.text(84, 84 + 64, chords[0]);
         
 
 
@@ -64,7 +63,6 @@ class Hub extends Phaser.Scene {
         let playerPos  = map.findObject("Player", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.setMaxVelocity(1000, 900);
-        //this.player.body.setSize(64, , 50, 25);
 
         // set up camera
         const viewH = 640;

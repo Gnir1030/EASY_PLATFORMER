@@ -72,7 +72,6 @@ class Menu extends Phaser.Scene {
             }),
             frameRate: 5,
             repeat: -1,
-            //repeatDelay: 5000
         });
         this.anims.create({
             key: 'walk',
@@ -83,7 +82,6 @@ class Menu extends Phaser.Scene {
             }),
             frameRate: 9,
             repeat: -1,
-            //repeatDelay: 5000
         });
         this.anims.create({
             key: 'jump',

@@ -301,15 +301,12 @@ class World2 extends Phaser.Scene {
         }
     }
     switchScene() {
-        //this.player.destroy();
         this.World_2_music.stop();
         completed[1] = 1;
         this.scene.start('hubScene');
     }
     collectChord(chord) {
-        //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
-        //this.player.magazine = 30;
     }
     looseHealth() {
         this.player.life -= 1;
