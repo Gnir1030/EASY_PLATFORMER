@@ -14,9 +14,9 @@ class Menu extends Phaser.Scene {
         this.load.audio('damage', './assets/Damage.wav');
         //this.load.atlas('player_atlas', './assets/colorlessPlayerIdle.png', './assets/colorlessPlayerJump.png', './assets/colorlessPlayerWalk.png', './assets/greymap.json');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
-        this.load.spritesheet('player_idle', './assets/playerIdle.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('player_walk', './assets/playerWalk.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
-        this.load.spritesheet('player_jump', './assets/playerJump.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('player_idle', './assets/playerIdle2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('player_walk', './assets/playerWalk3.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('player_jump', './assets/playerJump2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
 
         this.load.image('bullet1', './assets/bullet1.png');
@@ -75,16 +75,16 @@ class Menu extends Phaser.Scene {
                 end: 2, 
                 first: 0
             }),
-            frameRate: 5,
+            frameRate: 9,
             repeat: -1,
             //repeatDelay: 5000
         });
         this.anims.create({
             key: 'jump',
-            frames: this.anims.generateFrameNumbers('player_jump', { 
-                start: 0, 
-                end: 3, 
-                first: 0
+            frames: this.anims.generateFrameNumbers('player_walk', { 
+                start: 1, 
+                end: 1, 
+                first: 1
             }),
             frameRate: 5,
             repeat: -1
