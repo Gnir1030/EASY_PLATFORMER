@@ -12,7 +12,6 @@ class Menu extends Phaser.Scene {
         this.load.audio('health', './assets/healthIncrease.wav');
         this.load.audio('ineffective', './assets/not_effective.wav');
         this.load.audio('damage', './assets/Damage.wav');
-        //this.load.atlas('player_atlas', './assets/colorlessPlayerIdle.png', './assets/colorlessPlayerJump.png', './assets/colorlessPlayerWalk.png', './assets/greymap.json');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('player_idle', './assets/playerIdle2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('player_walk', './assets/playerWalk3.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
