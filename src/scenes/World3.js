@@ -155,7 +155,9 @@ class World3 extends Phaser.Scene {
         let portalPos  = map.findObject("Items", obj => obj.name === "portal");
         this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
         this.portal.play('portal');
-        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.portalCollides = this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.portalCollides.active = false;
+        this.portal.visible = false;
 
         // green chord
         let chordPos = map.findObject("Items", obj => obj.name === "green_chord");
@@ -340,6 +342,10 @@ class World3 extends Phaser.Scene {
     collectChord(chord) {
         //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
+        if (chord.name == 5) {
+            this.portalCollides.active = true;
+            this.portal.visible = true;
+        }
     }
 
     looseHealth() {
