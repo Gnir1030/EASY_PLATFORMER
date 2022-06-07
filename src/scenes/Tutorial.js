@@ -8,7 +8,6 @@ class Tutorial extends Phaser.Scene {
         this.load.audio('Jump_noise', './assets/Jump.wav');
         this.load.audio('Take_Damage', './assets/Damage.wav');
         this.load.audio('Game_over', './assets/Game_Over.wav');
-        this.load.audio('Low_C_Chord', './assets/Low_C_Chord.wav');
         this.load.audio('tutorial_music', './assets/Tutorial_Music.wav');
 
 
@@ -19,7 +18,6 @@ class Tutorial extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         this.load.image('background', './assets/background.png');
-        this.load.image('LowChordC', './assets/blueStar.png');
         this.load.image('bullet', './assets/bullet.png');
 
         //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
@@ -28,7 +26,6 @@ class Tutorial extends Phaser.Scene {
         //bullet image
         this.load.image('bullet1', './assets/bullet1.png');
         this.load.image('bullet2', './assets/bullet2.png');
-        this.load.image('chord2', './assets/High_C_Major_Chord.png');
     }
 
     create() {
@@ -146,7 +143,7 @@ class Tutorial extends Phaser.Scene {
         this.portalSwitch.active = false;
 
         //item
-        this.item = new Item(this, this.length - 256, 5*64, 'LowChordC', 0, 1).setOrigin(0);
+        this.item = new Item(this, this.length - 256, 5*64, 'chord1', 0, 1).setOrigin(0);
         this.physics.add.overlap(this.player, this.item, this.collectChord, ()=>{
             keySPACE.enabled = true;
             this.shootTuto.setVisible(true);
@@ -231,7 +228,7 @@ class Tutorial extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (R) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (M) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.tutorial_music.stop();
                 this.Game_over.stop();
@@ -298,7 +295,6 @@ class Tutorial extends Phaser.Scene {
         this.tutorial_music.stop();
     }
     collectChord() {
-        this.sound.play('Low_C_Chord');
         //this.item.addToItems(chords);
         this.item.destroy();
     }
