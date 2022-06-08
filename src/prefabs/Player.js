@@ -40,7 +40,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
             if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
                 this.bullet = (this.bullet + 1) % chords.length;
-                //console.log(this.active);
             }
             // move
             if (this.keyLeft.isDown && this.x > 0) {
@@ -64,7 +63,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
             // jump
             if(!this.body.onFloor()){
-                //console.log(1);
                 this.anims.play('jump', true);
             }
             
@@ -75,10 +73,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // change direction
             if (this.body.velocity.x > 0 ) {
                 this.setFlipX(false);
-                //this.dir = 'right';
             } else if (this.body.velocity.x < 0) {
                 this.setFlipX(true);
-                //this.dir = 'left';
             }
 
             if(this.isFire && this.magazine > 0) {
