@@ -15,14 +15,15 @@ This hub world can go to multiple worlds in order. Meaning that once one world i
 There is also a feature that allows the player to restart the game for multiple playthroughs, once he or she is finished.
 
 Art Cohesion
-Art Cohesion
 We feel that our game is very artistically coherent, ranging from the art, sound, and typography. In terms of our aesthetic/experience, we wanted to do both of the themes that we were
 given weeks prior, and after many changes, we decided that color would be the best option. In order to reflect this, we wanted to have one singular enemy type that was different 
 colors. To try and fit the fitting theme into our game, we made several bullets different colors as well, with each bullet only being effective against one enemy. For the missing 
 theme, we had it to where the player must look for each of their lost bullets, to then add it to their arsenal. Each world is a different theme as well, with different color palettes 
-to  reflect the multitude of different colors. This also fits in with our name of our game, as the player goes through diffferent worlds they need to explore. In terms of the sound, 
-we had some music that was  very moody and dark, while others were very bright cheerful, which we feel adheres to the artistic cohesion. For our itch page, our typography wanted to 
+to  reflect the multitude of different colors. World 1 has a night time theme, World 2 has a desert/wild west theme, and World 3 has a volcano based theme. The textures for each world is simplistic to allow the player a much easier time exploring.
+This also fits in with our name of our game, as the player goes through diffferent worlds they need to explore. The portals that are used to transport the player also reflect the multiple worlds.
+In terms of the sound, we had some music that was  very moody and dark, while others were very bright cheerful, which we feel adheres to the artistic cohesion. For our itch page, our typography wanted to 
 reflect the pixel style that we used for our sprites. Our animations also make sense with each other, like with the drones and the explosions that occur when they are defeated.
+We also use particle effects when the player hits a heart to show that health was gained.
 */
 
 let config = {
