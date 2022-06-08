@@ -23,7 +23,6 @@ let config = {
             debug: false
         }
     },
-    //scene: [World2]
     scene: [Menu, Tutorial, Instructions, Credit, Hub, World1, World2, World3]
 }
 let game = new Phaser.Game(config);
@@ -37,8 +36,8 @@ let gameOver = false;
 let scoreConfig = {
     fontFamily: 'Courier',
     fontSize: '28px',
-    backgroundColor: '#F3B141',
-    color: '#843605',
+    backgroundColor: '#000000',
+    color: '#b00000',
     align: 'center',
 };
 
@@ -49,6 +48,12 @@ let clearConfig = {
     color: '#ffffff',
     align: 'center',
 };
+
+let ammoConfig = {
+    fontSize: '20px',
+    backgroundColor: '#455a64',
+    color: '#ffffff'
+}
 
 let x = game.config.width;
 let y = game.config.height;

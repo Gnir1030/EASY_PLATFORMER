@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="100" height="101" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="80">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="100" height="101" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="83">
  <editorsettings>
   <export target="world2.json" format="json"/>
  </editorsettings>
@@ -224,11 +224,10 @@
   <object id="57" gid="21" x="1408" y="928" width="32" height="32"/>
   <object id="58" gid="21" x="63" y="545" width="32" height="32"/>
   <object id="59" gid="21" x="32" y="545" width="32" height="32"/>
-  <object id="72" gid="21" x="896.87" y="319.811" width="32" height="32" rotation="269.326"/>
-  <object id="73" gid="2147483669" x="896.87" y="352.122" width="32" height="32" rotation="270.438"/>
-  <object id="74" gid="2147483669" x="896.872" y="384.127" width="32" height="32" rotation="270.456"/>
   <object id="78" gid="21" x="512" y="1856" width="32" height="32"/>
   <object id="79" gid="21" x="544.182" y="1856" width="32" height="32"/>
+  <object id="80" gid="21" x="1280" y="224" width="32" height="32"/>
+  <object id="81" gid="21" x="1472" y="224" width="32" height="32"/>
  </objectgroup>
  <layer id="2" name="Platforms" width="100" height="101">
   <data encoding="csv">
@@ -396,7 +395,7 @@
  </objectgroup>
  <objectgroup id="6" name="Items">
   <object id="54" name="red_chord" gid="6" x="3040" y="160" width="32" height="32"/>
-  <object id="55" name="portal" gid="6" x="1580" y="2580" width="32" height="32"/>
+  <object id="55" name="portal" gid="6" x="1584.25" y="2608.5" width="32" height="32"/>
   <object id="75" name="purple_chord" gid="6" x="3047.22" y="2075.8" width="32" height="32"/>
   <object id="76" gid="6" x="-431.666" y="481.969" width="32" height="32"/>
   <object id="77" gid="6" x="3055.16" y="2062.56" width="32" height="32"/>

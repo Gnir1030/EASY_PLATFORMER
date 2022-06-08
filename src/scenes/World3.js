@@ -20,16 +20,9 @@ class World3 extends Phaser.Scene {
         });
 
         this.load.tilemapTiledJSON('map3', './assets/world3.json');
-        //this.load.image('spike', './assets/spike.png');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
-        //this.load.image('LowChordC', './assets/Low_C_Major_Chord.png');
-       // this.load.spritesheet('enemy_blue', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-       // this.load.spritesheet('enemy_purple', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        //this.load.spritesheet('enemy_red', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
-        //this.load.spritesheet('enemy_green', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet("healthBar", "./assets/healthBar.png", {frameWidth: 128, frameHeight: 32, startFrame: 0, endFrame: 3});
-        //this.load.spritesheet('bullet', './assets/bullet.png', {frameWidth: 17, frameHeight: 11, startFrame: 0, endFrame: 1});
     }
 
     create() {
@@ -61,7 +54,7 @@ class World3 extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
-        //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
+        keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
 
         // map
@@ -155,7 +148,9 @@ class World3 extends Phaser.Scene {
         let portalPos  = map.findObject("Items", obj => obj.name === "portal");
         this.portal = new Portal(this, portalPos.x, portalPos.y, 'portal', 0, 'hubScene').setOrigin(0);
         this.portal.play('portal');
-        this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.portalCollides = this.physics.add.collider(this.player, this.portal, this.switchScene, null, this);
+        this.portalCollides.active = false;
+        this.portal.visible = false;
 
         // green chord
         let chordPos = map.findObject("Items", obj => obj.name === "green_chord");
@@ -165,7 +160,7 @@ class World3 extends Phaser.Scene {
 
         //yellow chord
         let chordPos2 = map.findObject("Items", obj => obj.name === "yellow_chord");
-        this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord2', 0, 2).setOrigin(0);
+        this.chord2 = new Item(this, chordPos2.x, chordPos2.y, 'chord5', 0, 5).setOrigin(0);
         this.physics.add.overlap(this.player, this.chord2, ()=>{this.collectChord(this.chord2)}, null, this);
         this.chordTuto2 = this.add.text(chordPos2.x - 50, chordPos2.y - 50, "PRESS (T) to recharge bullets");
 
@@ -199,6 +194,13 @@ class World3 extends Phaser.Scene {
             this.enemy[index].play('idle5');
             index += 1;
         });
+
+        enemyObjects = map.filterObjects("Enemies", obj => obj.name === "yellow");
+        enemyObjects.map((element) => {
+            this.enemy[index] = new Enemy(this, element.x, element.y, 'enemy5', 0, this.length, this.height, 5).setOrigin(0,0).setImmovable(true); 
+            this.enemy[index].play('idle6');
+            index += 1;
+        });
         this.enemies = this.physics.add.group(this.enemy);
         this.physics.add.collider(this.enemies, this.platforms);
 
@@ -213,7 +215,6 @@ class World3 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.looseHealth();
-            //this.sound.play("Take_Damage");
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -223,16 +224,16 @@ class World3 extends Phaser.Scene {
                         this.collider.active = true;
                         this.overlap.active = true;
                         this.overlap2.active = true;
-                        //this.sound.stop("Take_Damage");
                     },
                     loop: false
                 })
         });
 
         // add magazine text
-        this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
+        this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets", ammoConfig).setScrollFactor(0);
+        this.resetText = this.add.text(20, 20, 'Press (P) to Restart', ammoConfig).setScrollFactor(0);
         this.gameoverText = this.add.text(350, 300, "GAME OVER", scoreConfig).setScrollFactor(0).setVisible(false);
-        this.gameoverText2 = this.add.text(120, 350, 'Press (R) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
+        this.gameoverText2 = this.add.text(120, 350, 'Press (P) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
 
         //bullet hitback
         this.bullets = this.add.group();
@@ -300,6 +301,7 @@ class World3 extends Phaser.Scene {
             }
             this.gameoverText.setVisible(true);
             this.gameoverText2.setVisible(true);
+            this.resetText.setVisible(false);
             this.physics.pause();
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_3_music.stop();
@@ -331,8 +333,11 @@ class World3 extends Phaser.Scene {
         this.scene.start('hubScene');
     }
     collectChord(chord) {
-        //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
+        if (chord.name == 5) {
+            this.portalCollides.active = true;
+            this.portal.visible = true;
+        }
     }
 
     looseHealth() {

@@ -53,7 +53,7 @@ class World2 extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
-        //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
+        keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
 
         // map
@@ -74,6 +74,7 @@ class World2 extends Phaser.Scene {
         const viewH = 640;
         const viewW = 800;
         this.cameras.main.setBounds(0,0,map.widthInPixels, map.heightInPixels + 96);
+        this.cameras.main.setBackgroundColor('#ffd080');
         this.cameras.main.startFollow(this.player);
 
         //healthBar
@@ -203,9 +204,10 @@ class World2 extends Phaser.Scene {
         });
 
         // add magazine text
-        this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
+        this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets", ammoConfig).setScrollFactor(0);
+        this.resetText = this.add.text(20, 20, 'Press (P) to Restart', ammoConfig).setScrollFactor(0);
         this.gameoverText = this.add.text(350, 300, "GAME OVER", scoreConfig).setScrollFactor(0).setVisible(false);
-        this.gameoverText2 = this.add.text(120, 350, 'Press (R) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
+        this.gameoverText2 = this.add.text(120, 350, 'Press (P) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
 
         this.bullets = this.add.group();
         this.overlap2 = this.physics.add.overlap(this.player, this.bullets, (obj1, obj2) => {
@@ -272,6 +274,7 @@ class World2 extends Phaser.Scene {
             }
             this.gameoverText.setVisible(true);
             this.gameoverText2.setVisible(true);
+            this.resetText.setVisible(false);
             this.physics.pause();
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_2_music.stop();
@@ -298,15 +301,12 @@ class World2 extends Phaser.Scene {
         }
     }
     switchScene() {
-        //this.player.destroy();
         this.World_2_music.stop();
         completed[1] = 1;
         this.scene.start('hubScene');
     }
     collectChord(chord) {
-        //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
-        //this.player.magazine = 30;
     }
     looseHealth() {
         this.player.life -= 1;

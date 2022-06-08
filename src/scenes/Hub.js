@@ -19,9 +19,9 @@ class Hub extends Phaser.Scene {
     create() {
         // Hub World music
 
-        this.Hub_World_music = this.sound.add('Hub_World', {volume: 0.50});
-        this.Hub_World_music.play();
-        this.Hub_World_music.loop = true;
+        this.hub_music = this.sound.add('Hub_World', {volume: 0.50});
+        this.hub_music.play();
+        this.hub_music.loop = true;
 
         // base settings for this scene
         gameOver = false;
@@ -33,8 +33,6 @@ class Hub extends Phaser.Scene {
         // Game Over music plays when player dies
         this.Game_over = this.sound.add('Game_over', {volume: 0.5});
 
-        // background
-        //this.add.image(0, 0,'background').setOrigin(0, 0);
         // move keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -50,7 +48,6 @@ class Hub extends Phaser.Scene {
         this.add.text(84, 84, 'Press M for Menu', clearConfig).setScrollFactor(0);
         this.gameclear = this.add.text(360, 520, "Thanks for playing!", clearConfig).setScale(2).setScrollFactor(0.5).setVisible(false);
         this.gameclear2 = this.add.text(84, 104, "Press (R) to reset", clearConfig).setScale(1).setScrollFactor(0).setVisible(false);
-        //this.add.text(84, 84 + 64, chords[0]);
         
 
 
@@ -66,7 +63,6 @@ class Hub extends Phaser.Scene {
         let playerPos  = map.findObject("Player", obj => obj.name === "player");
         this.player = new Player(this, playerPos.x, playerPos.y, 'player', 0, keyA, keyD, keyW, keySPACE, keyLEFT, keyRIGHT, this.length, this.height).setOrigin(0,0);
         this.player.setMaxVelocity(1000, 900);
-        //this.player.body.setSize(64, , 50, 25);
 
         // set up camera
         const viewH = 640;
@@ -92,22 +88,24 @@ class Hub extends Phaser.Scene {
         this.portal3 = new Portal(this, portalPos.x, portalPos.y + 43, 'portal', 0, 'world3Scene').setOrigin(0);
         this.clear3 = this.add.text(portalPos.x, portalPos.y + 135, 'Cleared', clearConfig).setVisible(false);
 
-        this.Hub_World_music.stop();
         this.portal.play('portal');
         this.portal2.play('portal');
         this.portal3.play('portal');
         this.portal1Collides = this.physics.add.collider(this.player, this.portal, (obj1, obj2) => {
             this.scene.start(obj2.destination);
+            this.hub_music.stop();
         }, null, this);
         
         this.portal2Collides = this.physics.add.collider(this.player, this.portal2, (obj1, obj2) => {
             this.scene.start(obj2.destination);
+            this.hub_music.stop();
         }, null, this);
         this.portal2Collides.active = false;
         this.portal2.visible = false;
 
         this.portal3Collides = this.physics.add.collider(this.player, this.portal3, (obj1, obj2) => {
             this.scene.start(obj2.destination);
+            this.hub_music.stop();
         }, null, this);
          this.portal3Collides.active = false;
          this.portal3.visible = false;
@@ -129,7 +127,7 @@ class Hub extends Phaser.Scene {
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
-            this.Hub_World_music.stop();
+            this.hub_music.stop();
             this.scene.start('menuScene');
         }
 

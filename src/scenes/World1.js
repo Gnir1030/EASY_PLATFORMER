@@ -52,7 +52,6 @@ class World1 extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        //this.add.text(84, 84, "Pick up the musical chord while avoiding the spikes");
 
 
         // map
@@ -100,7 +99,6 @@ class World1 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.player.shadow = true;
-            //this.player.life -= 1;
             this.looseHealth();
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -138,7 +136,6 @@ class World1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
             this.hSFX.explode();
-            //this.player.life += 1; // add 1 to player health
             this.gainHealth();
         }, null, this);
 
@@ -188,7 +185,6 @@ class World1 extends Phaser.Scene {
             this.overlap.active = false;
             this.overlap2.active = false;
             this.player.hitted = true;
-            //this.player.life -= 1;
             this.looseHealth();
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
@@ -205,9 +201,10 @@ class World1 extends Phaser.Scene {
         });
 
         // add magazine text
-        this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets").setScrollFactor(0);
+        this.magazineText = this.add.text(350, 20, this.player.magazine + "bullets", ammoConfig).setScrollFactor(0);
+        this.resetText = this.add.text(20, 20, 'Press (P) to Restart', ammoConfig).setScrollFactor(0);
         this.gameoverText = this.add.text(350, 300, "GAME OVER", scoreConfig).setScrollFactor(0).setVisible(false);
-        this.gameoverText2 = this.add.text(120, 350, 'Press (R) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
+        this.gameoverText2 = this.add.text(120, 350, 'Press (P) to Restart or (M) to return', scoreConfig).setScrollFactor(0).setVisible(false);
 
         //bullet hitback
         this.bullets = this.add.group();
@@ -275,6 +272,7 @@ class World1 extends Phaser.Scene {
             }
             this.gameoverText.setVisible(true);
             this.gameoverText2.setVisible(true);
+            this.resetText.setVisible(false);
             this.physics.pause();
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.World_1_music.stop();
@@ -301,13 +299,11 @@ class World1 extends Phaser.Scene {
         }
     }
     switchScene() {
-        //this.player.destroy();
         this.World_1_music.stop();
         completed[0] = 1;
         this.scene.start('hubScene');
     }
     collectChord(chord) {
-        //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
     }
 

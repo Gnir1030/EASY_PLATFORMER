@@ -12,7 +12,6 @@ class Menu extends Phaser.Scene {
         this.load.audio('health', './assets/healthIncrease.wav');
         this.load.audio('ineffective', './assets/not_effective.wav');
         this.load.audio('damage', './assets/Damage.wav');
-        //this.load.atlas('player_atlas', './assets/colorlessPlayerIdle.png', './assets/colorlessPlayerJump.png', './assets/colorlessPlayerWalk.png', './assets/greymap.json');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('player_idle', './assets/playerIdle2.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('player_walk', './assets/playerWalk3.png', {frameWidth: 108, frameHeight: 128, startFrame: 0, endFrame: 2});
@@ -24,16 +23,20 @@ class Menu extends Phaser.Scene {
         this.load.image('bullet2', './assets/bullet2.png');
         this.load.image('bullet3', './assets/bullet3.png');
         this.load.image('bullet4', './assets/bullet4.png');
+        this.load.image('bullet5', './assets/bullet5.png');
+
 
         this.load.image('chord1', './assets/blueStar.png');
         this.load.image('chord2', './assets/purpleStar.png');
         this.load.image('chord3', './assets/redStar.png');
         this.load.image('chord4', './assets/greenStar.png');
+        this.load.image('chord5', './assets/yellowStar.png')
 
         this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy2', './assets/purpleDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy3', './assets/redDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
         this.load.spritesheet('enemy4', './assets/greenDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('enemy5', './assets/yellowDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
 
         this.load.image('title', './assets/Title.png');
     }
@@ -69,7 +72,6 @@ class Menu extends Phaser.Scene {
             }),
             frameRate: 5,
             repeat: -1,
-            //repeatDelay: 5000
         });
         this.anims.create({
             key: 'walk',
@@ -80,7 +82,6 @@ class Menu extends Phaser.Scene {
             }),
             frameRate: 9,
             repeat: -1,
-            //repeatDelay: 5000
         });
         this.anims.create({
             key: 'jump',
@@ -116,6 +117,13 @@ class Menu extends Phaser.Scene {
         this.anims.create({
             key: 'idle5',
             frames: this.anims.generateFrameNumbers('enemy4', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'idle6',
+            frames: this.anims.generateFrameNumbers('enemy5', { start: 0, end: 4, first: 0}),
             frameRate: 10,
             repeat: -1
         });
