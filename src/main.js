@@ -24,8 +24,8 @@ let gameOver = false;
 let scoreConfig = {
     fontFamily: 'Courier',
     fontSize: '28px',
-    backgroundColor: '#F3B141',
-    color: '#843605',
+    backgroundColor: '#000000',
+    color: '#b00000',
     align: 'center',
 };
 

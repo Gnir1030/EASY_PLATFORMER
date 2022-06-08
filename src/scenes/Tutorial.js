@@ -17,7 +17,6 @@ class Tutorial extends Phaser.Scene {
         this.load.image('spike', './assets/spike.png');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
-        this.load.image('background', './assets/background.png');
         this.load.image('bullet', './assets/bullet.png');
 
         this.load.spritesheet('enemy', './assets/blueDrone.png', {frameWidth: 108, frameHeight: 88, startFrame: 0, endFrame: 4});
@@ -231,7 +230,7 @@ class Tutorial extends Phaser.Scene {
                 this.Game_over.stop();
                 this.scene.restart();
             }
-            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            if (Phaser.Input.Keyboard.JustDown(keyM)) {
                 this.tutorial_music.stop();
                 this.Game_over.stop();
                 this.scene.start('menuScene');
