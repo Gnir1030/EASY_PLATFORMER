@@ -20,7 +20,6 @@ class World3 extends Phaser.Scene {
         });
 
         this.load.tilemapTiledJSON('map3', './assets/world3.json');
-        //this.load.image('spike', './assets/spike.png');
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 64, frameHeight: 128, startFrame: 0, endFrame: 3});
         this.load.spritesheet('portal', './assets/portal.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5});
         this.load.spritesheet("healthBar", "./assets/healthBar.png", {frameWidth: 128, frameHeight: 32, startFrame: 0, endFrame: 3});
@@ -216,7 +215,6 @@ class World3 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.looseHealth();
-            //this.sound.play("Take_Damage");
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -226,7 +224,6 @@ class World3 extends Phaser.Scene {
                         this.collider.active = true;
                         this.overlap.active = true;
                         this.overlap2.active = true;
-                        //this.sound.stop("Take_Damage");
                     },
                     loop: false
                 })
@@ -336,7 +333,6 @@ class World3 extends Phaser.Scene {
         this.scene.start('hubScene');
     }
     collectChord(chord) {
-        //this.sound.play('Low_C_Chord');
         chord.addToItems(chords);
         if (chord.name == 5) {
             this.portalCollides.active = true;

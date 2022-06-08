@@ -224,7 +224,7 @@ class Tutorial extends Phaser.Scene {
             }
             this.physics.pause();
             this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2, 'Game Over', scoreConfig).setOrigin(0.5);
-            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (P) to Restart or (M) to return', scoreConfig).setOrigin(0.5);
+            this.add.text(this.cameras.main.worldView.x + this.cameras.main.worldView.width/2, this.cameras.main.worldView.y + this.cameras.main.worldView.height/2 + 32, 'Press (P) to Restart or ← to return to menu', scoreConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyP)) {
                 this.tutorial_music.stop();
                 this.Game_over.stop();

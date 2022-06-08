@@ -99,7 +99,6 @@ class World1 extends Phaser.Scene {
             this.overlap2.active = false;
             this.player.hitted = true;
             this.player.shadow = true;
-            //this.player.life -= 1;
             this.looseHealth();
                 this.timedEvent = this.time.addEvent({
                     delay: 700,
@@ -137,7 +136,6 @@ class World1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.hGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
             this.hSFX.explode();
-            //this.player.life += 1; // add 1 to player health
             this.gainHealth();
         }, null, this);
 
@@ -187,7 +185,6 @@ class World1 extends Phaser.Scene {
             this.overlap.active = false;
             this.overlap2.active = false;
             this.player.hitted = true;
-            //this.player.life -= 1;
             this.looseHealth();
             this.player.shadow = true;
                 this.timedEvent = this.time.addEvent({
@@ -302,7 +299,6 @@ class World1 extends Phaser.Scene {
         }
     }
     switchScene() {
-        //this.player.destroy();
         this.World_1_music.stop();
         completed[0] = 1;
         this.scene.start('hubScene');
